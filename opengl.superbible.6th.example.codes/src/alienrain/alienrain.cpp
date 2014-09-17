@@ -198,6 +198,11 @@ class alienrain_app : public sb6::application
         }
     }
 
+    void onKey(int key, int action)
+    {
+
+    }
+
 protected:
     GLuint          render_prog;
     GLuint          render_vao;

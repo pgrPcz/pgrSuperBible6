@@ -79,11 +79,13 @@ namespace sb6
 class application
 {
 public:
+	volatile bool running;
+
     application() {}
     virtual ~application() {}
     virtual void run(sb6::application* the_app)
     {
-        bool running = true;
+        running = true;
         app = the_app;
 
         if (!glfwInit())
@@ -121,7 +123,7 @@ public:
             if (!glfwOpenWindow(info.windowWidth, info.windowHeight, 8, 8, 8, 0, 32, 0, GLFW_WINDOW))
             {
                 fprintf(stderr, "Failed to open window\n");
-                return;
+                //return;
             }
         }
 
@@ -169,9 +171,9 @@ public:
             running &= (glfwGetWindowParam( GLFW_OPENED ) != GL_FALSE);
         } while(running);
 
-        shutdown();
+        //shutdown();
 
-        glfwTerminate();
+       // glfwTerminate();
     }
 
     virtual void init()
@@ -183,7 +185,7 @@ public:
         info.majorVersion = 3;
         info.minorVersion = 2;
 #else
-        info.majorVersion = 3;//4; adatczuk
+        info.majorVersion = 4;//4; adatczuk
         info.minorVersion = 3;
 #endif
         info.samples = 0;
