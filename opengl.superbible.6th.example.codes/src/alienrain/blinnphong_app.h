@@ -197,7 +197,7 @@ void blinnphong_app::onKey(int key, int action)
                 break;
         }
     }
-	mAppManager->onKey(key, action);
+	m_app_manager->onKey(key, action);
 }
 
 void blinnphong_app::load_shaders()

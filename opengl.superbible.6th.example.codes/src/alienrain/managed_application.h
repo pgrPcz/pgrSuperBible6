@@ -12,32 +12,31 @@ class managed_application : public sb6::application
 public:
 	managed_application(application_manager * am) 
 	{
-		mAppManager = am;
+		m_app_manager = am;
 	}
 
 
 protected:
-	application_manager * mAppManager;
+	application_manager * m_app_manager;
 
 };
 
 class application_manager
 {
-
-	int mAppsLength;
-	managed_application ** mApps;
+	int m_apps_length;
+	managed_application ** m_apps;
 
 	int mCurrentIndex;
-	managed_application * mCurrentApp;
+	managed_application * m_current_app;
 
 
 
 public:
 
-	void init(managed_application * apps[], int appsLength) 
+	void init(managed_application * apps[], int apps_length) 
 	{
-		mApps = apps;
-		mAppsLength = appsLength;
+		m_apps = apps;
+		m_apps_length = apps_length;
 		switchApp(0);
 	}
 
@@ -51,16 +50,16 @@ public:
 
 	void switchApp(int index) 
 	{
-		if(mAppsLength <= index) 
+		if(m_apps_length <= index) 
 		{
 			index = 0;
 		} else if(index < 0) {
-			index = mAppsLength - 1;
+			index = m_apps_length - 1;
 		}
 
 		mCurrentIndex = index;
-		mCurrentApp = mApps[mCurrentIndex];
-		mCurrentApp->run(mCurrentApp);
+		m_current_app = m_apps[mCurrentIndex];
+		m_current_app->run(m_current_app);
 	}
 
 	void onKey(int key, int action) 

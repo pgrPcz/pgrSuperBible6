@@ -16,6 +16,7 @@
     <ClInclude Include="..\..\src\alienrain\blendmatrix_app.h" />
     <ClInclude Include="..\..\src\alienrain\blinnphong_app.h" />
     <ClInclude Include="..\..\src\alienrain\bumpmapping.h" />
+    <ClInclude Include="..\..\src\alienrain\camera.h" />
     <ClInclude Include="..\..\src\alienrain\clipdistance_app.h" />
     <ClInclude Include="..\..\src\alienrain\grass.h" />
     <ClInclude Include="..\..\src\alienrain\managed_application.h" />

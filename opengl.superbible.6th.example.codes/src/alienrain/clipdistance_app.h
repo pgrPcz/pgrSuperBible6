@@ -159,6 +159,6 @@ void clipdistance_app::onKey(int key, int action)
         }
     }
 
-	mAppManager->onKey(key, action);
+	m_app_manager->onKey(key, action);
 }
 

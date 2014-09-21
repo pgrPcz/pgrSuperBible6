@@ -10,6 +10,7 @@
     <ClInclude Include="..\..\src\alienrain\grass.h" />
     <ClInclude Include="..\..\src\alienrain\managed_application.h" />
     <ClInclude Include="..\..\src\alienrain\startup.h" />
+    <ClInclude Include="..\..\src\alienrain\camera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\alienrain\startup.cpp" />

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "camera.h"
 #include "managed_application.h"
 #include "alienrain_app.h"
 #include "grass.h"

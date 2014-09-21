@@ -139,17 +139,22 @@ static const char * grass_fs_source[] =
 class grass_app : public managed_application
 {
 public:
+
 	grass_app(application_manager * a) : managed_application(a)
 	{
 	}
 
 protected:
 
+	camera * m_camera;
+
     void init()
     {
         static const char title[] = "OpenGL SuperBible - Grass";
 
         managed_application::init();
+
+		m_camera = new camera(this);
 
         memcpy(info.title, title, sizeof(title));
     }
@@ -219,10 +224,21 @@ protected:
         static const GLfloat one = 1.0f;
         glClearBufferfv(GL_COLOR, 0, black);
         glClearBufferfv(GL_DEPTH, 0, &one);
+		
+		m_camera->onRender(currentTime);
+		vmath::mat4 mv_matrix = m_camera->createViewMatrix();
+		   
+		   //vmath::lookat(vmath::vec3(sinf(t) * r, 25.0f, cosf(t) * r),
+          //                                    vmath::vec3(0.0f, -50.0f, 0.0f),
+          //                                    vmath::vec3(0.0, 1.0, 0.0));
 
-        vmath::mat4 mv_matrix = vmath::lookat(vmath::vec3(sinf(t) * r, 25.0f, cosf(t) * r),
+
+			
+			/*vmath::lookat(vmath::vec3(1, 25.0f, 1),
                                               vmath::vec3(0.0f, -50.0f, 0.0f),
                                               vmath::vec3(0.0, 1.0, 0.0));
+											  */
+
         vmath::mat4 prj_matrix = vmath::perspective(45.0f, (float)info.windowWidth / (float)info.windowHeight, 0.1f, 1000.0f);
 
         glUseProgram(grass_program);
@@ -239,8 +255,16 @@ protected:
 
     void onKey(int key, int action)
     {
-		mAppManager->onKey(key, action);
+		m_camera->onKey(key, action);
+		m_app_manager->onKey(key, action);
     }
+
+	void onMouseMove(int x, int y)
+	{
+		m_camera->onMouseMove(x, y);
+	}
+
+
 
 private:
     GLuint      grass_buffer;

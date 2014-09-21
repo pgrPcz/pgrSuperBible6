@@ -31,17 +31,22 @@
 #include <cstdio>
 #include "managed_application.h"
 
+
 class bumpmapping_app : public managed_application
 {
 public:
     bumpmapping_app(application_manager * a) : program(0), paused(false), managed_application(a) {}
 
 protected:
+	camera * m_camera;
+
     void init()
     {
         static const char title[] = "OpenGL SuperBible - Bump Mapping";
 
         sb6::application::init();
+
+		m_camera = new camera(this);
 
         memcpy(info.title, title, sizeof(title));
     }
@@ -49,6 +54,7 @@ protected:
     void startup();
     void render(double currentTime);
     void onKey(int key, int action);
+	void onMouseMove(int x, int y);
 
     void load_shaders();
     void make_screenshot();
@@ -112,12 +118,17 @@ void bumpmapping_app::render(double currentTime)
                                                     1000.0f);
     glUniformMatrix4fv(uniforms.proj_matrix, 1, GL_FALSE, proj_matrix);
 
-    vmath::mat4 mv_matrix = vmath::translate(0.0f, -0.2f, -5.5f) *
+	m_camera->onRender(currentTime);
+	vmath::mat4 mv_matrix = m_camera->createViewMatrix();
+		
+		/*
+							vmath::translate(0.0f, -0.2f, -5.5f) *
                             vmath::rotate(14.5f, 1.0f, 0.0f, 0.0f) *
                             vmath::rotate(-20.0f, 0.0f, 1.0f, 0.0f) *
                             //vmath::rotate(t * 14.5f, 0.0f, 1.0f, 0.0f) *
                             //vmath::rotate(0.0f, 1.0f, 0.0f, 0.0f) *
                             vmath::mat4::identity();
+							*/
     glUniformMatrix4fv(uniforms.mv_matrix, 1, GL_FALSE, mv_matrix);
 
     glUniform3fv(uniforms.light_pos, 1, vmath::vec3(40.0f * sinf(f), 30.0f + 20.0f * cosf(f), 40.0f));
@@ -170,6 +181,7 @@ void bumpmapping_app::make_screenshot()
 
 void bumpmapping_app::onKey(int key, int action)
 {
+	m_camera->onKey(key, action);
     if (action)
     {
         switch (key)
@@ -185,7 +197,12 @@ void bumpmapping_app::onKey(int key, int action)
                 break;
         }
     }
-	mAppManager->onKey(key, action);
+	m_app_manager->onKey(key, action);
+}
+
+void bumpmapping_app::onMouseMove(int x, int y)
+{
+	m_camera->onMouseMove(x, y);
 }
 
 void bumpmapping_app::load_shaders()

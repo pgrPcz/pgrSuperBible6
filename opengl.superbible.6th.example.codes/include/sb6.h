@@ -276,8 +276,9 @@ public:
         } flags;
     };
 
+	APPINFO     info;
 protected:
-    APPINFO     info;
+    
     static      sb6::application * app;
 
     static void GLFWCALL glfw_onResize(int w, int h)
