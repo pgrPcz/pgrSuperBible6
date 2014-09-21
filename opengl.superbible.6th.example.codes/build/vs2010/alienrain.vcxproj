@@ -10,6 +10,20 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\alienrain\alienrain_app.h" />
+    <ClInclude Include="..\..\src\alienrain\basicfbo_app.h" />
+    <ClInclude Include="..\..\src\alienrain\blendmatrix_app.h" />
+    <ClInclude Include="..\..\src\alienrain\blinnphong_app.h" />
+    <ClInclude Include="..\..\src\alienrain\bumpmapping.h" />
+    <ClInclude Include="..\..\src\alienrain\clipdistance_app.h" />
+    <ClInclude Include="..\..\src\alienrain\grass.h" />
+    <ClInclude Include="..\..\src\alienrain\managed_application.h" />
+    <ClInclude Include="..\..\src\alienrain\startup.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\alienrain\startup.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{055EA0D3-2400-4477-8EC0-C5794D92C9BD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -84,9 +98,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\alienrain\alienrain.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

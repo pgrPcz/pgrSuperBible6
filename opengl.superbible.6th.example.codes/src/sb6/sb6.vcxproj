@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="gl3w.c" />
     <ClCompile Include="sb6.cpp" />
+    <ClCompile Include="sb6ktx.cpp" />
     <ClCompile Include="sb6object.cpp" />
     <ClCompile Include="sb6shader.cpp" />
   </ItemGroup>
