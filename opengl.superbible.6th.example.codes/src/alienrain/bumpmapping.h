@@ -92,6 +92,7 @@ void bumpmapping_app::startup()
 
 void bumpmapping_app::render(double currentTime)
 {
+	m_camera->onRender(currentTime);
     static const GLfloat zeros[] = { 0.0f, 0.0f, 0.0f, 0.0f };
     static const GLfloat gray[] = { 0.1f, 0.1f, 0.1f, 0.0f };
     static const GLfloat ones[] = { 1.0f };
@@ -118,7 +119,6 @@ void bumpmapping_app::render(double currentTime)
                                                     1000.0f);
     glUniformMatrix4fv(uniforms.proj_matrix, 1, GL_FALSE, proj_matrix);
 
-	m_camera->onRender(currentTime);
 	vmath::mat4 mv_matrix = m_camera->createViewMatrix();
 		
 		/*

@@ -55,12 +55,15 @@ public:
 	}
 
 protected:
+	camera * m_camera;
 
     void init()
     {
         static const char title[] = "OpenGL SuperBible - Alien Rain";
 
         managed_application::init();
+
+		m_camera = new camera(this);
 
         memcpy(info.title, title, sizeof(title));
     }
@@ -210,8 +213,14 @@ protected:
 
     void onKey(int key, int action)
     {
+		m_camera->onKey(key, action);
 		m_app_manager->onKey(key, action);
     }
+
+	void onMouseMove(int x, int y)
+	{
+		m_camera->onMouseMove(x, y);
+	}
 
 protected:
     GLuint          render_prog;
@@ -219,6 +228,8 @@ protected:
 
     GLuint          tex_alien_array;
     GLuint          rain_buffer;
+
+	GLint		    mv_matrix;
 
     float           droplet_x_offset[256];
     float           droplet_rot_speed[256];

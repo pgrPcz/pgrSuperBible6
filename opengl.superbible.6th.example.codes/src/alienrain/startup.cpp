@@ -6,11 +6,11 @@ int CALLBACK WinMain(HINSTANCE hInstance,
                      LPSTR lpCmdLine,               
                      int nCmdShow)                  
 {             
-	const int appsLength = 7;
+	const int appsLength = 4;
 	//ik
 	am = new application_manager();
-	managed_application * apps [appsLength] = {new alienrain_app(am), new grass_app(am), new basicfbo_app(am),
-		new blendmatrix_app(am), new blinnphong_app(am), new clipdistance_app(am), new bumpmapping_app(am) };
+	managed_application * apps [appsLength] = {/*new alienrain_app(am),*/ new grass_app(am), /*new basicfbo_app(am),*/
+		new blendmatrix_app(am), /*new blinnphong_app(am),*/ new clipdistance_app(am), new bumpmapping_app(am) };
 	
 	am->init(apps, appsLength);
                          

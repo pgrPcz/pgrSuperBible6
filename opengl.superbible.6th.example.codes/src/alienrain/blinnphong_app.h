@@ -44,11 +44,15 @@ public:
     }
 
 protected:
+	camera * m_camera;
+
     void init()
     {
         static const char title[] = "OpenGL SuperBible - Blinn-Phong Shading";
 
         sb6::application::init();
+
+		m_camera = new camera(this);
 
         memcpy(info.title, title, sizeof(title));
     }
@@ -56,6 +60,7 @@ protected:
     void startup();
     void render(double currentTime);
     void onKey(int key, int action);
+	void onMouseMove(int x, int y);
 
     void load_shaders();
 
@@ -103,6 +108,7 @@ void blinnphong_app::startup()
 
 void blinnphong_app::render(double currentTime)
 {
+	m_camera->onRender(currentTime);
     static const GLfloat zeros[] = { 0.0f, 0.0f, 0.0f, 0.0f };
     static const GLfloat gray[] = { 0.1f, 0.1f, 0.1f, 0.0f };
     static const GLfloat ones[] = { 1.0f };
@@ -121,9 +127,11 @@ void blinnphong_app::render(double currentTime)
                                */
 
     vmath::vec3 view_position = vmath::vec3(0.0f, 0.0f, 50.0f);
-    vmath::mat4 view_matrix = vmath::lookat(view_position,
+	vmath::mat4 view_matrix = m_camera->createViewMatrix();
+		/*vmath::lookat(view_position,
                                             vmath::vec3(0.0f, 0.0f, 0.0f),
                                             vmath::vec3(0.0f, 1.0f, 0.0f));
+											*/
 
     vmath::vec3 light_position = vmath::vec3(-20.0f, -20.0f, 0.0f);
 
@@ -197,7 +205,14 @@ void blinnphong_app::onKey(int key, int action)
                 break;
         }
     }
+
+	m_camera->onKey(key, action);
 	m_app_manager->onKey(key, action);
+}
+
+void blinnphong_app::onMouseMove(int x, int y)
+{
+	m_camera->onMouseMove(x, y);
 }
 
 void blinnphong_app::load_shaders()

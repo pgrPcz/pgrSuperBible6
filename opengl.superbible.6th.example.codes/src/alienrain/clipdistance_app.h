@@ -32,6 +32,9 @@
 
 class clipdistance_app : public managed_application
 {
+protected:
+	camera * m_camera;
+
 public:
     clipdistance_app(application_manager * a)
         : render_program(0), managed_application(a),
@@ -46,12 +49,15 @@ public:
 
         sb6::application::init();
 
+		m_camera = new camera(this);
+
         memcpy(info.title, title, sizeof(title));
     }
 
     void startup();
     void render(double currentTime);
     void onKey(int key, int action);
+	void onMouseMove(int x, int y);
 
 protected:
     sb6::object     object;
@@ -78,6 +84,7 @@ void clipdistance_app::startup()
 
 void clipdistance_app::render(double currentTime)
 {
+	m_camera->onRender(currentTime);
     static const GLfloat black[] = { 0.0f, 0.0f, 0.0f, 0.0f };
     static const GLfloat one = 1.0f;
 
@@ -100,9 +107,11 @@ void clipdistance_app::render(double currentTime)
                                                  0.1f,
                                                  1000.0f);
 
-    vmath::mat4 mv_matrix = vmath::translate(0.0f, 0.0f, -15.0f) *
+	vmath::mat4 mv_matrix = m_camera->createViewMatrix();
+		
+		/*vmath::translate(0.0f, 0.0f, -15.0f) *
                             vmath::rotate(f * 0.34f, 0.0f, 1.0f, 0.0f) *
-                            vmath::translate(0.0f, -4.0f, 0.0f);
+                            vmath::translate(0.0f, -4.0f, 0.0f);*/
 
     vmath::mat4 plane_matrix = vmath::rotate(f * 6.0f, 1.0f, 0.0f, 0.0f) *
                                vmath::rotate(f * 7.3f, 0.0f, 1.0f, 0.0f);
@@ -159,6 +168,12 @@ void clipdistance_app::onKey(int key, int action)
         }
     }
 
+	m_camera->onKey(key, action);
 	m_app_manager->onKey(key, action);
+}
+
+void clipdistance_app::onMouseMove(int x, int y)
+{
+	m_camera->onMouseMove(x, y);
 }
 

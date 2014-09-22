@@ -217,6 +217,7 @@ protected:
 
     void render(double currentTime)
     {
+		m_camera->onRender(currentTime);
         float t = (float)currentTime * 0.02f;
         float r = 550.0f;
 
@@ -225,7 +226,7 @@ protected:
         glClearBufferfv(GL_COLOR, 0, black);
         glClearBufferfv(GL_DEPTH, 0, &one);
 		
-		m_camera->onRender(currentTime);
+		
 		vmath::mat4 mv_matrix = m_camera->createViewMatrix();
 		   
 		   //vmath::lookat(vmath::vec3(sinf(t) * r, 25.0f, cosf(t) * r),

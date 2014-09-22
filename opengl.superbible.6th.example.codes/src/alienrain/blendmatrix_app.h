@@ -36,12 +36,15 @@ public:
 	}
 
 protected:
+	camera * m_camera;
 
     void init()
     {
         static const char title[] = "OpenGL SuperBible - Blending Functions";
 
         sb6::application::init();
+
+		m_camera = new camera(this);
 
         memcpy(info.title, title, sizeof(title));
     }
@@ -164,6 +167,7 @@ protected:
 
     virtual void render(double currentTime)
     {
+		m_camera->onRender(currentTime);
         int i, j;
         static const GLfloat orange[] = { 0.6f, 0.4f, 0.1f, 1.0f };
         static const GLfloat one = 1.0f;
@@ -209,16 +213,23 @@ protected:
 
         glEnable(GL_BLEND);
         glBlendColor(0.2f, 0.5f, 0.7f, 0.5f);
+
         for (j = 0; j < num_blend_funcs; j++)
         {
             for (i = 0; i < num_blend_funcs; i++)
             {
-                vmath::mat4 mv_matrix = 
+				vmath::mat4 mv_matrix = 
+
+					
                     vmath::translate(9.5f - x_scale * float(i),
                                      7.5f - y_scale * float(j),
                                      -18.0f) *
-                    vmath::rotate(t * -45.0f, 0.0f, 1.0f, 0.0f) *
-                    vmath::rotate(t * -21.0f, 1.0f, 0.0f, 0.0f);
+
+					 m_camera->createViewMatrix() *
+                     vmath::rotate(t * -45.0f, 0.0f, 1.0f, 0.0f) *
+                     vmath::rotate(t * -21.0f, 1.0f, 0.0f, 0.0f);
+					
+
                 glUniformMatrix4fv(mv_location, 1, GL_FALSE, mv_matrix);
                 glBlendFunc(blend_func[i], blend_func[j]);
                 glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, 0);
@@ -235,8 +246,14 @@ protected:
 
     void onKey(int key, int action)
     {
+		m_camera->onKey(key, action);
 		m_app_manager->onKey(key, action);
     }
+
+	void onMouseMove(int x, int y)
+	{
+		m_camera->onMouseMove(x, y);
+	}
 
 private:
     GLuint          program;
