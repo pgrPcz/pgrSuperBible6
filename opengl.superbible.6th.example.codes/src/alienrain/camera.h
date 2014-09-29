@@ -77,6 +77,20 @@ public:
 		is_shift_preessed = false;
 	}
 
+	void setPosition(float nx, float ny, float nz)
+	{
+		x = nx;
+		y = ny;
+		z = nz;
+	}
+
+	void setLookat(vmath::vec3 neye, vmath::vec3 ncenter, vmath::vec3 nup)
+	{
+		eye = neye;
+		center = ncenter;
+		up = nup;
+	}
+
 	vmath::mat4 createViewMatrix() {
 
 		return  vmath::lookat(eye, center, up) * vmath::translate(x, y, z) * vmath::rotate(h_angle, 0.0f, 1.0f, 0.0f);
@@ -165,7 +179,7 @@ public:
 		}
 
 		{
-			float sign = last_mouse_x - x;
+			int sign = last_mouse_x - x;
 			float tmp_speed = sign > 0 ? mouse_speed : - mouse_speed;
 
 			float tmp = abs(sign) > mouse_speed ? tmp_speed :last_mouse_x - x;
@@ -175,7 +189,7 @@ public:
 		}
 
 		{
-			float sign = last_mouse_y - y;
+			int sign = last_mouse_y - y;
 			float tmp_speed = sign > 0 ? mouse_speed : - mouse_speed;
 
 			float tmp = abs(sign) > mouse_speed ? tmp_speed : last_mouse_y - y;

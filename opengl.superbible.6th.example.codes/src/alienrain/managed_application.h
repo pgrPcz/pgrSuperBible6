@@ -5,9 +5,11 @@
 #include <vmath.h>
 #include <GL/glfw.h>
 
+#include "managed_application.h"
+
 class application_manager;
 
-class managed_application : public sb6::application
+class managed_application : public sb6::application, public xml_helper_listener
 {
 public:
 	managed_application(application_manager * am) 
@@ -23,18 +25,20 @@ protected:
 
 class application_manager
 {
+protected:
 	int m_apps_length;
 	managed_application ** m_apps;
 
 	int mCurrentIndex;
 	managed_application * m_current_app;
 
-
+	xml_helper * m_xml_helper;
 
 public:
 
 	void init(managed_application * apps[], int apps_length) 
 	{
+		m_xml_helper = new xml_helper();
 		m_apps = apps;
 		m_apps_length = apps_length;
 		switchApp(0);
@@ -59,6 +63,8 @@ public:
 
 		mCurrentIndex = index;
 		m_current_app = m_apps[mCurrentIndex];
+
+		m_xml_helper->loadXml(m_current_app);
 		m_current_app->run(m_current_app);
 	}
 

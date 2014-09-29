@@ -1,0 +1,4 @@
+<app>
+	<speed v="-0.03"/>
+	<textures wall="brick.ktx"  ceiling ="ceiling.ktx" floor="floor.ktx"/>
+</app>

@@ -35,10 +35,49 @@
 class bumpmapping_app : public managed_application
 {
 public:
-    bumpmapping_app(application_manager * a) : program(0), paused(false), managed_application(a) {}
+    bumpmapping_app(application_manager * a) : program(0), paused(false), managed_application(a) 
+	{
+		tex_path = "media/textures/";
+		obj_path = "media/objects/";
+	}
+
+	string getAppName()
+	{
+		return "bumpmapping";
+	}
+
+	void handleDocument(XMLDocument* doc)
+	{
+		XMLElement* root = doc->FirstChildElement();
+
+		XMLElement* ele = root->FirstChildElement("textures");
+		tex_color_str = ele->Attribute("color");
+		tex_normals_str = ele->Attribute("normals");
+
+		ele = root->FirstChildElement("object");
+		obj_file_str = ele->Attribute("model");
+
+		ele = root->FirstChildElement("light");
+		light_pos_x_sin = ele->FloatAttribute("pos_x_sin");
+		light_pos_y_cos = ele->FloatAttribute("pos_y_cos");
+		light_pos_z = ele->FloatAttribute("pos_z");
+		light_speed = ele->FloatAttribute("light_speed");
+	}
 
 protected:
 	camera * m_camera;
+
+	string tex_path;
+	string obj_path;
+
+	string tex_color_str;
+	string tex_normals_str;
+	string obj_file_str;
+
+	float light_pos_x_sin;
+	float light_pos_y_cos;
+	float light_pos_z;
+	float light_speed;
 
     void init()
     {
@@ -83,11 +122,11 @@ void bumpmapping_app::startup()
     load_shaders();
 
     glActiveTexture(GL_TEXTURE0);
-    textures.color = sb6::ktx::file::load("media/textures/ladybug_co.ktx");
+    textures.color = sb6::ktx::file::load((tex_path + tex_color_str).c_str());
     glActiveTexture(GL_TEXTURE1);
-    textures.normals = sb6::ktx::file::load("media/textures/ladybug_nm.ktx");
+    textures.normals = sb6::ktx::file::load((tex_path + tex_normals_str).c_str());
 
-    object.load("media/objects/ladybug.sbm");
+    object.load((obj_path + obj_file_str).c_str());
 }
 
 void bumpmapping_app::render(double currentTime)
@@ -131,7 +170,8 @@ void bumpmapping_app::render(double currentTime)
 							*/
     glUniformMatrix4fv(uniforms.mv_matrix, 1, GL_FALSE, mv_matrix);
 
-    glUniform3fv(uniforms.light_pos, 1, vmath::vec3(40.0f * sinf(f), 30.0f + 20.0f * cosf(f), 40.0f));
+	glUniform3fv(uniforms.light_pos, 1, vmath::vec3(light_pos_x_sin * sinf(f * light_speed), 
+		light_pos_y_cos + 20.0f * cosf(f * light_speed), light_pos_z));
 
     object.render();
 }
@@ -210,8 +250,137 @@ void bumpmapping_app::load_shaders()
     GLuint vs;
     GLuint fs;
 
-    vs = sb6::shader::load("media/shaders/bumpmapping/bumpmapping.vs.glsl", GL_VERTEX_SHADER);
-    fs = sb6::shader::load("media/shaders/bumpmapping/bumpmapping.fs.glsl", GL_FRAGMENT_SHADER);
+		 static string vs_source_str =
+			"#version 410 core												\n"
+			"																\n"
+			"layout (location = 0) in vec4 position;						\n"
+			"layout (location = 1) in vec3 normal;							\n"
+			"layout (location = 2) in vec3 tangent;							\n"
+			"// Although the model file used in this example includes		\n"
+			"// a bitangent, we're not using it and will calculate our		\n"
+			"// own from the normal and tangent.							\n"
+			"// layout (location = 3) in vec3 bitangent;					\n"
+			"layout (location = 4) in vec2 texcoord;						\n"
+			"																\n"
+			"out VS_OUT														\n"
+			"{																\n"
+			"    vec2 texcoord;												\n"
+			"    vec3 eyeDir;												\n"
+			"    vec3 lightDir;												\n"
+			"    vec3 normal;												\n"
+			"} vs_out;														\n"
+			"																\n"
+			"uniform mat4 mv_matrix;										\n"
+			"uniform mat4 proj_matrix;										\n"
+			"uniform vec3 light_pos = vec3(0.0, 0.0, 100.0);				\n"
+			"																\n"
+			"void main(void)												\n"
+			"{																\n"
+			"    // Calculate vertex position in view space.				\n"
+			"    vec4 P = mv_matrix * position;								\n"
+			"																\n"
+			"    // Calculate normal (N) and tangent (T) vectors in view space from			\n"
+			"    // incoming object space vectors.											\n"
+			"    vec3 V = P.xyz;															\n"
+			"    vec3 N = normalize(mat3(mv_matrix) * normal);								\n"
+			"    vec3 T = normalize(mat3(mv_matrix) * tangent);								\n"
+			"    // Calculate the bitangent vector (B) from the normal and tangent			\n"
+			"    // vectors.																\n"
+			"    vec3 B = cross(N, T);														\n"
+			"																				\n"
+			"    // The light vector (L) is the vector from the point of interest to		\n"
+			"    // the light. Calculate that and multiply it by the TBN matrix.			\n"
+			"    vec3 L = light_pos - P.xyz;												\n"
+			"    vs_out.lightDir = normalize(vec3(dot(L, T), dot(L, B), dot(L, N)));		\n"
+			"																				\n"
+			"    // The view vector is the vector from the point of interest to the			\n"
+			"    // viewer, which in view space is simply the negative of the position.		\n"
+			"    // Calculate that and multiply it by the TBN matrix.						\n"
+			"    V = -P.xyz;																\n"
+			"    vs_out.eyeDir = normalize(vec3(dot(V, T), dot(V, B), dot(V, N)));			\n"
+			"																				\n"
+			"    // Pass the texture coordinate through unmodified so that the fragment		\n"
+			"    // shader can fetch from the normal and color maps.						\n"
+			"    vs_out.texcoord = texcoord;												\n"
+			"																				\n"
+			"    // Pass the per-vertex normal so that the fragment shader can				\n"
+			"    // turn the normal map on and off.											\n"
+			"    vs_out.normal = N;															\n"
+			"																				\n"
+			"    // Calculate clip coordinates by multiplying our view position by			\n"
+			"    // the projection matrix.													\n"
+			"    gl_Position = proj_matrix * P;												\n"
+			"}																				\n"
+			""
+		;
+        static const char * vs_source[] = {vs_source_str.c_str()};
+
+        static string fs_source_str =
+			"#version 410 core																\n"
+			"																				\n"
+			"out vec4 color;																\n"
+			"																				\n"
+			"// Color and normal maps														\n"
+			"layout (binding = 0) uniform sampler2D tex_color;								\n"
+			"layout (binding = 1) uniform sampler2D tex_normal;								\n"
+			"																				\n"
+			"in VS_OUT																		\n"
+			"{																				\n"
+			"    vec2 texcoord;																\n"
+			"    vec3 eyeDir;																\n"
+			"    vec3 lightDir;																\n"
+			"    vec3 normal;																\n"
+			"} fs_in;																		\n"
+			"																				\n"
+			"void main(void)																\n"
+			"{																				\n"
+			"    // Normalize our incomming view and light direction vectors.				\n"
+			"    vec3 V = normalize(fs_in.eyeDir);											\n"
+			"    vec3 L = normalize(fs_in.lightDir);										\n"
+			"    // Read the normal from the normal map and normalize it.					\n"
+			"    vec3 N = normalize(texture(tex_normal, fs_in.texcoord).rgb * 2.0 - vec3(1.0));		\n"
+			"    // Uncomment this to use surface normals rather than the normal map				\n"
+			"    // N = vec3(0.0, 0.0, 1.0);														\n"
+			"    // Calculate R ready for use in Phong lighting.							\n"
+			"    vec3 R = reflect(-L, N);													\n"
+			"																				\n"
+			"    // Fetch the diffuse albedo from the texture.								\n"
+			"    vec3 diffuse_albedo = texture(tex_color, fs_in.texcoord).rgb;				\n"
+			"    // Calculate diffuse color with simple N dot L.							\n"
+			"    vec3 diffuse = max(dot(N, L), 0.0) * diffuse_albedo;						\n"
+			"    // Uncomment this to turn off diffuse shading								\n"
+			"    // diffuse = vec3(0.0);													\n"
+			"																				\n"
+			"    // Assume that specular albedo is white - it could also come from a texture\n"
+			"    vec3 specular_albedo = vec3(1.0);											\n"
+			"    // Calculate Phong specular highlight										\n"
+			"    vec3 specular = max(pow(dot(R, V), 20.0), 0.0) * specular_albedo;			\n"
+			"    // Uncomment this to turn off specular highlights							\n"
+			"    // specular = vec3(0.0);													\n"
+			"																				\n"
+			"    // Final color is diffuse + specular										\n"
+			"    color = vec4(diffuse + specular, 1.0);										\n"
+			"}																				\n"
+			""
+        ;
+		static const char * fs_source[] = {fs_source_str.c_str()};
+
+		char buffer[4024];
+        vs = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(vs, 1, vs_source, NULL);
+        glCompileShader(vs);
+
+        glGetShaderInfoLog(vs, 1024, NULL, buffer);
+
+        fs = glCreateShader(GL_FRAGMENT_SHADER);
+		glShaderSource(fs, 1, fs_source, NULL);
+        glCompileShader(fs);
+
+        glGetShaderInfoLog(vs, 1024, NULL, buffer);
+
+
+   // vs = sb6::shader::load("media/shaders/bumpmapping/bumpmapping.vs.glsl", GL_VERTEX_SHADER);
+   // fs = sb6::shader::load("media/shaders/bumpmapping/bumpmapping.fs.glsl", GL_FRAGMENT_SHADER);
 
     if (program)
         glDeleteProgram(program);
