@@ -62,24 +62,44 @@
     #pragma comment (lib, "OpenGL32.lib")
 #endif
 
-#include "GL/gl3w.h"
-
 #define GLFW_NO_GLU 1
 #define GLFW_INCLUDE_GLCOREARB 1
-#include "GL/glfw.h"
 
-#include "sb6ext.h"
+
+
+#include "button.h"
 
 #include <stdio.h>
 #include <string.h>
 
+//forward dec
+class application;
+
 namespace sb6
 {
 
+	static int myAppIndex = 0;
 class application
 {
 public:
-    application() {}
+
+	static void WinLog(const wchar_t *text, int n = 0) {
+		wchar_t buf[1024];
+		_snwprintf_s(buf, 1024, _TRUNCATE, L"%s %d\n", text, n);
+		OutputDebugString(buf);
+	}
+
+	int myQuickIndex;
+
+	static Button* myButton;
+	static Button* myButton2;
+
+    application() {
+		
+
+		myQuickIndex=myAppIndex++;
+
+	}
     virtual ~application() {}
     virtual void run(sb6::application* the_app)
     {
@@ -93,7 +113,7 @@ public:
         }
 
         init();
-
+		
         glfwOpenWindowHint(GLFW_OPENGL_VERSION_MAJOR, info.majorVersion);
         glfwOpenWindowHint(GLFW_OPENGL_VERSION_MINOR, info.minorVersion);
 
@@ -158,20 +178,38 @@ public:
         }
 
         startup();
+		WinLog(L"application::startup()", myQuickIndex);
+		myButton->Init(800, 600, 50, 110, 125, 50,"../../bitmap/Button1.bmp");
+		myButton2->Init(800, 600, 50, 50, 125, 50, "../../bitmap/Button2.bmp");
 
+
+		bool left = FALSE;
+		bool right = FALSE;
         do
         {
+			if (!left) {
+				left = TRUE;
+				WinLog(L"application::while()", myQuickIndex);
+			}
+				
             render(glfwGetTime());
+			myButton->Render(glfwGetTime());
+			myButton2->Render(glfwGetTime());
 
             glfwSwapBuffers();
 
+			//WinLog(L"running", myQuickIndex);
             running &= (glfwGetKey( GLFW_KEY_ESC ) == GLFW_RELEASE);
             running &= (glfwGetWindowParam( GLFW_OPENED ) != GL_FALSE);
+			
+
         } while(running);
 
-        shutdown();
+			glfwTerminate();
 
-        glfwTerminate();
+		delete myButton;
+		delete myButton2;
+
     }
 
     virtual void init()
@@ -248,9 +286,10 @@ public:
 #endif /* _WIN32 */
     }
 
+
     static void getMousePosition(int& x, int& y)
     {
-        glfwGetMousePos(&x, &y);
+
     }
 
 public:
@@ -291,13 +330,30 @@ protected:
         app->onKey(key, action);
     }
 
+	static void myButtonEvent() {
+		WinLog(L"myButton Event executed");
+	}
+	static void myButton2Event() {
+		WinLog(L"myButton2 Event executed");
+	}
+
     static void GLFWCALL glfw_onMouseButton(int button, int action)
     {
         app->onMouseButton(button, action);
+			
+		//Button 1
+		if(myButton->onMouseButton(button, action))
+			myButtonEvent();
+
+		//Button 2
+		if(myButton2->onMouseButton(button, action))
+			myButton2Event();
     }
 
     static void GLFWCALL glfw_onMouseMove(int x, int y)
     {
+		myButton->CheckArea(x, y);
+		myButton2->CheckArea(x, y);
         app->onMouseMove(x, y);
     }
 
@@ -324,7 +380,11 @@ protected:
     }
 };
 
+
+
 };
+
+
 
 #if defined _WIN32
 #define DECLARE_MAIN(a)                             \
