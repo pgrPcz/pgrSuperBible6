@@ -349,6 +349,7 @@ void Button::Render(double currentTime) {
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 
+	//This is optional drawcall
 	//When using given draw calls there is memory access violation (why?):
 	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT,0);
 	//glDrawElementsInstancedBaseInstance(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0, 1, 0);
