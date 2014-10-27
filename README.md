@@ -18,3 +18,13 @@ Najwazniejsze nowe pliki i te w ktorych dokonalem zmainy to:
     include/sb6ktx.h
 
 wypisalem je zeby nie szukac bo niechcacy zaladowalem pelno smieci z msvs(*.ilk,*.obj,* itp.)
+
+****************************************
+Do listy rozwijane dodalem/zmienilem nastepujace pliki:
+
+	bitmap/DropDownList.bmp
+	src/sb6/dropDownList.cpp
+	src/sb6/sb6.cpp
+    include/dropDownList.h
+    include/sb6.h
+	
