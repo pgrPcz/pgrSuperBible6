@@ -68,6 +68,7 @@
 
 
 #include "button.h"
+#include "dropDownList.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -93,6 +94,9 @@ public:
 
 	static Button* myButton;
 	static Button* myButton2;
+
+	static DropDownList* myDDList;
+
 
     application() {
 		
@@ -180,8 +184,11 @@ public:
         startup();
 		WinLog(L"application::startup()", myQuickIndex);
 		myButton->Init(800, 600, 50, 110, 125, 50,"../../bitmap/Button1.bmp");
-		myButton2->Init(800, 600, 50, 50, 125, 50, "../../bitmap/Button2.bmp");
-
+		WinLog(L"btn1\n");
+		myButton2->Init(800, 600, 50, 50, 225, 50, "../../bitmap/Button2.bmp");
+		WinLog(L"btn2\n");
+		myDDList->Init(800, 600, 50, 170, 150, 50,"../../bitmap/DropDownList1.bmp",5);
+		WinLog(L"btn3\n");
 
 		bool left = FALSE;
 		bool right = FALSE;
@@ -192,9 +199,14 @@ public:
 				WinLog(L"application::while()", myQuickIndex);
 			}
 				
+			//WinLog(L"application::whilee()", myQuickIndex);
+
             render(glfwGetTime());
+
 			myButton->Render(glfwGetTime());
 			myButton2->Render(glfwGetTime());
+
+			myDDList->Render(glfwGetTime());
 
             glfwSwapBuffers();
 
@@ -205,10 +217,13 @@ public:
 
         } while(running);
 
+		WinLog(L"after while", 0);
+
 			glfwTerminate();
 
 		delete myButton;
 		delete myButton2;
+		delete myDDList;
 
     }
 
@@ -221,8 +236,8 @@ public:
         info.majorVersion = 3;
         info.minorVersion = 2;
 #else
-        info.majorVersion = 3;//4; adatczuk
-        info.minorVersion = 3;
+        info.majorVersion = 4;//4; adatczuk
+        info.minorVersion = 0;
 #endif
         info.samples = 0;
         info.flags.all = 0;
@@ -331,10 +346,13 @@ protected:
     }
 
 	static void myButtonEvent() {
-		WinLog(L"myButton Event executed");
+		WinLog(L"myButton Event executed",1);
 	}
 	static void myButton2Event() {
-		WinLog(L"myButton2 Event executed");
+		WinLog(L"myButton2 Event executed",2);
+	}
+	static void myDDList2Event() {
+		WinLog(L"DropDownIndex changed to ", myDDList->GetCurrentElement());
 	}
 
     static void GLFWCALL glfw_onMouseButton(int button, int action)
@@ -348,12 +366,17 @@ protected:
 		//Button 2
 		if(myButton2->onMouseButton(button, action))
 			myButton2Event();
+
+		//DropDownList
+		if (myDDList->onMouseButton(button, action))
+			myDDList2Event();
     }
 
     static void GLFWCALL glfw_onMouseMove(int x, int y)
     {
 		myButton->CheckArea(x, y);
 		myButton2->CheckArea(x, y);
+		myDDList->CheckArea(x, y);
         app->onMouseMove(x, y);
     }
 

@@ -1,5 +1,4 @@
 #include "../../include/button.h"
-#include <fstream>
 
 Button::Button():
 	winWidth(0),
@@ -108,32 +107,7 @@ void Button::generate_texture(float * data, int width, int height) {
 	}
 }
 
-static const GLfloat vertex_positions[] =
-{
-	-0.5f, 0.5f, 0,
-	-0.5f, -0.5f, 0,
-	0.5f, -0.5f, 0,
-	0.5f, -0.5f, 0,
-	0.5f, 0.5f, 0,
-	-0.5f, 0.5f, 0,
-};
 
-static const GLfloat tex_coords_pos[] =
-{
-	0.0f, 1.0f,
-	0.0f, 0.0f,
-	1.0f, 0.0f,
-	1.0f, 0.0f,
-	1.0f, 1.0f,
-	0.0f, 1.0f,
-};
-
-
-static const GLushort vertex_indices[] =
-{
-	0, 1, 2,
-	2, 4, 0
-};
 
 void Button::Init(int winW, int winH, float posX, float posY, int btnWidth, int btnHeight, const char * bitmap) {
 
@@ -157,6 +131,32 @@ void Button::Init(int winW, int winH, float posX, float posY, int btnWidth, int 
 	width /= winWidth;
 	height /= winHeight;
 
+	static const GLfloat vertex_positions[] =
+	{
+		-0.5f, 0.5f, 0,
+		-0.5f, -0.5f, 0,
+		0.5f, -0.5f, 0,
+		0.5f, -0.5f, 0,
+		0.5f, 0.5f, 0,
+		-0.5f, 0.5f, 0,
+	};
+
+	static const GLfloat tex_coords_pos[] =
+	{
+		0.0f, 1.0f,
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+	};
+
+
+	static const GLushort vertex_indices[] =
+	{
+		0, 1, 2,
+		2, 4, 0
+	};
 
 	static const char * vs_source[] =
 	{
@@ -258,14 +258,13 @@ void Button::Init(int winW, int winH, float posX, float posY, int btnWidth, int 
 
 }
 
-float * data;
+
 
 GLuint Button::LoadBMPTexture(const char * imagepath) {
 
 
 	unsigned char header[54]; // Each BMP file begins by a 54-bytes header
 	unsigned int dataPos;     // Position in the file where the actual data begins
-	unsigned int width, height;
 	unsigned int imageSize;   // = width*height*3
 	// Actual RGB data
 	
@@ -298,17 +297,18 @@ GLuint Button::LoadBMPTexture(const char * imagepath) {
 	fileHeight = *(int*)&(header[0x16]);
 
 	// Some BMP files are misformatted, guess missing information
-	if (imageSize == 0)    imageSize = width*height * 3; // 3 : one byte for each Red, Green and Blue component
+	if (imageSize == 0)    imageSize = fileWidth*fileHeight * 3; // 3 : one byte for each Red, Green and Blue component
 	if (dataPos == 0)      dataPos = 54; // The BMP header is done that way
 
 	textureData = new unsigned char[imageSize];
-
+	
 	// Read the actual data from the file into the buffer
 	fread(textureData, 1, imageSize, file);
 
 	//Everything is in memory now, the file can be closed
 	fclose(file);
 
+	float * data;
 	// Define some data to upload into the texture
 	data = new float[fileWidth * fileHeight * 4];
 
@@ -321,7 +321,7 @@ GLuint Button::LoadBMPTexture(const char * imagepath) {
 	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, fileWidth, fileHeight, 0, GL_BGR, GL_UNSIGNED_BYTE, textureData);
 
 	glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGB16, fileWidth, fileHeight);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 0);
+	//glPixelStorei(GL_UNPACK_ALIGNMENT, 0);
 	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, fileWidth, fileHeight, GL_BGR, GL_UNSIGNED_BYTE, textureData);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);

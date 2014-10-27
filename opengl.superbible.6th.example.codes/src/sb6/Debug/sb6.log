@@ -1,4 +1,4 @@
-﻿Build started 10/20/2014 7:27:46 PM.
+﻿Build started 10/27/2014 7:25:12 PM.
      1>Project "C:\Users\mlaboszc\Documents\Visual Studio 2013\Projects\pgrSuperBible6\opengl.superbible.6th.example.codes\src\sb6\sb6.vcxproj" on node 2 (Build target(s)).
      1>Lib:
          sb6.vcxproj -> C:\Users\mlaboszc\Documents\Visual Studio 2013\Projects\pgrSuperBible6\opengl.superbible.6th.example.codes\lib\sb6_d32.lib
@@ -6,4 +6,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.18
+Time Elapsed 00:00:00.14

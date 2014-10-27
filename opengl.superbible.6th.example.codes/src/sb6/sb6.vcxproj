@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="button.cpp" />
+    <ClCompile Include="dropDownList.cpp" />
     <ClCompile Include="gl3w.c" />
     <ClCompile Include="sb6.cpp" />
     <ClCompile Include="sb6ktx.cpp" />

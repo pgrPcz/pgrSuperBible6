@@ -1,12 +1,12 @@
 #ifndef __BUTTON_H__
 #define __BUTTON_H__
 
-
 #include "GL/gl3w.h"
 #include "GL/glfw.h"
 #include "sb6ext.h"
 #include <vmath.h>
 #include <stdio.h>
+#include <fstream>
 
 
 
@@ -15,21 +15,22 @@ public:
 	Button();
 	~Button();
 
-	void WinLog(const wchar_t *text, int n );
-	GLuint LoadBMPTexture(const char * imagepath);
-	void generate_texture(float * data, int width, int height);
-
 	void Init(int winW, int winH, float x, float y, int width, int hight, const char * bitmap);
 	void Render(double currentTime);
 	void ShoutDown();
 
+	bool CheckArea(int x, int y);
+	bool onMouseButton(int a, int b);
+
+private:
+	void WinLog(const wchar_t *text, int n );
+	GLuint LoadBMPTexture(const char * imagepath);
+	void generate_texture(float * data, int width, int height);
+
 	void SetProjMat(int w, int h);
 	void SetWinSize(int w, int h);
 
-	bool CheckArea(int x, int y);
 	void SetColor(bool mouseStatus);
-	bool onMouseButton(int a, int b);
-private:
 
 	int winWidth, winHeight;
 	float width, height;
@@ -65,4 +66,4 @@ private:
 };
 
 
-#endif /* __SB6EXT_H__ */
+#endif /* __BUTTON_H__ */

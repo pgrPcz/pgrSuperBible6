@@ -28,6 +28,7 @@
 sb6::application * sb6::application::app = 0;
 Button* sb6::application::myButton = new Button();
 Button* sb6::application::myButton2 = new Button();
+DropDownList* sb6::application::myDDList = new DropDownList();
 
 #include <GL/glext.h>
 

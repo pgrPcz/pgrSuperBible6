@@ -1,13 +1,9 @@
-﻿Build started 10/20/2014 7:27:14 PM.
+﻿Build started 10/27/2014 7:25:09 PM.
      1>Project "C:\Users\mlaboszc\Documents\Visual Studio 2013\Projects\pgrSuperBible6\opengl.superbible.6th.example.codes\build\vs2010\win32raw.vcxproj" on node 3 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"win32raw_Debug\\" /Fd"win32raw_Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\src\win32raw\win32raw.cpp
-         win32raw.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\mlaboszc\Documents\Visual Studio 2013\Projects\pgrSuperBible6\opengl.superbible.6th.example.codes\bin\win32raw_dbg.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\mlaboszc\Documents\Visual Studio 2013\Projects\pgrSuperBible6\opengl.superbible.6th.example.codes\bin\win32raw_dbg.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\mlaboszc\Documents\Visual Studio 2013\Projects\pgrSuperBible6\opengl.superbible.6th.example.codes\bin\win32raw_dbg.lib" /MACHINE:X86 win32raw_Debug\win32raw.obj
+     1>Link:
          win32raw.vcxproj -> C:\Users\mlaboszc\Documents\Visual Studio 2013\Projects\pgrSuperBible6\opengl.superbible.6th.example.codes\bin\win32raw_dbg.exe
      1>Done Building Project "C:\Users\mlaboszc\Documents\Visual Studio 2013\Projects\pgrSuperBible6\opengl.superbible.6th.example.codes\build\vs2010\win32raw.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.69
+Time Elapsed 00:00:00.95

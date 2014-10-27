@@ -6,6 +6,7 @@
     <ClCompile Include="sb6shader.cpp" />
     <ClCompile Include="gl3w.c" />
     <ClCompile Include="sb6.cpp" />
+    <ClCompile Include="dropDownList.cpp" />
     <ClCompile Include="button.cpp" />
   </ItemGroup>
 </Project>
