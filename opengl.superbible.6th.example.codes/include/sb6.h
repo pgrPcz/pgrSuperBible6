@@ -68,6 +68,7 @@
 
 
 #include "button.h"
+#include "checkBox.h"
 #include "dropDownList.h"
 
 #include <stdio.h>
@@ -94,6 +95,7 @@ public:
 
 	static Button* myButton;
 	static Button* myButton2;
+	static CheckBox* myCheckBox;
 
 	static DropDownList* myDDList;
 
@@ -187,6 +189,9 @@ public:
 		WinLog(L"btn1\n");
 		myButton2->Init(800, 600, 50, 50, 225, 50, "../../bitmap/Button2.bmp");
 		WinLog(L"btn2\n");
+		myCheckBox->Init(800, 600, 50, 250, 20, 20, "../../bitmap/CheckBoxUnchecked.bmp");
+		WinLog(L"chb\n");
+
 		myDDList->Init(800, 600, 50, 170, 150, 50,"../../bitmap/DropDownList1.bmp",5);
 		WinLog(L"btn3\n");
 
@@ -205,6 +210,7 @@ public:
 
 			myButton->Render(glfwGetTime());
 			myButton2->Render(glfwGetTime());
+			myCheckBox->Render(glfwGetTime());
 
 			myDDList->Render(glfwGetTime());
 
@@ -223,6 +229,7 @@ public:
 
 		delete myButton;
 		delete myButton2;
+		delete myCheckBox;
 		delete myDDList;
 
     }
@@ -351,6 +358,9 @@ protected:
 	static void myButton2Event() {
 		WinLog(L"myButton2 Event executed",2);
 	}
+	static void myCheckBoxEvent() {
+		WinLog(L"myCheckBox Event executed", 3);
+	}
 	static void myDDList2Event() {
 		WinLog(L"DropDownIndex changed to ", myDDList->GetCurrentElement());
 	}
@@ -367,6 +377,10 @@ protected:
 		if(myButton2->onMouseButton(button, action))
 			myButton2Event();
 
+		//CheckBox
+		if (myCheckBox->onMouseButton(button, action))
+			myCheckBoxEvent();
+
 		//DropDownList
 		if (myDDList->onMouseButton(button, action))
 			myDDList2Event();
@@ -376,6 +390,7 @@ protected:
     {
 		myButton->CheckArea(x, y);
 		myButton2->CheckArea(x, y);
+		myCheckBox->CheckArea(x, y);
 		myDDList->CheckArea(x, y);
         app->onMouseMove(x, y);
     }

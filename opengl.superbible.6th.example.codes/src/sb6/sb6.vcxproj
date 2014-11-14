@@ -12,12 +12,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="button.cpp" />
+    <ClCompile Include="checkBox.cpp" />
     <ClCompile Include="dropDownList.cpp" />
     <ClCompile Include="gl3w.c" />
     <ClCompile Include="sb6.cpp" />
     <ClCompile Include="sb6ktx.cpp" />
     <ClCompile Include="sb6object.cpp" />
     <ClCompile Include="sb6shader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="sb6.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{ADDFF1E2-C5D4-4217-A5B3-96ECED2C3584}</ProjectGuid>

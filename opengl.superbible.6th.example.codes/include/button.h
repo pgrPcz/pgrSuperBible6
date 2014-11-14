@@ -21,25 +21,17 @@ public:
 
 	bool CheckArea(int x, int y);
 	bool onMouseButton(int a, int b);
-
+	
 private:
 	void WinLog(const wchar_t *text, int n );
-	GLuint LoadBMPTexture(const char * imagepath);
 	void generate_texture(float * data, int width, int height);
 
 	void SetProjMat(int w, int h);
 	void SetWinSize(int w, int h);
 
-	void SetColor(bool mouseStatus);
-
 	int winWidth, winHeight;
 	float width, height;
 	float x, y;
-
-	int iwidth, iheight;
-	int ix, iy;
-
-	int mousePosX, mousePosY;
 
 	const char * TexturePath;
 	unsigned char * textureData;
@@ -61,8 +53,15 @@ private:
 
 	float           aspect;
 	vmath::mat4     proj_matrix;
-	vmath::vec4		color;
 
+protected:
+	int mousePosX, mousePosY;
+	int ix, iy;
+	int iwidth, iheight;
+	vmath::vec4 color;
+
+	void SetColor(bool mouseStatus);
+	GLuint LoadBMPTexture(const char * imagepath);
 };
 
 
