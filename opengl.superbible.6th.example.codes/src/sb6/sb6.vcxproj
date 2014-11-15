@@ -15,10 +15,12 @@
     <ClCompile Include="checkBox.cpp" />
     <ClCompile Include="dropDownList.cpp" />
     <ClCompile Include="gl3w.c" />
+    <ClCompile Include="label.cpp" />
     <ClCompile Include="sb6.cpp" />
     <ClCompile Include="sb6ktx.cpp" />
     <ClCompile Include="sb6object.cpp" />
     <ClCompile Include="sb6shader.cpp" />
+    <ClCompile Include="TextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
