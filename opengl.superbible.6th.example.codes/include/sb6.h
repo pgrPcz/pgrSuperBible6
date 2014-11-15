@@ -71,6 +71,7 @@
 #include "checkBox.h"
 #include "dropDownList.h"
 #include "panel.h"
+#include "tabPanel.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -98,13 +99,13 @@ public:
 	static Button* myButton2;
 	static CheckBox* myCheckBox;
 	static Panel* myPanel;
-
+	static TabPanel* myTabPanel;
 	static DropDownList* myDDList;
 
 
     application() {
 		
-
+		//myTabPanel = new TabPanel();
 		myQuickIndex=myAppIndex++;
 
 	}
@@ -187,9 +188,11 @@ public:
 
         startup();
 		WinLog(L"application::startup()", myQuickIndex);
+		myTabPanel->Init();
+		WinLog(L"TabPanel\n");
 		myPanel->Init(800, 600, 30, 30, 400, 400, "../../bitmap/panel2.bmp");
 		WinLog(L"Panel\n");
-		myButton->Init(800, 600, 50, 110, 125, 50,"../../bitmap/Button1.bmp");
+		myButton->Init(800, 600, 30, 10, 50, 20,"../../bitmap/panelPage1.bmp");
 		WinLog(L"btn1\n");
 		myButton2->Init(800, 600, 50, 50, 225, 50, "../../bitmap/Button2.bmp");
 		WinLog(L"btn2\n");
@@ -213,13 +216,16 @@ public:
 			//WinLog(L"application::whilee()", myQuickIndex);
 
             render(glfwGetTime());
-			myPanel->Render(glfwGetTime());
-			myButton->Render(glfwGetTime());
-			myButton2->Render(glfwGetTime());
-			myCheckBox->Render(glfwGetTime());
+			
+			//myTabPanel->buttonPage1.Render(glfwGetTime());
+			//myPanel->Render(glfwGetTime());
+			//myButton->Render(glfwGetTime());
+			//myButton2->Render(glfwGetTime());
+			//myCheckBox->Render(glfwGetTime());
 			
 
-			myDDList->Render(glfwGetTime());
+			//myDDList->Render(glfwGetTime());
+			myTabPanel->Render(glfwGetTime());
 
             glfwSwapBuffers();
 
@@ -239,6 +245,7 @@ public:
 		delete myCheckBox;
 		delete myDDList;
 		delete myPanel;
+		delete myTabPanel;
 
     }
 
@@ -392,9 +399,12 @@ protected:
 		//CheckBox
 		if (myCheckBox->onMouseButton(button, action))
 			myCheckBoxEvent();
-		//Panel
-		if (myPanel->onMouseButton(button, action))
-			myPanelEvent();
+		//TabPanel
+		myTabPanel->CheckClickedButton(button, action);
+		//if (btnTesselation)
+		//	myTesselationEvent();
+
+			//myPanelEvent();
 
 		//DropDownList
 		if (myDDList->onMouseButton(button, action))
@@ -403,6 +413,9 @@ protected:
 
     static void GLFWCALL glfw_onMouseMove(int x, int y)
     {
+		//myTabPanel->buttonPage1.CheckArea(x, y);
+		//myTabPanel->panelPage1.CheckArea(x, y);
+		myTabPanel->CheckArea(x, y);
 		myButton->CheckArea(x, y);
 		myButton2->CheckArea(x, y);
 		myCheckBox->CheckArea(x, y);

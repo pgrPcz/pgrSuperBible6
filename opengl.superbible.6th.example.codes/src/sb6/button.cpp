@@ -26,7 +26,7 @@ Button::Button():
 	tex_object(0),
 	TexturePath(0)
 {
-
+	color = vmath::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 }
 Button::~Button() {
 	ShoutDown();
@@ -344,6 +344,9 @@ void Button::Render(double currentTime) {
 	vmath::mat4 mv_matrix = m1*m2*m3;
 
 	glUniformMatrix4fv(mv_location, 1, GL_FALSE, mv_matrix);
+	//vmath::vec4 c(1, 1, 1, 1);
+	//color = color + c;
+	
 
 	glUniform4fv(btnColor, 1, color);
 

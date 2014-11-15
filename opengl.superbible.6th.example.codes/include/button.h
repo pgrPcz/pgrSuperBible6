@@ -21,7 +21,8 @@ public:
 
 	bool CheckArea(int x, int y);
 	bool onMouseButton(int a, int b);
-	
+	void SetColor(bool mouseStatus);
+
 private:
 	void WinLog(const wchar_t *text, int n );
 	void generate_texture(float * data, int width, int height);
@@ -60,7 +61,6 @@ protected:
 	int iwidth, iheight;
 	vmath::vec4 color;
 
-	void SetColor(bool mouseStatus);
 	GLuint LoadBMPTexture(const char * imagepath);
 };
 

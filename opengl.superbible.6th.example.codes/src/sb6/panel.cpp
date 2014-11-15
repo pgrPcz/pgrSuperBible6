@@ -10,16 +10,6 @@ Panel::~Panel()
 	Button::ShoutDown();
 }
 
-//bool Panel::CheckArea(int x, int y)
-//{
-//	return false;
-//}
-//
-//bool Panel::onMouseButton(int a, int b)
-//{
-//	return false;
-//}
-
 bool Panel::CheckArea(int posX, int posY) {
 
 	mousePosX = posX;
