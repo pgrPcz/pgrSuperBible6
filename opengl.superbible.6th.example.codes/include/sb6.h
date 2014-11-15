@@ -70,6 +70,7 @@
 #include "button.h"
 #include "checkBox.h"
 #include "dropDownList.h"
+#include "panel.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -96,6 +97,7 @@ public:
 	static Button* myButton;
 	static Button* myButton2;
 	static CheckBox* myCheckBox;
+	static Panel* myPanel;
 
 	static DropDownList* myDDList;
 
@@ -185,15 +187,19 @@ public:
 
         startup();
 		WinLog(L"application::startup()", myQuickIndex);
+		myPanel->Init(800, 600, 30, 30, 400, 400, "../../bitmap/panel2.bmp");
+		WinLog(L"Panel\n");
 		myButton->Init(800, 600, 50, 110, 125, 50,"../../bitmap/Button1.bmp");
 		WinLog(L"btn1\n");
 		myButton2->Init(800, 600, 50, 50, 225, 50, "../../bitmap/Button2.bmp");
 		WinLog(L"btn2\n");
-		myCheckBox->Init(800, 600, 50, 250, 20, 20, "../../bitmap/CheckBoxUnchecked.bmp");
+		myCheckBox->Init(800, 600, 50, 120, 20, 20, "../../bitmap/CheckBoxUnchecked.bmp");
 		WinLog(L"chb\n");
-
-		myDDList->Init(800, 600, 50, 170, 150, 50,"../../bitmap/DropDownList1.bmp",5);
+		myDDList->Init(800, 600, 50, 170, 150, 50, "../../bitmap/DropDownList1.bmp", 5);
 		WinLog(L"btn3\n");
+		
+
+		
 
 		bool left = FALSE;
 		bool right = FALSE;
@@ -207,10 +213,11 @@ public:
 			//WinLog(L"application::whilee()", myQuickIndex);
 
             render(glfwGetTime());
-
+			myPanel->Render(glfwGetTime());
 			myButton->Render(glfwGetTime());
 			myButton2->Render(glfwGetTime());
 			myCheckBox->Render(glfwGetTime());
+			
 
 			myDDList->Render(glfwGetTime());
 
@@ -231,6 +238,7 @@ public:
 		delete myButton2;
 		delete myCheckBox;
 		delete myDDList;
+		delete myPanel;
 
     }
 
@@ -352,6 +360,7 @@ protected:
         app->onKey(key, action);
     }
 
+	
 	static void myButtonEvent() {
 		WinLog(L"myButton Event executed",1);
 	}
@@ -360,6 +369,9 @@ protected:
 	}
 	static void myCheckBoxEvent() {
 		WinLog(L"myCheckBox Event executed", 3);
+	}
+	static void myPanelEvent() {
+		WinLog(L"myPanel Event executed", 4);
 	}
 	static void myDDList2Event() {
 		WinLog(L"DropDownIndex changed to ", myDDList->GetCurrentElement());
@@ -380,6 +392,9 @@ protected:
 		//CheckBox
 		if (myCheckBox->onMouseButton(button, action))
 			myCheckBoxEvent();
+		//Panel
+		if (myPanel->onMouseButton(button, action))
+			myPanelEvent();
 
 		//DropDownList
 		if (myDDList->onMouseButton(button, action))
@@ -391,6 +406,7 @@ protected:
 		myButton->CheckArea(x, y);
 		myButton2->CheckArea(x, y);
 		myCheckBox->CheckArea(x, y);
+		myPanel->CheckArea(x, y);
 		myDDList->CheckArea(x, y);
         app->onMouseMove(x, y);
     }

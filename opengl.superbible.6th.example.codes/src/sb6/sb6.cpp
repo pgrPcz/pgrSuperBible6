@@ -30,6 +30,7 @@ Button* sb6::application::myButton = new Button();
 Button* sb6::application::myButton2 = new Button();
 CheckBox* sb6::application::myCheckBox = new CheckBox();
 DropDownList* sb6::application::myDDList = new DropDownList();
+Panel* sb6::application::myPanel = new Panel();
 
 #include <GL/glext.h>
 
