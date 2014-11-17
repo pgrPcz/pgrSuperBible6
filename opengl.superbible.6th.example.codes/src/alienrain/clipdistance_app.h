@@ -122,6 +122,18 @@ public:
 		m_camera = new camera(this);
 
         memcpy(info.title, title, sizeof(title));
+
+		/*
+		map<string ,map<string ,string>> base;
+		base[string("material_properties")][string("diffuse_albedo")] = "0.1, 0.1, 0.9";
+		m_xml_helper->saveGuiState(&base, this);
+
+		reloadXml();
+		*/
+
+		/*
+		m_xml_helper->getGuiState(this);
+		*/
     }
 
     void startup();

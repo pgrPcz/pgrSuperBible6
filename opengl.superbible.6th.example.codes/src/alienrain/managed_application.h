@@ -15,11 +15,23 @@ public:
 	managed_application(application_manager * am) 
 	{
 		m_app_manager = am;
+		m_xml_helper = new xml_helper();
+	}
+
+	void reloadXml() 
+	{
+		m_xml_helper->loadXml(this);
+	}
+
+	void saveXml() 
+	{
+		m_xml_helper->saveXml(this);
 	}
 
 
 protected:
 	application_manager * m_app_manager;
+	xml_helper * m_xml_helper;
 
 };
 
@@ -32,13 +44,10 @@ protected:
 	int mCurrentIndex;
 	managed_application * m_current_app;
 
-	xml_helper * m_xml_helper;
-
 public:
 
 	void init(managed_application * apps[], int apps_length) 
 	{
-		m_xml_helper = new xml_helper();
 		m_apps = apps;
 		m_apps_length = apps_length;
 		switchApp(0);
@@ -64,7 +73,7 @@ public:
 		mCurrentIndex = index;
 		m_current_app = m_apps[mCurrentIndex];
 
-		m_xml_helper->loadXml(m_current_app);
+		m_current_app->reloadXml();
 		m_current_app->run(m_current_app);
 	}
 

@@ -29,6 +29,8 @@ using namespace std;
 
 #include <string>
 #include <vector>
+#include <map>
+
 #include "xml_helper.h"
 #include "camera.h"
 #include "managed_application.h"
