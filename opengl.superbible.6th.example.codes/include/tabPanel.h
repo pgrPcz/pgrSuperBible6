@@ -3,6 +3,7 @@
 #include "panel.h"
 #include "checkBox.h"
 #include "label.h"
+#include "dropDownList.h"
 
 class TabPanel
 {
@@ -17,6 +18,7 @@ public:
 	Button* btnMenu2;
 	CheckBox* cbOpt1;
 	Label* labelTest;
+	DropDownList* dropDownListTest;
 
 	TabPanel();
 	~TabPanel();

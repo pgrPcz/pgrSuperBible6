@@ -161,7 +161,7 @@ void DropDownList::generate_texture(float * data, int width, int height) {
 }
 
 
-static const GLfloat vertex_positions[] =
+static const GLfloat vertex_positions2[] =
 {
 	-0.5f, 0.5f, 0,
 	-0.5f, -0.5f, 0,
@@ -171,7 +171,7 @@ static const GLfloat vertex_positions[] =
 	-0.5f, 0.5f, 0,
 };
 
-static GLfloat tex_coords_pos[] =
+static GLfloat tex_coords_pos2[] =
 {
 	0.0f, 1.0f,
 	0.0f, 0.0f,
@@ -182,11 +182,11 @@ static GLfloat tex_coords_pos[] =
 	0.0f, 1.0f,
 };
 
-static const GLushort vertex_indices[] =
-{
-	0, 1, 2,
-	2, 4, 0
-};
+//static const GLushort vertex_indices[] =
+//{
+//	0, 1, 2,
+//	2, 4, 0
+//};
 
 void DropDownList::Init(int winW, int winH, float posX, float posY, int btnWidth, int btnHeight, const char * bitmap, int numOfElementsInList) {
 
@@ -293,7 +293,7 @@ void DropDownList::Init(int winW, int winH, float posX, float posY, int btnWidth
 	//vertecies
 	glGenBuffers(1, &positionBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_positions), vertex_positions, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_positions2), vertex_positions2, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(0);
 
@@ -307,7 +307,7 @@ void DropDownList::Init(int winW, int winH, float posX, float posY, int btnWidth
 	//texture vertecies
 	glGenBuffers(1, &texCoordBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords_pos), tex_coords_pos, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords_pos2), tex_coords_pos2, GL_STATIC_DRAW);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(1);
 
@@ -378,8 +378,9 @@ GLuint DropDownList::LoadBMPTexture(const char * imagepath) {
 	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, fileWidth, fileHeight, 0, GL_BGR, GL_UNSIGNED_BYTE, textureData);
 
 	glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGB16, fileWidth, fileHeight);
-	//glPixelStorei(GL_UNPACK_ALIGNMENT, 0);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 0);
 	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, fileWidth, fileHeight, GL_BGR, GL_UNSIGNED_BYTE, textureData);
+
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
@@ -387,27 +388,27 @@ GLuint DropDownList::LoadBMPTexture(const char * imagepath) {
 
 void DropDownList::ChangeToElement(int index) {
 
-	tex_coords_pos[1] = 1.0f;
-	tex_coords_pos[3] = 1.0f;
-	tex_coords_pos[5] = 1.0f;
-	tex_coords_pos[7] = 1.0f;
-	tex_coords_pos[9] = 1.0f;
-	tex_coords_pos[11] = 1.0f;
+	tex_coords_pos2[1] = 1.0f;
+	tex_coords_pos2[3] = 1.0f;
+	tex_coords_pos2[5] = 1.0f;
+	tex_coords_pos2[7] = 1.0f;
+	tex_coords_pos2[9] = 1.0f;
+	tex_coords_pos2[11] = 1.0f;
 
 	offsetValue = float(1) / (float)numOfElements;
 
-	tex_coords_pos[3] -= offsetValue;
-	tex_coords_pos[5] -= offsetValue;
-	tex_coords_pos[7] -= offsetValue;
+	tex_coords_pos2[3] -= offsetValue;
+	tex_coords_pos2[5] -= offsetValue;
+	tex_coords_pos2[7] -= offsetValue;
 
 	offsetValue = float(index) / (float)numOfElements;
 
-	tex_coords_pos[1] -= offsetValue;
-	tex_coords_pos[3] -= offsetValue;
-	tex_coords_pos[5] -= offsetValue;
-	tex_coords_pos[7] -= offsetValue;
-	tex_coords_pos[9] -= offsetValue;
-	tex_coords_pos[11] -= offsetValue;
+	tex_coords_pos2[1] -= offsetValue;
+	tex_coords_pos2[3] -= offsetValue;
+	tex_coords_pos2[5] -= offsetValue;
+	tex_coords_pos2[7] -= offsetValue;
+	tex_coords_pos2[9] -= offsetValue;
+	tex_coords_pos2[11] -= offsetValue;
 }
 void DropDownList::Render(double currentTime) {
 
@@ -424,17 +425,16 @@ void DropDownList::Render(double currentTime) {
 	m2 = vmath::translate(2*(x+width/2)-1, 1-2*(y+height/2), 0.0f);
 	m3 = vmath::scale(2 * width, 2 * height, 0.0f);
 
-
 	//WinLog(L"dropDownlist render");
 
 	if (insideWholeArea || insideBtnArea) {
 		//mouse over
-		tex_coords_pos[1] = 1.0f;
-		tex_coords_pos[3] = 0.0f;
-		tex_coords_pos[5] = 0.0f;
-		tex_coords_pos[7] = 0.0f;
-		tex_coords_pos[9] = 1.0f;
-		tex_coords_pos[11] = 1.0f;
+		tex_coords_pos2[1] = 1.0f;
+		tex_coords_pos2[3] = 0.0f;
+		tex_coords_pos2[5] = 0.0f;
+		tex_coords_pos2[7] = 0.0f;
+		tex_coords_pos2[9] = 1.0f;
+		tex_coords_pos2[11] = 1.0f;
 
 		m2 = vmath::translate(2 * (x + width / 2) - 1, (1 - 2 * (y + height / 2)) - ((numOfElements-1)*height), 0.0f);
 		m3 = vmath::scale(2 * width, numOfElements*(2 * height), 0.0f);
@@ -449,7 +449,7 @@ void DropDownList::Render(double currentTime) {
 	}
 		
 	glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords_pos), tex_coords_pos, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords_pos2), tex_coords_pos2, GL_STATIC_DRAW);
 	glUniformMatrix4fv(mv_location, 1, GL_FALSE, m1*m2*m3);
 	glUniform4fv(btnColor, 1, color);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -466,7 +466,7 @@ void DropDownList::Render(double currentTime) {
 
 		ChangeToElement(currentElement);
 		glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords_pos), tex_coords_pos, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords_pos2), tex_coords_pos2, GL_STATIC_DRAW);
 		color = vmath::vec4(0.2f, 0.2f, 0.8f, 0.0f);
 		glUniform4fv(btnColor, 1, color);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -478,7 +478,7 @@ void DropDownList::Render(double currentTime) {
 
 		ChangeToElement(activeElement);
 		glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords_pos), tex_coords_pos, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords_pos2), tex_coords_pos2, GL_STATIC_DRAW);
 
 		if (btnClicked) {
 			color = vmath::vec4(0.2f, 0.8f, 0.3f, 0.0f);
