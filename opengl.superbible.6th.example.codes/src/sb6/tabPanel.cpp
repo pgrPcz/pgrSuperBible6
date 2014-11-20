@@ -28,7 +28,7 @@ TabPanel::~TabPanel()
 
 void TabPanel::Init()
 {
-	buttonPage1->Init(800, 600, 30, 10, 50, 20, "../../bitmap/panelPage1.bmp");
+	buttonPage1->Init(800, 600, 10, 10, 50, 20, "../../bitmap/panelPage1.bmp");
 	panelPage1->Init(800, 600, 30, 30, 400, 400, "../../bitmap/panel2.bmp");
 	buttonPage2->Init(800, 600, 80, 10, 50, 20, "../../bitmap/panelPage2.bmp");
 	btnMenu1->Init(800, 600, 50, 50, 50, 20, "../../bitmap/Button1.bmp");
