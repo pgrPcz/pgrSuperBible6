@@ -166,8 +166,6 @@ public:
         glBindVertexArray(render_vao);
     }
 
-	
-
     void render(double currentTime)
     {
 		m_camera->onRender(currentTime);

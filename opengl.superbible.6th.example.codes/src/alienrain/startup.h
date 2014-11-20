@@ -6,7 +6,7 @@
 	#endif
 #endif
 
-#include "tinyxml2.h"
+//#include "tinyxml2.h"
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
@@ -24,14 +24,18 @@
 	#include <sys/stat.h>	// mkdir
 #endif
 
-using namespace tinyxml2;
+//using namespace tinyxml2;
 using namespace std;
 
 #include <string>
 #include <vector>
+<<<<<<< HEAD
 #include <map>
 
 #include "xml_helper.h"
+=======
+//#include "xml_helper.h"
+>>>>>>> temp commit
 #include "camera.h"
 #include "managed_application.h"
 

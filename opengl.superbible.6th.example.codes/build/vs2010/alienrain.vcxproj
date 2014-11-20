@@ -16,6 +16,7 @@
     <ClInclude Include="..\..\src\alienrain\camera.h" />
     <ClInclude Include="..\..\src\alienrain\clipdistance_app.h" />
     <ClInclude Include="..\..\src\alienrain\managed_application.h" />
+    <ClInclude Include="..\..\src\alienrain\scene_object.h" />
     <ClInclude Include="..\..\src\alienrain\startup.h" />
     <ClInclude Include="..\..\src\alienrain\tessellatedtri.h" />
     <ClInclude Include="..\..\src\alienrain\tinyxml2.h" />
@@ -23,6 +24,8 @@
     <ClInclude Include="..\..\src\alienrain\xml_helper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\alienrain\managed_application.cpp" />
+    <ClCompile Include="..\..\src\alienrain\scene_object.cpp" />
     <ClCompile Include="..\..\src\alienrain\startup.cpp" />
     <ClCompile Include="..\..\src\alienrain\tinyxml2.cpp" />
   </ItemGroup>
@@ -37,7 +40,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>

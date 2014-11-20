@@ -1,19 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="..\..\src\alienrain\blinnphong_app.h" />
-    <ClInclude Include="..\..\src\alienrain\bumpmapping.h" />
-    <ClInclude Include="..\..\src\alienrain\clipdistance_app.h" />
-    <ClInclude Include="..\..\src\alienrain\managed_application.h" />
-    <ClInclude Include="..\..\src\alienrain\startup.h" />
-    <ClInclude Include="..\..\src\alienrain\camera.h" />
-    <ClInclude Include="..\..\src\alienrain\tinyxml2.h" />
-    <ClInclude Include="..\..\src\alienrain\xml_helper.h" />
-    <ClInclude Include="..\..\src\alienrain\tessellatedtri.h" />
-    <ClInclude Include="..\..\src\alienrain\tunnel.h" />
+    <ClInclude Include="..\..\src\alienrain\managed_application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alienrain\clipdistance_app.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alienrain\camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alienrain\bumpmapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alienrain\blinnphong_app.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alienrain\tessellatedtri.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alienrain\startup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alienrain\tinyxml2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alienrain\tunnel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alienrain\xml_helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\alienrain\scene_object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\alienrain\startup.cpp" />
-    <ClCompile Include="..\..\src\alienrain\tinyxml2.cpp" />
+    <ClCompile Include="..\..\src\alienrain\startup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\alienrain\tinyxml2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\alienrain\managed_application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\alienrain\scene_object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{8019bdfc-24dc-44c4-bade-5eb7c9437f03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{e7be24fe-1a3d-496c-9847-b0bec59f88b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

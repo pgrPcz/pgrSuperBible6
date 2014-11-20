@@ -1,5 +1,11 @@
 #pragma once
 
+#include <string>
+#include "tinyxml2.h"
+
+using namespace tinyxml2;
+using namespace std;
+
 class xml_helper_listener
 {
 public:
@@ -87,6 +93,9 @@ public:
 protected:
 	string m_assets_path;
 	string m_config_file_extension;
+<<<<<<< HEAD
 
 	XMLDocument* m_doc;
+=======
+>>>>>>> temp commit
 };
