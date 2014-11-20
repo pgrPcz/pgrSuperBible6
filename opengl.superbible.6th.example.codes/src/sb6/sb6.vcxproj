@@ -16,6 +16,7 @@
     <ClCompile Include="dropDownList.cpp" />
     <ClCompile Include="gl3w.c" />
     <ClCompile Include="label.cpp" />
+    <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="panel.cpp" />
     <ClCompile Include="sb6.cpp" />
     <ClCompile Include="sb6ktx.cpp" />

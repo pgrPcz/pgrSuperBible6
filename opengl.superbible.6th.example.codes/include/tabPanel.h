@@ -2,6 +2,7 @@
 #include "button.h"
 #include "panel.h"
 #include "checkBox.h"
+#include "label.h"
 
 class TabPanel
 {
@@ -15,6 +16,7 @@ public:
 	Button* btnMenu1;
 	Button* btnMenu2;
 	CheckBox* cbOpt1;
+	Label* labelTest;
 
 	TabPanel();
 	~TabPanel();

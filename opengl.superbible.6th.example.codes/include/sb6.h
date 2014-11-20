@@ -72,6 +72,7 @@
 #include "dropDownList.h"
 #include "panel.h"
 #include "tabPanel.h"
+#include "label.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -95,17 +96,15 @@ public:
 
 	int myQuickIndex;
 
-	static Button* myButton;
-	static Button* myButton2;
-	static CheckBox* myCheckBox;
-	static Panel* myPanel;
+	//static Button* myButton;
+	//static Button* myButton2;
+	//static CheckBox* myCheckBox;
+	//static Panel* myPanel;
 	static TabPanel* myTabPanel;
-	static DropDownList* myDDList;
-
+	//static DropDownList* myDDList;
+	static Label* myLabel;
 
     application() {
-		
-		//myTabPanel = new TabPanel();
 		myQuickIndex=myAppIndex++;
 
 	}
@@ -188,9 +187,11 @@ public:
 
         startup();
 		WinLog(L"application::startup()", myQuickIndex);
+		myLabel->Init(800, 600, 120, 50, 15, "MarkoGej");
+		WinLog(L"Label\n");
 		myTabPanel->Init();
 		WinLog(L"TabPanel\n");
-		myPanel->Init(800, 600, 30, 30, 400, 400, "../../bitmap/panel2.bmp");
+		/*myPanel->Init(800, 600, 30, 30, 400, 400, "../../bitmap/panel2.bmp");
 		WinLog(L"Panel\n");
 		myButton->Init(800, 600, 30, 10, 50, 20,"../../bitmap/panelPage1.bmp");
 		WinLog(L"btn1\n");
@@ -199,7 +200,7 @@ public:
 		myCheckBox->Init(800, 600, 50, 120, 20, 20, "../../bitmap/CheckBoxUnchecked.bmp");
 		WinLog(L"chb\n");
 		myDDList->Init(800, 600, 50, 170, 150, 50, "../../bitmap/DropDownList1.bmp", 5);
-		WinLog(L"btn3\n");
+		WinLog(L"btn3\n");*/
 		
 
 		
@@ -226,6 +227,7 @@ public:
 
 			//myDDList->Render(glfwGetTime());
 			myTabPanel->Render(glfwGetTime());
+			//myLabel->Render(glfwGetTime());
 
             glfwSwapBuffers();
 
@@ -240,12 +242,7 @@ public:
 
 			glfwTerminate();
 
-		delete myButton;
-		delete myButton2;
-		delete myCheckBox;
-		delete myDDList;
-		delete myPanel;
-		delete myTabPanel;
+		delete myLabel;
 
     }
 
@@ -380,35 +377,35 @@ protected:
 	static void myPanelEvent() {
 		WinLog(L"myPanel Event executed", 4);
 	}
-	static void myDDList2Event() {
+	/*static void myDDList2Event() {
 		WinLog(L"DropDownIndex changed to ", myDDList->GetCurrentElement());
-	}
+	}*/
 
     static void GLFWCALL glfw_onMouseButton(int button, int action)
     {
         app->onMouseButton(button, action);
 			
-		//Button 1
-		if(myButton->onMouseButton(button, action))
-			myButtonEvent();
+		////Button 1
+		//if(myButton->onMouseButton(button, action))
+		//	myButtonEvent();
 
-		//Button 2
-		if(myButton2->onMouseButton(button, action))
-			myButton2Event();
+		////Button 2
+		//if(myButton2->onMouseButton(button, action))
+		//	myButton2Event();
 
-		//CheckBox
-		if (myCheckBox->onMouseButton(button, action))
-			myCheckBoxEvent();
-		//TabPanel
+		////CheckBox
+		//if (myCheckBox->onMouseButton(button, action))
+		//	myCheckBoxEvent();
+		////TabPanel
 		myTabPanel->CheckClickedButton(button, action);
-		//if (btnTesselation)
-		//	myTesselationEvent();
+		////if (btnTesselation)
+		////	myTesselationEvent();
 
-			//myPanelEvent();
+		//	//myPanelEvent();
 
-		//DropDownList
-		if (myDDList->onMouseButton(button, action))
-			myDDList2Event();
+		////DropDownList
+		//if (myDDList->onMouseButton(button, action))
+		//	myDDList2Event();
     }
 
     static void GLFWCALL glfw_onMouseMove(int x, int y)
@@ -416,11 +413,12 @@ protected:
 		//myTabPanel->buttonPage1.CheckArea(x, y);
 		//myTabPanel->panelPage1.CheckArea(x, y);
 		myTabPanel->CheckArea(x, y);
-		myButton->CheckArea(x, y);
+		/*myButton->CheckArea(x, y);
 		myButton2->CheckArea(x, y);
 		myCheckBox->CheckArea(x, y);
 		myPanel->CheckArea(x, y);
-		myDDList->CheckArea(x, y);
+		myDDList->CheckArea(x, y);*/
+
         app->onMouseMove(x, y);
     }
 
