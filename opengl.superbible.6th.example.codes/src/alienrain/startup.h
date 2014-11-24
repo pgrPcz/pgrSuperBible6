@@ -28,14 +28,8 @@
 using namespace std;
 
 #include <string>
-#include <vector>
-<<<<<<< HEAD
-#include <map>
 
-#include "xml_helper.h"
-=======
 //#include "xml_helper.h"
->>>>>>> temp commit
 #include "camera.h"
 #include "managed_application.h"
 

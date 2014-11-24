@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <map>
 #include "tinyxml2.h"
 
 using namespace tinyxml2;
@@ -93,9 +94,6 @@ public:
 protected:
 	string m_assets_path;
 	string m_config_file_extension;
-<<<<<<< HEAD
 
 	XMLDocument* m_doc;
-=======
->>>>>>> temp commit
 };

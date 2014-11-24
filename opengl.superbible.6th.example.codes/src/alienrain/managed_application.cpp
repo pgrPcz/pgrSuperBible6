@@ -10,7 +10,6 @@ managed_application::managed_application( application_manager * am )
     m_app_manager = am;
 }
 
-
 /************************************************************************/
 /* application_manager                                                  */
 /************************************************************************/
