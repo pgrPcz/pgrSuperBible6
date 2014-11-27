@@ -297,14 +297,7 @@ void DropDownList::Init(int winW, int winH, float posX, float posY, int btnWidth
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(0);
 
-	////indicies
-	//glGenBuffers(1, &indexBuffer);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertex_indices), vertex_indices, GL_STATIC_DRAW);
-
-
-
-	//texture vertecies
+	////texture vertecies
 	glGenBuffers(1, &texCoordBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords_pos2), tex_coords_pos2, GL_STATIC_DRAW);
@@ -312,9 +305,9 @@ void DropDownList::Init(int winW, int winH, float posX, float posY, int btnWidth
 	glEnableVertexAttribArray(1);
 
 	LoadBMPTexture(bitmap);
-
+	glBindVertexArray(0);
 }
-
+	
 
 
 GLuint DropDownList::LoadBMPTexture(const char * imagepath) {
@@ -333,7 +326,7 @@ GLuint DropDownList::LoadBMPTexture(const char * imagepath) {
 		WinLog(L"Image could not be opened");
 		return 0;
 	}
-
+	
 	// The first thing in the file is a 54-bytes header. It contains information such as “Is this file really a BMP file?”, the size of the image, the number of bits per pixel, etc. So let’s read this header :
 	if (fread(header, 1, 54, file) != 54) { // If not 54 bytes read : problem
 		printf("Not a correct BMP file\n");
@@ -358,7 +351,7 @@ GLuint DropDownList::LoadBMPTexture(const char * imagepath) {
 	if (dataPos == 0)      dataPos = 54; // The BMP header is done that way
 
 	textureData = new unsigned char[imageSize];
-	float * data;
+	//float * data;
 
 	// Read the actual data from the file into the buffer
 	fread(textureData, 1, imageSize, file);
@@ -367,10 +360,10 @@ GLuint DropDownList::LoadBMPTexture(const char * imagepath) {
 	fclose(file);
 
 	// Define some data to upload into the texture
-	data = new float[fileWidth * fileHeight * 4];
+	//data = new float[fileWidth * fileHeight * 4];
 
 	// generate_texture() is a function that fills memory with image data
-	generate_texture(data, fileWidth, fileHeight);
+	//generate_texture(data, fileWidth, fileHeight);
 
 	// Create one OpenGL texture
 	glGenTextures(1, &textureID);
@@ -380,7 +373,6 @@ GLuint DropDownList::LoadBMPTexture(const char * imagepath) {
 	glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGB16, fileWidth, fileHeight);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 0);
 	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, fileWidth, fileHeight, GL_BGR, GL_UNSIGNED_BYTE, textureData);
-
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
@@ -411,6 +403,8 @@ void DropDownList::ChangeToElement(int index) {
 	tex_coords_pos2[11] -= offsetValue;
 }
 void DropDownList::Render(double currentTime) {
+
+	glBindVertexArray(vao);
 
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
@@ -450,13 +444,12 @@ void DropDownList::Render(double currentTime) {
 		
 	glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords_pos2), tex_coords_pos2, GL_STATIC_DRAW);
+	
 	glUniformMatrix4fv(mv_location, 1, GL_FALSE, m1*m2*m3);
 	glUniform4fv(btnColor, 1, color);
+	
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 
-
-
-				
 	if (insideWholeArea || insideBtnArea) {
 
 
@@ -467,6 +460,7 @@ void DropDownList::Render(double currentTime) {
 		ChangeToElement(currentElement);
 		glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords_pos2), tex_coords_pos2, GL_STATIC_DRAW);
+		
 		color = vmath::vec4(0.2f, 0.2f, 0.8f, 0.0f);
 		glUniform4fv(btnColor, 1, color);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -479,7 +473,7 @@ void DropDownList::Render(double currentTime) {
 		ChangeToElement(activeElement);
 		glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords_pos2), tex_coords_pos2, GL_STATIC_DRAW);
-
+		
 		if (btnClicked) {
 			color = vmath::vec4(0.2f, 0.8f, 0.3f, 0.0f);
 		} else {

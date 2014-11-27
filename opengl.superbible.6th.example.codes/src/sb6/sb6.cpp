@@ -32,7 +32,7 @@ sb6::application * sb6::application::app = 0;
 //DropDownList* sb6::application::myDDList = new DropDownList();
 //Panel* sb6::application::myPanel = new Panel();
 TabPanel* sb6::application::myTabPanel = new TabPanel();
-Label* sb6::application::myLabel = new Label();
+//Label* sb6::application::myLabel = new Label();
 
 #include <GL/glext.h>
 

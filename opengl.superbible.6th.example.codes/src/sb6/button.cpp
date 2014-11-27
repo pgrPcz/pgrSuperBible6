@@ -331,6 +331,7 @@ GLuint Button::LoadBMPTexture(const char * imagepath) {
 
 void Button::Render(double currentTime) {
 
+	glBindVertexArray(vao);
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
 	glUseProgram(program);

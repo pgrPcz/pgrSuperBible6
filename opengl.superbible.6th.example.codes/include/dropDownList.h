@@ -79,10 +79,6 @@ private:
 	float           aspect;
 	vmath::mat4     proj_matrix;
 	vmath::vec4		color;
-
-
-
-
 };
 
 
