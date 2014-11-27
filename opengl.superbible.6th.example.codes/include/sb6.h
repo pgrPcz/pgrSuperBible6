@@ -102,7 +102,7 @@ public:
 	//static Panel* myPanel;
 	static TabPanel* myTabPanel;
 	//static DropDownList* myDDList;
-	static Label* myLabel;
+	//static Label* myLabel;
 
     application() {
 		myQuickIndex=myAppIndex++;
@@ -187,8 +187,6 @@ public:
 
         startup();
 		WinLog(L"application::startup()", myQuickIndex);
-		myLabel->Init(800, 600, 120, 50, 15, "MarkoGej");
-		WinLog(L"Label\n");
 		myTabPanel->Init();
 		WinLog(L"TabPanel\n");
 		/*myPanel->Init(800, 600, 30, 30, 400, 400, "../../bitmap/panel2.bmp");
@@ -214,7 +212,6 @@ public:
 				WinLog(L"application::while()", myQuickIndex);
 			}
 				
-			//WinLog(L"application::whilee()", myQuickIndex);
 
             render(glfwGetTime());
 			
@@ -242,7 +239,6 @@ public:
 
 			glfwTerminate();
 
-		delete myLabel;
 
     }
 

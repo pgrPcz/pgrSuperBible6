@@ -185,7 +185,7 @@ void Label::Init(int winW, int winH, float posX, float posY, int fontsize, const
 		"void main(void)                                                    \n"
 		"{                                                                  \n"
 		"    gl_Position =  mv_matrix*position2;							\n"
-		"    vs_out.tc = texPos;							\n"
+		"    vs_out.tc = texPos.xy;							\n"
 		//"    vs_out.tc = texPos2[gl_VertexID].xy;							\n"
 		"    vs_out.color = btnColor;										\n"
 		"}                                                                  \n"
@@ -206,8 +206,6 @@ void Label::Init(int winW, int winH, float posX, float posY, int fontsize, const
 		"                                                                   \n"
 		"void main(void)                                                    \n"
 		"{                                                                  \n"
-		//"    color = texture(sss, fs_in.tc );	\n"
-		//"    color = texture(sss, fs_in.tc )*vec4(0.4,0.2,0.6,0.5);	\n"
 		"    color = texture(sss, fs_in.tc )*fs_in.color;	\n"
 		//"    color = textureOffset(sss, fs_in.tc ,vec2(0.0625,0.0625);	\n"
 		//"    color = vec4(0.4,0.2,0.6,0.5);									        \n"
@@ -246,26 +244,18 @@ void Label::Init(int winW, int winH, float posX, float posY, int fontsize, const
 	glGenBuffers(1, &positionBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_positions), vertex_positions, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(0);
-
-	////indicies
-	//glGenBuffers(1, &indexBuffer);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertex_indices), vertex_indices, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
 	//texture coordinates
-
 	glGenBuffers(1, &texCoordBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords_pos), tex_coords_pos, GL_STATIC_DRAW);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(1);
-
-	//LoadBMPTexture(bitmap);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+		
 	LoadPNGTexture();
-	
-
+	glBindVertexArray(0);
 }
 
 
@@ -397,14 +387,13 @@ void Label::SetTexCoordASCII(char symbol,float charPosition) {
 	glUniformMatrix4fv(mv_location, 1, GL_FALSE, m2*m3);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coords_pos), tex_coords_pos, GL_STATIC_DRAW);
 
-
-
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 
 }
 
 void Label::Render(double currentTime) {
 	
+	glBindVertexArray(vao);
 	glBindTexture(GL_TEXTURE_2D, textureID);
 	glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
 	
@@ -426,4 +415,5 @@ void Label::Render(double currentTime) {
 		charPos++;
 	}
 
+	glDisable(GL_BLEND);
 }

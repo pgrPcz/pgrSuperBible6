@@ -9,7 +9,7 @@ TabPanel::TabPanel()
 	btnMenu1 = new Button();
 	btnMenu2 = new Button();
 	cbOpt1 = new CheckBox();
-	//dropDownListTest = new DropDownList();
+	dropDownListTest = new DropDownList();
 	labelTest = new Label();
 
 }
@@ -22,7 +22,7 @@ TabPanel::~TabPanel()
 	delete btnMenu1;
 	delete btnMenu2;
 	delete cbOpt1;
-	//delete dropDownListTest;
+	delete dropDownListTest;
 	delete labelTest;
 }
 
@@ -35,14 +35,13 @@ void TabPanel::Init()
 	btnMenu2->Init(800, 600, 50, 50, 50, 20, "../../bitmap/Button2.bmp");
 	cbOpt1->Init(800, 600, 50, 80, 15, 15, "../../bitmap/CheckBoxUnchecked.bmp");
 	
-	labelTest->Init(800, 600, 50, 120, 20, "napis obrazajacy Marko");
-	//dropDownListTest->Init(800, 600, 50, 350, 150, 50, "../../bitmap/DropDownList1.bmp", 5);
+	dropDownListTest->Init(800, 600, 50, 150, 150, 50, "../../bitmap/DropDownList1.bmp", 5);
+	labelTest->Init(800, 600, 50, 320, 20, "napis obrazajacy Kube");
 }
 
 void TabPanel::Render(double currentTime)
 {
 	panelPage1->Render(currentTime);
-	
 	buttonPage1->Render(currentTime);
 	buttonPage2->Render(currentTime);	
 
@@ -51,7 +50,7 @@ void TabPanel::Render(double currentTime)
 		btnMenu1->Render(currentTime);
 		cbOpt1->Render(currentTime);
 		labelTest->Render(currentTime);
-		//dropDownListTest->Render(currentTime);
+		dropDownListTest->Render(currentTime);
 	}
 	if (currentPage == 2)
 	{
@@ -68,20 +67,19 @@ bool TabPanel::CheckArea(int x, int y)
 	btnMenu1->CheckArea(x, y);
 	btnMenu2->CheckArea(x, y);
 	cbOpt1->CheckArea(x, y);
-	//dropDownListTest->CheckArea(x, y);
 	//labelTest->CheckArea(x, y);
+	dropDownListTest->CheckArea(x, y);
 
 	return true;
 }
 
 void TabPanel::CheckClickedButton(int button, int action)
 {
-	//labelTest->onMouseButton(button, action);
-	
 	btnMenu1->onMouseButton(button, action);
 	btnMenu2->onMouseButton(button, action);
 	cbOpt1->onMouseButton(button, action);
-	//dropDownListTest->onMouseButton(button, action);
+	//labelTest->onMouseButton(button, action);
+	dropDownListTest->onMouseButton(button, action);
 
 	if (buttonPage1->onMouseButton(button, action))
 	{
