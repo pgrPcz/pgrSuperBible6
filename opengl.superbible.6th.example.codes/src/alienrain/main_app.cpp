@@ -60,17 +60,17 @@ void MainApp::handleDocument( XMLDocument* doc )
 {
     XMLElement* root = doc->FirstChildElement();
 
-    XMLElement* ele = root->FirstChildElement("object");
-    is_many_objects = ele->BoolAttribute("many_objects");
-    is_per_vertex = ele->BoolAttribute("per_vertex");
+    XMLElement* ele  = root->FirstChildElement("object");
+    is_many_objects  = ele->BoolAttribute("many_objects");
+    is_per_vertex    = ele->BoolAttribute("per_vertex");
 
-    ele = root->FirstChildElement("light");
-    light_pos = ele->Attribute("pos");	
+    ele              = root->FirstChildElement("light");
+    light_pos        = ele->Attribute("pos");	
 
-    ele = root->FirstChildElement("material_properties");
-    diffuse_albedo = ele->Attribute("diffuse_albedo");	
-    specular_albedo = ele->Attribute("specular_albedo");	
-    specular_power = ele->Attribute("specular_power");
+    ele              = root->FirstChildElement("material_properties");
+    diffuse_albedo   = ele->Attribute("diffuse_albedo");	
+    specular_albedo  = ele->Attribute("specular_albedo");	
+    specular_power   = ele->Attribute("specular_power");
 }
 
 //************************************
@@ -101,6 +101,19 @@ void MainApp::init()
 //************************************
 void MainApp::startup()
 {
+    // Init scene objects
+    /*for(int i = 0; i < OBJECT_COUNT_X; i++)
+    {
+        for(int j = 0; j < OBJECT_COUNT_Y; j++)
+        {
+            for(int k = 0; k < OBJECT_COUNT_Z; k++)
+            {
+                mSceneObjects[i][j][k].startup("media/objects/sphere.sbm");
+            }
+        }
+    }*/
+
+
     load_shaders();
 
     glGenBuffers(1, &uniforms_buffer);
@@ -126,8 +139,8 @@ void MainApp::render(double currentTime)
 {
 	m_camera->onRender(currentTime);
     static const GLfloat zeros[] = { 0.0f, 0.0f, 0.0f, 0.0f };
-    static const GLfloat gray[] = { 0.1f, 0.1f, 0.1f, 0.0f };
-    static const GLfloat ones[] = { 1.0f };
+    static const GLfloat gray[]  = { 0.1f, 0.1f, 0.1f, 0.0f };
+    static const GLfloat ones[]  = { 1.0f };
     const float f = (float)currentTime;
 
     glUseProgram(per_fragment_program);
@@ -149,7 +162,7 @@ void MainApp::render(double currentTime)
                                             vmath::vec3(0.0f, 1.0f, 0.0f));
 											*/
 
-    vmath::vec3 light_position = vmath::vec3(-20.0f, -20.0f, 0.0f);
+    vmath::vec3 light_position    = vmath::vec3(-20.0f, -20.0f, 0.0f);
 
     vmath::mat4 light_proj_matrix = vmath::frustum(-1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 200.0f);
     vmath::mat4 light_view_matrix = vmath::lookat(light_position,
@@ -163,28 +176,28 @@ void MainApp::render(double currentTime)
             {
                 for (int k = 0; k < 3; k++)
                 {
-                glBindBufferBase(GL_UNIFORM_BUFFER, 0, uniforms_buffer);
-                uniforms_block * block = (uniforms_block *)glMapBufferRange(GL_UNIFORM_BUFFER,
-                    0,
-                    sizeof(uniforms_block),
-                    GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
+                    glBindBufferBase(GL_UNIFORM_BUFFER, 0, uniforms_buffer);
+                    uniforms_block * block = (uniforms_block *)glMapBufferRange(GL_UNIFORM_BUFFER,
+                        0,
+                        sizeof(uniforms_block),
+                        GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
 
-                // TODO adatczuk position here (addition) + spacing (multiplication)
-                vmath::mat4 model_matrix = vmath::translate((float)j * 2.25f - 6.25f, 2.75f - (float)i * 2.25f, (float)k * 2.25f - 2.25f);
+                    // TODO adatczuk position here (addition) + spacing (multiplication)
+                    vmath::mat4 model_matrix = vmath::translate((float)j * 2.25f - 6.25f, 2.75f - (float)i * 2.25f, (float)k * 2.25f - 2.25f);
 
-                block->mv_matrix = view_matrix * model_matrix;
-                block->view_matrix = view_matrix;
-                block->proj_matrix = vmath::perspective(50.0f,
-                    (float)info.windowWidth / (float)info.windowHeight,
-                    0.1f,
-                    1000.0f);
+                    block->mv_matrix = view_matrix * model_matrix;
+                    block->view_matrix = view_matrix;
+                    block->proj_matrix = vmath::perspective(50.0f,
+                        (float)info.windowWidth / (float)info.windowHeight,
+                        0.1f,
+                        1000.0f);
 
-                glUnmapBuffer(GL_UNIFORM_BUFFER);
+                    glUnmapBuffer(GL_UNIFORM_BUFFER);
 
-                glUniform1f(uniforms[is_per_vertex ? 1 : 0].specular_power, powf(2.0f, (float)i + 2.0f));
-                glUniform3fv(uniforms[is_per_vertex ? 1 : 0].specular_albedo, 1, vmath::vec3((float)j / 9.0f + 1.0f / 9.0f));
+                    glUniform1f(uniforms[is_per_vertex ? 1 : 0].specular_power, powf(2.0f, (float)i + 2.0f));
+                    glUniform3fv(uniforms[is_per_vertex ? 1 : 0].specular_albedo, 1, vmath::vec3((float)j / 9.0f + 1.0f / 9.0f));
 
-                object.render();
+                    object.render();
                 }
             }
         }
@@ -192,19 +205,13 @@ void MainApp::render(double currentTime)
     else 
     {
         glBindBufferBase(GL_UNIFORM_BUFFER, 0, uniforms_buffer);
-        uniforms_block * block = (uniforms_block *)glMapBufferRange(GL_UNIFORM_BUFFER,
-            0,
-            sizeof(uniforms_block),
+        uniforms_block * block = (uniforms_block *)glMapBufferRange(GL_UNIFORM_BUFFER, 0, sizeof(uniforms_block),
             GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
 
         vmath::mat4 model_matrix = vmath::scale(7.0f);
-
-        block->mv_matrix = view_matrix * model_matrix;
+        block->mv_matrix   = view_matrix * model_matrix;
         block->view_matrix = view_matrix;
-        block->proj_matrix = vmath::perspective(50.0f,
-            (float)info.windowWidth / (float)info.windowHeight,
-            0.1f,
-            1000.0f);
+        block->proj_matrix = vmath::perspective(50.0f, (float)info.windowWidth / (float)info.windowHeight, 0.1f, 1000.0f);
 
         glUnmapBuffer(GL_UNIFORM_BUFFER);
 

@@ -31,10 +31,10 @@
     <ClInclude Include="..\..\src\alienrain\xml_helper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\alienrain\scene_object.h">
+    <ClInclude Include="..\..\src\alienrain\main_app.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\alienrain\main_app.h">
+    <ClInclude Include="..\..\src\alienrain\scene_object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
