@@ -7,18 +7,148 @@
 
 #include "scene_object.h"
 
+/* SceneObject constants */
+const float SceneObject::perspective_fovy = 50.0f;
+const float SceneObject::perspective_f    = 0.1f;
+const float SceneObject::perspective_n    = 1000.0f;
+
 //************************************
 // Method:    SceneObject
 // FullName:  SceneObject::SceneObject
 // Access:    public 
 // Returns:   
-// Qualifier: : per_fragment_program(0), per_vertex_program(0), per_vertex(false)
+// Qualifier: : per_fragment_program(0), per_vertex_program(0), is_per_vertex(false)
 //************************************
 SceneObject::SceneObject() : per_fragment_program(0),
     per_vertex_program(0),
-    per_vertex(false)
+    is_per_vertex(true)
 {
 
+}
+
+void SceneObject::load_shaders()
+{
+    // !!!!!!!!!!!! 
+    // Note adatczuk: just a temp method, a target is to load shaders from files, 
+    //                current method/shader from file doesn't work
+    // !!!!!!!!!!!!!
+
+    GLuint vs;
+    GLuint fs;
+
+    static string vs_source_str =
+        "#version 410 core										\n"
+        "														\n"
+        "// Per-vertex inputs									\n"
+        "layout (location = 0) in vec4 position;				\n"
+        "layout (location = 1) in vec3 normal;					\n"
+        "														\n"
+        "// Matrices we'll need									\n"
+        "layout (std140) uniform constants						\n"
+        "{														\n"
+        "    mat4 mv_matrix;									\n"
+        "    mat4 view_matrix;									\n"
+        "    mat4 proj_matrix;									\n"
+        "};														\n"
+        "														\n"
+        "// Inputs from vertex shader							\n"
+        "out VS_OUT												\n"
+        "{														\n"
+        "    vec3 N;											\n"
+        "    vec3 L;											\n"
+        "    vec3 V;											\n"
+        "} vs_out;												\n"
+        "														\n"
+        "// Position of light									\n"
+        "uniform vec3 light_pos = vec3(" "100.0, 100.0, 100.0" ");		\n"
+        "														\n"
+        "void main(void)										\n"
+        "{														\n"
+        "    // Calculate view-space coordinate					\n"
+        "    vec4 P = mv_matrix * position;						\n"
+        "														\n"
+        "    // Calculate normal in view-space					\n"
+        "    vs_out.N = mat3(mv_matrix) * normal;				\n"
+        "														\n"
+        "    // Calculate light vector							\n"
+        "    vs_out.L = mat3(mv_matrix) * light_pos - P.xyz;						\n"
+        "														\n"
+        "    // Calculate view vector							\n"
+        "    vs_out.V = -P.xyz;									\n"
+        "														\n"
+        "    // Calculate the clip-space position of each vertex\n"
+        "    gl_Position = proj_matrix * P;						\n"
+        "}														\n"
+        ""
+        ;
+    static const char * vs_source[] = {vs_source_str.c_str()};
+
+    static string fs_source_str =
+        "#version 410 core										\n"
+        "														\n"
+        "// Output												\n"
+        "layout (location = 0) out vec4 color;					\n"
+        "														\n"
+        "// Input from vertex shader							\n"
+        "in VS_OUT												\n"
+        "{														\n"
+        "    vec3 N;											\n"
+        "    vec3 L;											\n"
+        "    vec3 V;											\n"
+        "} fs_in;												\n"
+        "														\n"
+        "// Material properties									\n"
+        "uniform vec3 diffuse_albedo = vec3(" "0.4, 0.9, 0.3" ");				\n"
+        "uniform vec3 specular_albedo = vec3(" "0.7" ");			\n"
+        "uniform float specular_power = " "200" ";					\n"
+        "														\n"
+        "void main(void)										\n"
+        "{														\n"
+        "    // Normalize the incoming N, L and V vectors		\n"
+        "    vec3 N = normalize(fs_in.N);						\n"
+        "    vec3 L = normalize(fs_in.L);						\n"
+        "    vec3 V = normalize(fs_in.V);						\n"
+        "    vec3 H = normalize(L + V);							\n"
+        "														\n"
+        "    // Compute the diffuse and specular components for each fragment				\n"
+        "    vec3 diffuse = max(dot(N, L), 0.0) * diffuse_albedo;							\n"
+        "    vec3 specular = pow(max(dot(N, H), 0.0), specular_power) * specular_albedo;	\n"
+        "																					\n"
+        "    // Write final color to the framebuffer										\n"
+        "    color = vec4(diffuse + specular, 1.0);											\n"
+        "}																					\n"
+        ""
+        ;
+    static const char * fs_source[] = {fs_source_str.c_str()};
+
+    char buffer[4024];
+    vs = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vs, 1, vs_source, NULL);
+    glCompileShader(vs);
+
+    glGetShaderInfoLog(vs, 1024, NULL, buffer);
+
+    fs = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fs, 1, fs_source, NULL);
+    glCompileShader(fs);
+
+    glGetShaderInfoLog(vs, 1024, NULL, buffer);
+
+
+    //vs = sb6::shader::load("media/shaders/blinnphong/blinnphong.vs.glsl", GL_VERTEX_SHADER);
+    //fs = sb6::shader::load("media/shaders/blinnphong/blinnphong.fs.glsl", GL_FRAGMENT_SHADER);
+
+    if (per_fragment_program)
+        glDeleteProgram(per_fragment_program);
+
+    per_fragment_program = glCreateProgram();
+    glAttachShader(per_fragment_program, vs);
+    glAttachShader(per_fragment_program, fs);
+    glLinkProgram(per_fragment_program);
+
+    uniforms[0].diffuse_albedo = glGetUniformLocation(per_fragment_program, "diffuse_albedo");
+    uniforms[0].specular_albedo = glGetUniformLocation(per_fragment_program, "specular_albedo");
+    uniforms[0].specular_power = glGetUniformLocation(per_fragment_program, "specular_power");
 }
 
 //************************************
@@ -31,10 +161,14 @@ SceneObject::SceneObject() : per_fragment_program(0),
 //************************************
 void SceneObject::startup( const char* object_path )
 {
-    load_shaders("media/shaders/phonglighting/per-fragment-phong.vs.glsl", 
-        "media / shaders / phonglighting / per - fragment - phong.fs.glsl",
+    /*load_shaders("media/shaders/phonglighting/per-fragment-phong.vs.glsl", 
+        "media/shaders/phonglighting/per-fragment-phong.fs.glsl",
         "media/shaders/phonglighting/per-vertex-phong.vs.glsl", 
-        "media/shaders/phonglighting/per-vertex-phong.fs.glsl");
+        "media/shaders/phonglighting/per-vertex-phong.fs.glsl");*/
+    // Note adatczuk: ^^^^^^ doesn' work for now :(
+
+    // TODO check error on load shaders and load object
+    load_shaders();
 
     glGenBuffers(1, &uniforms_buffer);
     glBindBuffer(GL_UNIFORM_BUFFER, uniforms_buffer);
@@ -58,27 +192,16 @@ void SceneObject::startup( const char* object_path )
 // Parameter: int h
 // Parameter: vmath::vec3 view_position
 // Parameter: vmath::mat4 view_matrix
-// Parameter: vmath::vec3 light_position
-// Parameter: vmath::mat4 light_proj_matrix
-// Parameter: vmath::mat4 light_view_matrix
-// Parameter: float perspective_fovy
-// Parameter: float perspective_n
-// Parameter: float perspective_f
+// Parameter: vmath::mat4 model_matrix
 //************************************
-void SceneObject::render( double currentTime, int w, int h, vmath::vec3 view_position, vmath::mat4 view_matrix, vmath::vec3 light_position, vmath::mat4 light_proj_matrix, vmath::mat4 light_view_matrix, float perspective_fovy, float perspective_n, float perspective_f )
+void SceneObject::render( double currentTime, int w, int h, vmath::vec3 view_position, vmath::mat4 view_matrix, 
+    vmath::mat4 model_matrix )
 {
     static const GLfloat zeros[] = { 0.0f, 0.0f, 0.0f, 0.0f };
     static const GLfloat gray[] = { 0.1f, 0.1f, 0.1f, 0.0f };
     static const GLfloat ones[] = { 1.0f };
-    const float f = (float)currentTime;
 
-    glUseProgram(per_vertex ? per_vertex_program : per_fragment_program);
-    glViewport(0, 0, w, h);
-
-    glClearBufferfv(GL_COLOR, 0, gray);
-    glClearBufferfv(GL_DEPTH, 0, ones);
-
-    /*
+     /*
     vmath::mat4 model_matrix = vmath::rotate((float)currentTime * 14.5f, 0.0f, 1.0f, 0.0f) *
     vmath::rotate(180.0f, 0.0f, 0.0f, 1.0f) *
     vmath::rotate(20.0f, 1.0f, 0.0f, 0.0f);
@@ -98,67 +221,23 @@ void SceneObject::render( double currentTime, int w, int h, vmath::vec3 view_pos
     vmath::vec3(0.0f), vmath::vec3(0.0f, 1.0f, 0.0f));
     */
 
-#if defined(MANY_OBJECTS)
-    int i, j;
+    glUseProgram(/*is_per_vertex ? per_vertex_program : */per_fragment_program);
+    glViewport(0, 0, w, h);
 
-    for (j = 0; j < 7; j++)
-    {
-        for (i = 0; i < 7; i++)
-        {
-            glBindBufferBase(GL_UNIFORM_BUFFER, 0, uniforms_buffer);
-            uniforms_block * block = (uniforms_block *)glMapBufferRange(GL_UNIFORM_BUFFER,
-                0,
-                sizeof(uniforms_block),
-                GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
-
-            vmath::mat4 model_matrix = vmath::translate((float)i * 2.75f - 8.25f, 6.75f - (float)j * 2.25f, 0.0f);
-
-            block->mv_matrix = view_matrix * model_matrix;
-            block->view_matrix = view_matrix;
-            block->proj_matrix = vmath::perspective(50.0f,
-                (float)info.windowWidth / (float)info.windowHeight,
-                0.1f,
-                1000.0f);
-
-            glUnmapBuffer(GL_UNIFORM_BUFFER);
-
-            glUniform1f(uniforms[per_vertex ? 1 : 0].specular_power, powf(2.0f, (float)j + 2.0f));
-            glUniform3fv(uniforms[per_vertex ? 1 : 0].specular_albedo, 1, vmath::vec3((float)i / 9.0f + 1.0f / 9.0f));
-
-            object.render();
-        }
-    }
-#else
     glBindBufferBase(GL_UNIFORM_BUFFER, 0, uniforms_buffer);
-    uniforms_block * block = (uniforms_block *)glMapBufferRange(GL_UNIFORM_BUFFER,
-        0,
-        sizeof(uniforms_block),
+    uniforms_block * block = (uniforms_block *)glMapBufferRange(GL_UNIFORM_BUFFER, 0, sizeof(uniforms_block),
         GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
 
-    vmath::mat4 model_matrix = vmath::scale(7.0f);
-
-    block->mv_matrix = view_matrix * model_matrix;
+    block->mv_matrix   = view_matrix * model_matrix;
     block->view_matrix = view_matrix;
-
-    /* MUST BE PASSED TO A FUNCTION NOW
-    block->proj_matrix = vmath::perspective(50.0f,
-    (float)w / (float)h,
-    0.1f,
-    1000.0f);
-    */
-
-    block->proj_matrix = vmath::perspective(perspective_fovy,
-        (float)w / (float)h,
-        perspective_f,
-        perspective_n);
+    block->proj_matrix = vmath::perspective(perspective_fovy, (float)w / (float)h, perspective_f, perspective_n);
 
     glUnmapBuffer(GL_UNIFORM_BUFFER);
 
-    glUniform1f(uniforms[per_vertex ? 1 : 0].specular_power, 30.0f);
-    glUniform3fv(uniforms[per_vertex ? 1 : 0].specular_albedo, 1, vmath::vec3(1.0f));
+    glUniform1f(uniforms[is_per_vertex ? 1 : 0].specular_power, powf(2.0f, (float)0 + 2.0f));
+    glUniform3fv(uniforms[is_per_vertex ? 1 : 0].specular_albedo, 1, vmath::vec3((float)0 / 9.0f + 1.0f / 9.0f));
 
     object.render();
-#endif
 }
 
 //************************************

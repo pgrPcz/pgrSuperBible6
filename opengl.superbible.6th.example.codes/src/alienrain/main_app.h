@@ -3,27 +3,20 @@
 #include <sb6.h>
 #include <vmath.h>
 
-#include <object.h>
-#include <sb6ktx.h>
-#include <shader.h>
-
-#include <sb6ktx.h>
-
 #include "managed_application.h"
 #include "camera.h"
 #include "scene_object.h"
 
 // TODO here adatczuk
-// - Cube of objects
-// - Setting shaders
-// - Rendering each object
-// - Rendering GUI
-// - Saving XML?
-// - Reading XML
-// - Input handling (update)
-
-//#define MANY_OBJECTS 1
-//#undef MANY_OBJECTS
+// +  Cube of objects
+// +  Rendering each object
+// -  Translate / rotate each object
+// -  Setting shaders for each object
+// -  Shader parameters (10)
+// -  Rendering GUI
+// -  Saving XML?
+// +- Reading XML
+// +- Input handling (update)
 
 class MainApp : public managed_application
 {
@@ -42,7 +35,7 @@ protected:
     void    onKey(int key, int action);
     void    onMouseMove(int x, int y);
 
-    void    load_shaders();
+    //void    load_shaders();
 
 /* Variables */
 public:
@@ -54,7 +47,7 @@ protected:
 	camera* m_camera;
 
 	// Object
-	bool    is_many_objects;
+	bool    is_many_objects; // TODO adatczuk to be removed
 	bool    is_per_vertex;
 
 	// Light
@@ -65,7 +58,7 @@ protected:
 	string  specular_albedo;
 	string  specular_power;
 
-    GLuint  per_fragment_program;
+    GLuint  per_fragment_program; // TODO adatczuk to be removed
 
     struct
     {
@@ -88,6 +81,6 @@ protected:
         GLint       specular_power;
     } uniforms[2];
 
-    sb6::object object;
+    sb6::object object; // TODO adatczuk to be removed
     SceneObject mSceneObjects[OBJECT_COUNT_X][OBJECT_COUNT_Y][OBJECT_COUNT_Z];
 };
