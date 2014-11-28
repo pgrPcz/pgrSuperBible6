@@ -28,8 +28,8 @@ public:
 	}
 
 protected:
-	application_manager * m_app_manager;
-	xml_helper * m_xml_helper;
+	application_manager* m_app_manager;
+	xml_helper*          m_xml_helper;
 };
 
 
@@ -47,13 +47,13 @@ public:
     void onKey(int key, int action);
 
 protected:
-    int m_apps_length;
-    managed_application ** m_apps;
+    int                   m_apps_length;
+    managed_application** m_apps;
 
-    int mCurrentIndex;
-    managed_application * m_current_app;
+    int                   mCurrentIndex;
+    managed_application*  m_current_app;
 
-    xml_helper * m_xml_helper;
+    xml_helper*           m_xml_helper;
 
 };
 
