@@ -21,6 +21,7 @@ public:
 	CheckBox* cbOpt1;
 	Label* labelTest;
 	DropDownList* dropDownListTest;
+	DropDownList* dropDownListSlots;
 
 	TabPanel();
 	~TabPanel();
