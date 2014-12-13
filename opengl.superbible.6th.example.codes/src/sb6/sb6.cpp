@@ -26,7 +26,7 @@
 #include "sb6.h"
 
 sb6::application * sb6::application::app = 0;
-//Button* sb6::application::myButton = new Button();
+//Button* sb6::application::buttonShowMenu = new Button();
 //Button* sb6::application::myButton2 = new Button();
 //CheckBox* sb6::application::myCheckBox = new CheckBox();
 //DropDownList* sb6::application::myDDList = new DropDownList();

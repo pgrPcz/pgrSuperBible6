@@ -8,10 +8,12 @@
 class TabPanel
 {
 private:
-	int currentPage = 1;
+	int currentPage = 0;
+	bool showMenuFlag = false;
 public:
 	Button* buttonPage1;
 	Button* buttonPage2;
+	Button* buttonShowMenu;
 	Panel* panelPage1;
 	
 	Button* btnMenu1;

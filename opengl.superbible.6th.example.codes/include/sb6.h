@@ -99,13 +99,8 @@ public:
 
 	int myQuickIndex;
 
-	//static Button* myButton;
-	//static Button* myButton2;
-	//static CheckBox* myCheckBox;
-	//static Panel* myPanel;
 	static TabPanel* myTabPanel;
-	//static DropDownList* myDDList;
-	//static Label* myLabel;
+	//static Button* buttonShowMenu;
 
     application() {
 		myQuickIndex=myAppIndex++;
@@ -192,17 +187,9 @@ public:
 		WinLog(L"application::startup()", myQuickIndex);
 		myTabPanel->Init();
 		WinLog(L"TabPanel\n");
-		/*myPanel->Init(800, 600, 30, 30, 400, 400, "../../bitmap/panel2.bmp");
-		WinLog(L"Panel\n");
-		myButton->Init(800, 600, 30, 10, 50, 20,"../../bitmap/panelPage1.bmp");
+	/*	buttonShowMenu->Init(800, 600, 30, 10, 50, 20, "../../bitmap/ButtonShowMenu2.bmp");
 		WinLog(L"btn1\n");
-		myButton2->Init(800, 600, 50, 50, 225, 50, "../../bitmap/Button2.bmp");
-		WinLog(L"btn2\n");
-		myCheckBox->Init(800, 600, 50, 120, 20, 20, "../../bitmap/CheckBoxUnchecked.bmp");
-		WinLog(L"chb\n");
-		myDDList->Init(800, 600, 50, 170, 150, 50, "../../bitmap/DropDownList1.bmp", 5);
-		WinLog(L"btn3\n");*/
-		
+		*/
 
 		
 
@@ -216,23 +203,14 @@ public:
 			}
 				
 
-            render(glfwGetTime());
-			
-			//myTabPanel->buttonPage1.Render(glfwGetTime());
-			//myPanel->Render(glfwGetTime());
-			//myButton->Render(glfwGetTime());
-			//myButton2->Render(glfwGetTime());
-			//myCheckBox->Render(glfwGetTime());
-			
+            render(glfwGetTime());		
 
-			//myDDList->Render(glfwGetTime());
+			//buttonShowMenu->Render(glfwGetTime());
 			myTabPanel->Render(glfwGetTime());
-			//myLabel->Render(glfwGetTime());
 
             glfwSwapBuffers();
 
-			//WinLog(L"running", myQuickIndex);
-            running &= (glfwGetKey( GLFW_KEY_ESC ) == GLFW_RELEASE);
+			running &= (glfwGetKey( GLFW_KEY_ESC ) == GLFW_RELEASE);
             running &= (glfwGetWindowParam( GLFW_OPENED ) != GL_FALSE);
 			
 
@@ -385,17 +363,9 @@ protected:
         app->onMouseButton(button, action);
 			
 		////Button 1
-		//if(myButton->onMouseButton(button, action))
-		//	myButtonEvent();
+		/*if(buttonShowMenu->onMouseButton(button, action))
+			myButtonEvent();*/
 
-		////Button 2
-		//if(myButton2->onMouseButton(button, action))
-		//	myButton2Event();
-
-		////CheckBox
-		//if (myCheckBox->onMouseButton(button, action))
-		//	myCheckBoxEvent();
-		////TabPanel
 		myTabPanel->CheckClickedButton(button, action);
 		////if (btnTesselation)
 		////	myTesselationEvent();
@@ -412,8 +382,8 @@ protected:
 		//myTabPanel->buttonPage1.CheckArea(x, y);
 		//myTabPanel->panelPage1.CheckArea(x, y);
 		myTabPanel->CheckArea(x, y);
-		/*myButton->CheckArea(x, y);
-		myButton2->CheckArea(x, y);
+		//buttonShowMenu->CheckArea(x, y);
+		/*myButton2->CheckArea(x, y);
 		myCheckBox->CheckArea(x, y);
 		myPanel->CheckArea(x, y);
 		myDDList->CheckArea(x, y);*/
