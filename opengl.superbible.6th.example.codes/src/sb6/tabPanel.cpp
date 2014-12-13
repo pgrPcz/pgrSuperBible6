@@ -47,7 +47,7 @@ void TabPanel::Render(double currentTime)
 {
 	buttonShowMenu->Render(currentTime);
 
-	if (currentPage != 0)
+	if (showMenuFlag)
 	{
 		panelPage1->Render(currentTime);
 		buttonPage1->Render(currentTime);
@@ -93,15 +93,6 @@ void TabPanel::CheckClickedButton(int button, int action)
 	if (buttonShowMenu->onMouseButton(button, action))
 	{
 		showMenuFlag = !showMenuFlag;
-	}
-
-	if (!showMenuFlag)
-	{
-		currentPage = 0;
-	}
-	else
-	{
-		currentPage = 1;
 	}
 
 	if (buttonPage1->onMouseButton(button, action))

@@ -8,7 +8,7 @@
 class TabPanel
 {
 private:
-	int currentPage = 0;
+	int currentPage = 1;
 	bool showMenuFlag = false;
 public:
 	Button* buttonPage1;
