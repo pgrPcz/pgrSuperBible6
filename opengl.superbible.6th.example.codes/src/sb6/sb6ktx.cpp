@@ -246,7 +246,7 @@ unsigned int load(const char * filename, unsigned int tex)
                 unsigned char * ptr = data;
                 unsigned int height = h.pixelheight;
                 unsigned int width = h.pixelwidth;
-                glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+                //glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
                 for (unsigned int i = 0; i < h.miplevels; i++)
                 {
                     glTexSubImage2D(GL_TEXTURE_2D, i, 0, 0, width, height, h.glformat, h.gltype, ptr);

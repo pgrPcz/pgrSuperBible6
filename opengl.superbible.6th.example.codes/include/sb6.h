@@ -65,24 +65,52 @@
     #pragma comment (lib, "OpenGL32.lib")
 #endif
 
-#include "GL/gl3w.h"
-
 #define GLFW_NO_GLU 1
 #define GLFW_INCLUDE_GLCOREARB 1
-#include "GL/glfw.h"
 
-#include "sb6ext.h"
+
+
+#include "button.h"
+#include "checkBox.h"
+#include "dropDownList.h"
+#include "panel.h"
+#include "tabPanel.h"
+#include "label.h"
 
 #include <stdio.h>
 #include <string.h>
 
+//forward dec
+class application;
+
 namespace sb6
 {
 
+	static int myAppIndex = 0;
 class application
 {
 public:
-    application() {}
+
+	static void WinLog(const wchar_t *text, int n = 0) {
+		wchar_t buf[1024];
+		_snwprintf_s(buf, 1024, _TRUNCATE, L"%s %d\n", text, n);
+		OutputDebugString(buf);
+	}
+
+	int myQuickIndex;
+
+	//static Button* myButton;
+	//static Button* myButton2;
+	//static CheckBox* myCheckBox;
+	//static Panel* myPanel;
+	static TabPanel* myTabPanel;
+	//static DropDownList* myDDList;
+	//static Label* myLabel;
+
+    application() {
+		myQuickIndex=myAppIndex++;
+
+	}
     virtual ~application() {}
     virtual void run(sb6::application* the_app)
     {
@@ -96,7 +124,7 @@ public:
         }
 
         init();
-
+		
         glfwOpenWindowHint(GLFW_OPENGL_VERSION_MAJOR, info.majorVersion);
         glfwOpenWindowHint(GLFW_OPENGL_VERSION_MINOR, info.minorVersion);
 
@@ -161,20 +189,60 @@ public:
         }
 
         startup();
+		WinLog(L"application::startup()", myQuickIndex);
+		myTabPanel->Init();
+		WinLog(L"TabPanel\n");
+		/*myPanel->Init(800, 600, 30, 30, 400, 400, "../../bitmap/panel2.bmp");
+		WinLog(L"Panel\n");
+		myButton->Init(800, 600, 30, 10, 50, 20,"../../bitmap/panelPage1.bmp");
+		WinLog(L"btn1\n");
+		myButton2->Init(800, 600, 50, 50, 225, 50, "../../bitmap/Button2.bmp");
+		WinLog(L"btn2\n");
+		myCheckBox->Init(800, 600, 50, 120, 20, 20, "../../bitmap/CheckBoxUnchecked.bmp");
+		WinLog(L"chb\n");
+		myDDList->Init(800, 600, 50, 170, 150, 50, "../../bitmap/DropDownList1.bmp", 5);
+		WinLog(L"btn3\n");*/
+		
 
+		
+
+		bool left = FALSE;
+		bool right = FALSE;
         do
         {
+			if (!left) {
+				left = TRUE;
+				WinLog(L"application::while()", myQuickIndex);
+			}
+				
+
             render(glfwGetTime());
+			
+			//myTabPanel->buttonPage1.Render(glfwGetTime());
+			//myPanel->Render(glfwGetTime());
+			//myButton->Render(glfwGetTime());
+			//myButton2->Render(glfwGetTime());
+			//myCheckBox->Render(glfwGetTime());
+			
+
+			//myDDList->Render(glfwGetTime());
+			myTabPanel->Render(glfwGetTime());
+			//myLabel->Render(glfwGetTime());
 
             glfwSwapBuffers();
 
+			//WinLog(L"running", myQuickIndex);
             running &= (glfwGetKey( GLFW_KEY_ESC ) == GLFW_RELEASE);
             running &= (glfwGetWindowParam( GLFW_OPENED ) != GL_FALSE);
+			
+
         } while(running);
 
-        shutdown();
+		WinLog(L"after while", 0);
 
-        glfwTerminate();
+			glfwTerminate();
+
+
     }
 
     virtual void init()
@@ -186,8 +254,8 @@ public:
         info.majorVersion = 3;
         info.minorVersion = 2;
 #else
-        info.majorVersion = 3;//4; adatczuk
-        info.minorVersion = 3;
+        info.majorVersion = 4;//4; adatczuk
+        info.minorVersion = 0;
 #endif
         info.samples = 0;
         info.flags.all = 0;
@@ -251,9 +319,10 @@ public:
 #endif /* _WIN32 */
     }
 
+
     static void getMousePosition(int& x, int& y)
     {
-        glfwGetMousePos(&x, &y);
+
     }
 
 public:
@@ -294,13 +363,61 @@ protected:
         app->onKey(key, action);
     }
 
+	
+	static void myButtonEvent() {
+		WinLog(L"myButton Event executed",1);
+	}
+	static void myButton2Event() {
+		WinLog(L"myButton2 Event executed",2);
+	}
+	static void myCheckBoxEvent() {
+		WinLog(L"myCheckBox Event executed", 3);
+	}
+	static void myPanelEvent() {
+		WinLog(L"myPanel Event executed", 4);
+	}
+	/*static void myDDList2Event() {
+		WinLog(L"DropDownIndex changed to ", myDDList->GetCurrentElement());
+	}*/
+
     static void GLFWCALL glfw_onMouseButton(int button, int action)
     {
         app->onMouseButton(button, action);
+			
+		////Button 1
+		//if(myButton->onMouseButton(button, action))
+		//	myButtonEvent();
+
+		////Button 2
+		//if(myButton2->onMouseButton(button, action))
+		//	myButton2Event();
+
+		////CheckBox
+		//if (myCheckBox->onMouseButton(button, action))
+		//	myCheckBoxEvent();
+		////TabPanel
+		myTabPanel->CheckClickedButton(button, action);
+		////if (btnTesselation)
+		////	myTesselationEvent();
+
+		//	//myPanelEvent();
+
+		////DropDownList
+		//if (myDDList->onMouseButton(button, action))
+		//	myDDList2Event();
     }
 
     static void GLFWCALL glfw_onMouseMove(int x, int y)
     {
+		//myTabPanel->buttonPage1.CheckArea(x, y);
+		//myTabPanel->panelPage1.CheckArea(x, y);
+		myTabPanel->CheckArea(x, y);
+		/*myButton->CheckArea(x, y);
+		myButton2->CheckArea(x, y);
+		myCheckBox->CheckArea(x, y);
+		myPanel->CheckArea(x, y);
+		myDDList->CheckArea(x, y);*/
+
         app->onMouseMove(x, y);
     }
 
@@ -327,7 +444,11 @@ protected:
     }
 };
 
+
+
 };
+
+
 
 #if defined _WIN32
 #define DECLARE_MAIN(a)                             \
