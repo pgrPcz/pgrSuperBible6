@@ -7,6 +7,7 @@ private:
 public:
 	CheckBox();
 	~CheckBox();
+	void setActive(bool flag);
 	bool onMouseButton(int button, int action);
 };
 

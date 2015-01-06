@@ -9,13 +9,15 @@
 
 #include <sb6ktx.h>
 
+
+
 #include "main_app.h"
 
 // TODO here adatczuk
 // - Cube of objects
 // - Setting shaders
 // - Rendering each object
-// - Rendering GUI
+// + Rendering GUI
 // - Saving XML?
 // - Reading XML
 // - Input handling (update)
@@ -82,7 +84,11 @@ void MainApp::init()
 {
     static const char title[] = "OpenGL SuperBible - Main test app";
 
-    sb6::application::init();
+	sb6::application::init();
+
+	//mlaboszc
+	myTabPanel = new TabPanel();
+	m_xml_helper = new xml_helper();
 
     m_camera = new camera(this);
     m_camera->setPosition(-20, 0, 0);
@@ -99,6 +105,7 @@ void MainApp::init()
 //************************************
 void MainApp::startup()
 {
+	myTabPanel->Init();
     // Init scene objects
     for(int i = 0; i < OBJECT_COUNT_X; i++)
     {
@@ -106,6 +113,10 @@ void MainApp::startup()
         {
             for(int k = 0; k < OBJECT_COUNT_Z; k++)
             {
+				//mlaboszc
+				m_xml_helper->loadXml(&mSceneObjects[i][j][k]);
+				myTabPanel->setXmlParamsStruct(mSceneObjects[i][j][k].instanceNum, mSceneObjects[i][j][k].xmlParams);
+
                 mSceneObjects[i][j][k].startup("media/objects/sphere.sbm");
             }
         }
@@ -122,6 +133,7 @@ void MainApp::startup()
 //************************************
 void MainApp::render(double currentTime)
 {
+	
 	m_camera->onRender(currentTime);
     
     static const GLfloat zeros[] = { 0.0f, 0.0f, 0.0f, 0.0f };
@@ -168,6 +180,7 @@ void MainApp::render(double currentTime)
             }
         }
     }
+	myTabPanel->Render(currentTime);
 }
 
 //************************************
@@ -210,10 +223,13 @@ void MainApp::onKey(int key, int action)
 //************************************
 void MainApp::onMouseMove(int x, int y)
 {
+	myTabPanel->CheckArea(x, y);
 	m_camera->onMouseMove(x, y);
 }
 
-
+void MainApp::onMouseButton(int button, int action) {
+	myTabPanel->CheckClickedButton(button, action);
+}
 // Note adatczuk: to be removed
 ////************************************
 //// Method:    load_shaders

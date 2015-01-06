@@ -99,8 +99,6 @@ public:
 
 	int myQuickIndex;
 
-	static TabPanel* myTabPanel;
-	//static Button* buttonShowMenu;
 
     application() {
 		myQuickIndex=myAppIndex++;
@@ -184,12 +182,6 @@ public:
         }
 
         startup();
-		WinLog(L"application::startup()", myQuickIndex);
-		myTabPanel->Init();
-		WinLog(L"TabPanel\n");
-	/*	buttonShowMenu->Init(800, 600, 30, 10, 50, 20, "../../bitmap/ButtonShowMenu2.bmp");
-		WinLog(L"btn1\n");
-		*/
 
 		
 
@@ -204,9 +196,6 @@ public:
 				
 
             render(glfwGetTime());		
-
-			//buttonShowMenu->Render(glfwGetTime());
-			myTabPanel->Render(glfwGetTime());
 
             glfwSwapBuffers();
 
@@ -361,33 +350,10 @@ protected:
     static void GLFWCALL glfw_onMouseButton(int button, int action)
     {
         app->onMouseButton(button, action);
-			
-		////Button 1
-		/*if(buttonShowMenu->onMouseButton(button, action))
-			myButtonEvent();*/
-
-		myTabPanel->CheckClickedButton(button, action);
-		////if (btnTesselation)
-		////	myTesselationEvent();
-
-		//	//myPanelEvent();
-
-		////DropDownList
-		//if (myDDList->onMouseButton(button, action))
-		//	myDDList2Event();
     }
 
     static void GLFWCALL glfw_onMouseMove(int x, int y)
     {
-		//myTabPanel->buttonPage1.CheckArea(x, y);
-		//myTabPanel->panelPage1.CheckArea(x, y);
-		myTabPanel->CheckArea(x, y);
-		//buttonShowMenu->CheckArea(x, y);
-		/*myButton2->CheckArea(x, y);
-		myCheckBox->CheckArea(x, y);
-		myPanel->CheckArea(x, y);
-		myDDList->CheckArea(x, y);*/
-
         app->onMouseMove(x, y);
     }
 

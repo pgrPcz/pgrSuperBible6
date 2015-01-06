@@ -13,14 +13,14 @@
 #include <iostream>     // std::cout
 #include <algorithm>    // std::fill
 #include <vector>       // std::vector
-
+#include <string>
 
 class Label {
 public:
 	Label();
 	~Label();
 
-	void Init(int winW, int winH, float x, float y, int fontsize, const char * labeltext);
+	void Init(int winW, int winH, float x, float y, int fontsize, std::string labeltext);
 	void Render(double currentTime);
 	void ShoutDown();
 
@@ -29,6 +29,8 @@ public:
 	void ChangeTexCoord(int index);
 	void SetTexCoordASCII(char symbol,float);
 	
+	void ChangeText(std::string text);
+
 private:
 	void WinLog(const wchar_t *text, int n);
 	GLuint LoadBMPTexture(const char * imagepath);
@@ -49,7 +51,8 @@ private:
 
 	int mousePosX, mousePosY;
 
-	const char * labelText;
+	std::string labelText;
+	const char* text2Change;
 
 	unsigned char * textureData;
 	unsigned int fileWidth, fileHeight;

@@ -10,6 +10,15 @@ CheckBox::~CheckBox()
 	Button::ShoutDown();
 }
 
+void CheckBox::setActive(bool flag) {
+
+	if (flag) {
+		LoadBMPTexture("../../bitmap/CheckBoxUnchecked.bmp");
+	} else {
+		LoadBMPTexture("../../bitmap/CheckBoxChecked.bmp");
+	}
+}
+
 bool CheckBox::onMouseButton(int button, int action)
 {
 	if (CheckArea(mousePosX, mousePosY) && action == 1) 

@@ -24,7 +24,8 @@ btnColor(0),
 aspect(0),
 proj_matrix(0),
 tex_object(0),
-labelText(0) {
+text2Change(0)
+{
 
 	textColor = vmath::vec4(0.5f, 0.1f, 0.7f, 1.0f);
 
@@ -119,7 +120,11 @@ static GLfloat tex_coords_pos[] =
 	0.0f, 0.0f,
 };
 
-void Label::Init(int winW, int winH, float posX, float posY, int fontsize, const char * textToDraw) {
+void Label::ChangeText(std::string text2Change) {
+	labelText = text2Change;
+}
+
+void Label::Init(int winW, int winH, float posX, float posY, int fontsize, std::string textToDraw) {
 
 	winWidth = winW;
 	winHeight = winH;
@@ -133,6 +138,7 @@ void Label::Init(int winW, int winH, float posX, float posY, int fontsize, const
 	y = posY;
 	width = fontsize;
 	height = fontsize;
+
 	labelText = textToDraw;
 
 	x /= winWidth;
@@ -408,10 +414,15 @@ void Label::Render(double currentTime) {
 
 	glUniform4fv(btnColor, 1, textColor);
 
+
+	text2Change = labelText.c_str();
+
 	int charPos = 0;
 	while (1) {
-		if (labelText[charPos] == '\0') break;
-		SetTexCoordASCII(labelText[charPos], charPos + 1);
+
+		char c = text2Change[charPos];
+		if (c == '\0') break;
+		SetTexCoordASCII(text2Change[charPos], charPos + 1);
 		charPos++;
 	}
 

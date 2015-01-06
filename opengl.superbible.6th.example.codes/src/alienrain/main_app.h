@@ -7,6 +7,7 @@
 #include "camera.h"
 #include "scene_object.h"
 
+#include "../../include/tabPanel.h"
 // TODO here adatczuk
 // +  Cube of objects
 // +  Rendering each object
@@ -24,6 +25,7 @@ class MainApp : public managed_application
 public:
     MainApp(application_manager * a);
 
+
 	string  getAppName();
 	void    handleDocument(XMLDocument* doc);
 
@@ -35,6 +37,7 @@ protected:
     void    onKey(int key, int action);
     void    onMouseMove(int x, int y);
 
+	void    onMouseButton(int button, int action);
     //void    load_shaders();
 
 /* Variables */
@@ -44,6 +47,8 @@ public:
     const static unsigned int OBJECT_COUNT_Z = 3;
 
 protected:
+	TabPanel* myTabPanel;
+
 	camera* m_camera;
 
 	// Object
