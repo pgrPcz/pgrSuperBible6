@@ -1,5 +1,44 @@
 <app>
-	<object many_objects="1" per_vertex="1"/>
+	<!-- <object many_objects="0" per_vertex="1" scaleX="1" scaleY="1" scaleZ="1"/> -->
 	<light pos="100.0, 100.0, 100.0"/>
 	<material_properties diffuse_albedo="0.4, 0.9, 0.3" specular_albedo="0.7" specular_power="200" />
+	<objects>
+		<object coordX="0" coordY="0" coordZ="0" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="0" coordY="0" coordZ="1" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="0" coordY="0" coordZ="2" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		
+		<object coordX="0" coordY="1" coordZ="0" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="0" coordY="1" coordZ="1" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="0" coordY="1" coordZ="2" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		
+		<object coordX="0" coordY="2" coordZ="0" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="0" coordY="2" coordZ="1" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="0" coordY="2" coordZ="2" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		
+		
+		<object coordX="1" coordY="0" coordZ="0" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="1" coordY="0" coordZ="1" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="1" coordY="0" coordZ="2" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		
+		<object coordX="1" coordY="1" coordZ="0" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="1" coordY="1" coordZ="1" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="1" coordY="1" coordZ="2" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		
+		<object coordX="1" coordY="2" coordZ="0" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="1" coordY="2" coordZ="1" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="1" coordY="2" coordZ="2" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		
+		
+		<object coordX="2" coordY="0" coordZ="0" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="2" coordY="0" coordZ="1" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="2" coordY="0" coordZ="2" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		
+		<object coordX="2" coordY="1" coordZ="0" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="2" coordY="1" coordZ="1" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="2" coordY="1" coordZ="2" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		
+		<object coordX="2" coordY="2" coordZ="0" model="media/objects/bunny_1k.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="2" coordY="2" coordZ="1" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+		<object coordX="2" coordY="2" coordZ="2" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.3" scaleX="1" scaleY="1" scaleZ="1"/>
+	</objects>
 </app>

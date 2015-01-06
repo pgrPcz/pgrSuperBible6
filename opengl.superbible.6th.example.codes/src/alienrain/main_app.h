@@ -34,7 +34,7 @@ protected:
     void    render(double currentTime);
     void    onKey(int key, int action);
     void    onMouseMove(int x, int y);
-
+    void    ReadObjectsProperties( XMLElement* root );
     //void    load_shaders();
 
 /* Variables */
@@ -81,6 +81,5 @@ protected:
         GLint       specular_power;
     } uniforms[2];
 
-    sb6::object object; // TODO adatczuk to be removed
     SceneObject mSceneObjects[OBJECT_COUNT_X][OBJECT_COUNT_Y][OBJECT_COUNT_Z];
 };

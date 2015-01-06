@@ -2,15 +2,6 @@
 
 #include <sb6.h>
 
-/*
-int CALLBACK WinMain(HINSTANCE hInstance,
-	HINSTANCE hPrevInstance,
-	LPSTR lpCmdLine,
-	int nCmdShow)
-{
-	return 0;
-}
-*/
 using namespace std;
 
 class SceneObject
@@ -18,24 +9,37 @@ class SceneObject
 public:
     SceneObject();
 
-    void startup(
-        const char* object_path);
+    void Startup();
 
-    void render( double currentTime, int w, int h, vmath::vec3 view_position, vmath::mat4 view_matrix, vmath::mat4 model_matrix);
+    void Render(double currentTime, int w, int h, vmath::vec3 view_position, vmath::mat4 view_matrix, vmath::mat4 model_matrix);
 
-	void load_shaders(
+	void LoadShaders(
         const char* per_fragment_vs_path, 
         const char* per_fragment_fs_path,
         const char* per_vertex_vs_path, 
         const char* per_vertex_fs_path );
 
-    void load_shaders();
+    void LoadShaders();
+
+    void SetModel( std::string path );
+    void SetTexture( std::string path );
+    void SetRotation( vmath::vec3 rotation );
+    void SetRotation( float x, float y, float z );
+    void SetCoords( vmath::uvec3 coords );
+    void SetScale( vmath::vec3 scale );
 
 protected:
+    // Config from XML
+    string          mModelPath;
+    string          mTexturePath;
+    vmath::vec3     mRotation;
+    vmath::vec3     mScale;
+    vmath::uvec3    mCoords;
+
     GLuint          per_fragment_program;
     GLuint          per_vertex_program;
     bool            is_per_vertex;
-    sb6::object     object;
+    sb6::object     model;
 
     struct
     {

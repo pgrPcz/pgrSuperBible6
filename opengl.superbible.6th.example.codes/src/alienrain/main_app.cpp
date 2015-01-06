@@ -58,17 +58,57 @@ void MainApp::handleDocument( XMLDocument* doc )
 {
     XMLElement* root = doc->FirstChildElement();
 
-    XMLElement* ele  = root->FirstChildElement("object");
+    /*XMLElement* ele  = root->FirstChildElement("object");
     is_many_objects  = ele->BoolAttribute("many_objects");
-    is_per_vertex    = ele->BoolAttribute("per_vertex");
+    is_per_vertex    = ele->BoolAttribute("per_vertex");*/
 
-    ele              = root->FirstChildElement("light");
-    light_pos        = ele->Attribute("pos");	
+    XMLElement* ele  = root->FirstChildElement( "light" );
+    light_pos        = ele->Attribute("pos");
 
     ele              = root->FirstChildElement("material_properties");
     diffuse_albedo   = ele->Attribute("diffuse_albedo");	
     specular_albedo  = ele->Attribute("specular_albedo");	
     specular_power   = ele->Attribute("specular_power");
+
+    ReadObjectsProperties( root );
+}
+
+void MainApp::ReadObjectsProperties( XMLElement* root )
+{
+    XMLElement* element = root->FirstChildElement( "objects" );
+
+    if( !element )
+        return;
+
+    element = element->FirstChildElement( "object" );
+    while( element != NULL )
+    {
+        vmath::uvec3 coords  = vmath::uvec3(
+            element->UnsignedAttribute( "coordX" ),
+            element->UnsignedAttribute( "coordY" ),
+            element->UnsignedAttribute( "coordZ" ) );
+
+        vmath::vec3 rotation = vmath::vec3(
+            element->FloatAttribute( "rotX" ),
+            element->FloatAttribute( "rotY" ),
+            element->FloatAttribute( "rotZ" ) );
+
+        string modelPath   = element->Attribute( "model" );
+        string texturePath = element->Attribute( "texture" );
+
+        if( coords[0] < OBJECT_COUNT_X && 
+            coords[1] < OBJECT_COUNT_Y && 
+            coords[2] < OBJECT_COUNT_Z )
+        {
+            SceneObject& object = mSceneObjects[coords[0]][coords[1]][coords[2]];
+            object.SetCoords( coords );
+            object.SetRotation( rotation );
+            object.SetModel( modelPath );
+            object.SetTexture( texturePath );
+        }
+
+        element = element->NextSiblingElement();
+    }
 }
 
 //************************************
@@ -106,7 +146,7 @@ void MainApp::startup()
         {
             for(int k = 0; k < OBJECT_COUNT_Z; k++)
             {
-                mSceneObjects[i][j][k].startup("media/objects/sphere.sbm");
+                mSceneObjects[i][j][k].Startup();
             }
         }
     }
@@ -158,7 +198,7 @@ void MainApp::render(double currentTime)
                 vmath::mat4 model_matrix = 
                     vmath::translate((float)i * 2.25f - 6.25f, 2.75f - (float)j * 2.25f, (float)k * 2.25f - 2.25f);
 
-                mSceneObjects[i][j][k].render(
+                mSceneObjects[i][j][k].Render(
                     currentTime, 
                     info.windowWidth, 
                     info.windowHeight, 

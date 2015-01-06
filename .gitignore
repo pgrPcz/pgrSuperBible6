@@ -18,5 +18,6 @@ Temp
 *.tlog
 *.user
 *.sdf
+*.lastbuildstate
 Debug
 startup_Debug

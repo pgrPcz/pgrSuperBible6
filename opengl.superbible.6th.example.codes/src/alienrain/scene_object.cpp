@@ -26,7 +26,14 @@ SceneObject::SceneObject() : per_fragment_program(0),
 
 }
 
-void SceneObject::load_shaders()
+//************************************
+// Method:    LoadShaders
+// FullName:  SceneObject::LoadShaders
+// Access:    public 
+// Returns:   void
+// Qualifier:
+//************************************
+void SceneObject::LoadShaders()
 {
     // !!!!!!!!!!!! 
     // Note adatczuk: just a temp method, a target is to load shaders from files, 
@@ -152,14 +159,14 @@ void SceneObject::load_shaders()
 }
 
 //************************************
-// Method:    startup
+// Method:    Startup
 // FullName:  SceneObject::startup
 // Access:    public 
 // Returns:   void
 // Qualifier:
 // Parameter: const char * object_path
 //************************************
-void SceneObject::startup( const char* object_path )
+void SceneObject::Startup()
 {
     /*load_shaders("media/shaders/phonglighting/per-fragment-phong.vs.glsl", 
         "media/shaders/phonglighting/per-fragment-phong.fs.glsl",
@@ -167,14 +174,19 @@ void SceneObject::startup( const char* object_path )
         "media/shaders/phonglighting/per-vertex-phong.fs.glsl");*/
     // Note adatczuk: ^^^^^^ doesn' work for now :(
 
+    if( mModelPath.empty() )
+    {
+        mModelPath = "media/objects/sphere.sbm";
+    }
+
     // TODO check error on load shaders and load object
-    load_shaders();
+    LoadShaders();
 
     glGenBuffers(1, &uniforms_buffer);
     glBindBuffer(GL_UNIFORM_BUFFER, uniforms_buffer);
     glBufferData(GL_UNIFORM_BUFFER, sizeof(uniforms_block), NULL, GL_DYNAMIC_DRAW);
 
-    object.load(object_path);
+    model.load(mModelPath.c_str());
 
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
@@ -182,7 +194,7 @@ void SceneObject::startup( const char* object_path )
 }
 
 //************************************
-// Method:    render
+// Method:    Render
 // FullName:  SceneObject::render
 // Access:    public 
 // Returns:   void
@@ -194,7 +206,7 @@ void SceneObject::startup( const char* object_path )
 // Parameter: vmath::mat4 view_matrix
 // Parameter: vmath::mat4 model_matrix
 //************************************
-void SceneObject::render( double currentTime, int w, int h, vmath::vec3 view_position, vmath::mat4 view_matrix, 
+void SceneObject::Render( double currentTime, int w, int h, vmath::vec3 view_position, vmath::mat4 view_matrix, 
     vmath::mat4 model_matrix )
 {
     static const GLfloat zeros[] = { 0.0f, 0.0f, 0.0f, 0.0f };
@@ -237,11 +249,11 @@ void SceneObject::render( double currentTime, int w, int h, vmath::vec3 view_pos
     glUniform1f(uniforms[is_per_vertex ? 1 : 0].specular_power, powf(2.0f, (float)0 + 2.0f));
     glUniform3fv(uniforms[is_per_vertex ? 1 : 0].specular_albedo, 1, vmath::vec3((float)0 / 9.0f + 1.0f / 9.0f));
 
-    object.render();
+    model.render();
 }
 
 //************************************
-// Method:    load_shaders
+// Method:    LoadShaders
 // FullName:  SceneObject::load_shaders
 // Access:    public 
 // Returns:   void
@@ -251,7 +263,7 @@ void SceneObject::render( double currentTime, int w, int h, vmath::vec3 view_pos
 // Parameter: const char * per_vertex_vs_path
 // Parameter: const char * per_vertex_fs_path
 //************************************
-void SceneObject::load_shaders( const char* per_fragment_vs_path, const char* per_fragment_fs_path, const char* per_vertex_vs_path, const char* per_vertex_fs_path )
+void SceneObject::LoadShaders( const char* per_fragment_vs_path, const char* per_fragment_fs_path, const char* per_vertex_vs_path, const char* per_vertex_fs_path )
 {
     GLuint vs;
     GLuint fs;
@@ -295,4 +307,87 @@ void SceneObject::load_shaders( const char* per_fragment_vs_path, const char* pe
     uniforms[1].diffuse_albedo = glGetUniformLocation(per_vertex_program, "diffuse_albedo");
     uniforms[1].specular_albedo = glGetUniformLocation(per_vertex_program, "specular_albedo");
     uniforms[1].specular_power = glGetUniformLocation(per_vertex_program, "specular_power");
+}
+
+//************************************
+// Method:    SetModel
+// FullName:  SceneObject::SetModel
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: std::string path
+//************************************
+void SceneObject::SetModel( std::string path )
+{
+    mModelPath = path; 
+    /* TODO load model etc */
+}
+
+//************************************
+// Method:    SetTexture
+// FullName:  SceneObject::SetTexture
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: std::string path
+//************************************
+void SceneObject::SetTexture( std::string path )
+{
+    mTexturePath = path; 
+    /* TODO load texture etc */
+}
+
+//************************************
+// Method:    SetRotation
+// FullName:  SceneObject::SetRotation
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: float x
+// Parameter: float y
+// Parameter: float z
+//************************************
+void SceneObject::SetRotation( float x, float y, float z )
+{
+    SetRotation( vmath::vec3( x, y, z ) );
+}
+
+//************************************
+// Method:    SetRotation
+// FullName:  SceneObject::SetRotation
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: vmath::vec3 rotation
+//************************************
+void SceneObject::SetRotation( vmath::vec3 rotation )
+{
+    mRotation = rotation;
+    /* TODO change matrix? */
+}
+
+//************************************
+// Method:    SetCoords
+// FullName:  SceneObject::SetCoords
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: vmath::uvec3 coords
+//************************************
+void SceneObject::SetCoords( vmath::uvec3 coords )
+{
+    mCoords = coords;
+}
+
+//************************************
+// Method:    SetScale
+// FullName:  SceneObject::SetScale
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: vmath::vec3 scale
+//************************************
+void SceneObject::SetScale( vmath::vec3 scale )
+{
+    mScale = scale;
 }

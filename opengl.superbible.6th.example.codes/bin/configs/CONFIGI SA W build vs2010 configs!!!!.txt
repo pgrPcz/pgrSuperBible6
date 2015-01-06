@@ -1,0 +1,1 @@
+aplikacja tych nie uzywa; uzywane configi sa w build/vs2010/configs
