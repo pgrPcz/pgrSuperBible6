@@ -4,13 +4,23 @@
 #include "checkBox.h"
 #include "label.h"
 #include "dropDownList.h"
+#include "../src/alienrain/unifiedXmlParamsBlock.h"
 
 class TabPanel
 {
 private:
 	int currentPage = 1;
 	bool showMenuFlag = false;
+
+	const static unsigned int OBJECT_COUNT_X = 3;
+	const static unsigned int OBJECT_COUNT_Y = 3;
+	const static unsigned int OBJECT_COUNT_Z = 3;
+
+	unifiedXmlParamsBlock xmlParams[OBJECT_COUNT_X*OBJECT_COUNT_Y*OBJECT_COUNT_Z];
 public:
+	
+	unifiedXmlParamsBlock TabPanel::getXmlParamsStruct(int index);
+
 	Button* buttonPage1;
 	Button* buttonPage2;
 	Button* buttonShowMenu;
@@ -19,9 +29,26 @@ public:
 	Button* btnMenu1;
 	Button* btnMenu2;
 	CheckBox* cbOpt1;
-	Label* labelTest;
+	CheckBox* cbOpt2;
+
 	DropDownList* dropDownListTest;
 	DropDownList* dropDownListSlots;
+
+	Label* slotName;
+
+	Label* label1;
+	Label* label2;
+	Label* label3;
+	Label* label4;
+	Label* label5;
+	Label* label6;
+	Label* label7;
+
+	Label* label8;
+	Label* label9;
+	Label* label10;
+	Label* label11;
+	Label* label12;
 
 	TabPanel();
 	~TabPanel();
@@ -29,5 +56,8 @@ public:
 	void Render(double currentTime);
 	bool CheckArea(int x, int y);
 	void CheckClickedButton(int button, int action);
+	void setXmlParamsStruct(int index, unifiedXmlParamsBlock block);
+
+	void ChangeTabParams();
 };
 

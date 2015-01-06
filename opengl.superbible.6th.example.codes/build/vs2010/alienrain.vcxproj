@@ -22,6 +22,7 @@
     <ClInclude Include="..\..\src\alienrain\tessellatedtri.h" />
     <ClInclude Include="..\..\src\alienrain\tinyxml2.h" />
     <ClInclude Include="..\..\src\alienrain\tunnel.h" />
+    <ClInclude Include="..\..\src\alienrain\unifiedXmlParamsBlock.h" />
     <ClInclude Include="..\..\src\alienrain\xml_helper.h" />
   </ItemGroup>
   <ItemGroup>

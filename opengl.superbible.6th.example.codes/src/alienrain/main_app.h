@@ -7,6 +7,8 @@
 #include "camera.h"
 #include "scene_object.h"
 
+#include "../../include/tabPanel.h"
+
 // TODO here adatczuk
 // +  Cube of objects
 // +  Rendering each object
@@ -24,8 +26,9 @@ class MainApp : public managed_application
 public:
     MainApp(application_manager * a);
 
-	string  getAppName();
-	void    handleDocument(XMLDocument* doc);
+
+    string  getAppName();
+    void    handleDocument(XMLDocument* doc);
 
 protected:
     void    init();
@@ -34,6 +37,8 @@ protected:
     void    render(double currentTime);
     void    onKey(int key, int action);
     void    onMouseMove(int x, int y);
+    void    onMouseButton(int button, int action);
+    
     void    ReadObjectsProperties( XMLElement* root );
     //void    load_shaders();
 
@@ -44,19 +49,21 @@ public:
     const static unsigned int OBJECT_COUNT_Z = 3;
 
 protected:
-	camera* m_camera;
+    TabPanel* myTabPanel;
 
-	// Object
-	bool    is_many_objects; // TODO adatczuk to be removed
-	bool    is_per_vertex;
+    camera* m_camera;
 
-	// Light
-	string  light_pos;	
+    // Object
+    bool    is_many_objects; // TODO adatczuk to be removed
+    bool    is_per_vertex;
 
-	// Material properties	
-	string  diffuse_albedo;
-	string  specular_albedo;
-	string  specular_power;
+    // Light
+    string  light_pos;    
+
+    // Material properties    
+    string  diffuse_albedo;
+    string  specular_albedo;
+    string  specular_power;
 
     GLuint  per_fragment_program; // TODO adatczuk to be removed
 

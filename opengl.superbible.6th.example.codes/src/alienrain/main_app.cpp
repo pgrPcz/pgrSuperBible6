@@ -9,13 +9,15 @@
 
 #include <sb6ktx.h>
 
+
+
 #include "main_app.h"
 
 // TODO here adatczuk
 // - Cube of objects
 // - Setting shaders
 // - Rendering each object
-// - Rendering GUI
+// + Rendering GUI
 // - Saving XML?
 // - Reading XML
 // - Input handling (update)
@@ -66,8 +68,8 @@ void MainApp::handleDocument( XMLDocument* doc )
     light_pos        = ele->Attribute("pos");
 
     ele              = root->FirstChildElement("material_properties");
-    diffuse_albedo   = ele->Attribute("diffuse_albedo");	
-    specular_albedo  = ele->Attribute("specular_albedo");	
+    diffuse_albedo   = ele->Attribute("diffuse_albedo");
+    specular_albedo  = ele->Attribute("specular_albedo");
     specular_power   = ele->Attribute("specular_power");
 
     ReadObjectsProperties( root );
@@ -124,6 +126,10 @@ void MainApp::init()
 
     sb6::application::init();
 
+    //mlaboszc
+    myTabPanel = new TabPanel();
+    m_xml_helper = new xml_helper();
+
     m_camera = new camera(this);
     m_camera->setPosition(-20, 0, 0);
 
@@ -139,6 +145,7 @@ void MainApp::init()
 //************************************
 void MainApp::startup()
 {
+    myTabPanel->Init();
     // Init scene objects
     for(int i = 0; i < OBJECT_COUNT_X; i++)
     {
@@ -146,6 +153,11 @@ void MainApp::startup()
         {
             for(int k = 0; k < OBJECT_COUNT_Z; k++)
             {
+                
+                //mlaboszc
+                m_xml_helper->loadXml(&mSceneObjects[i][j][k]);
+                myTabPanel->setXmlParamsStruct(mSceneObjects[i][j][k].instanceNum, mSceneObjects[i][j][k].xmlParams);
+
                 mSceneObjects[i][j][k].Startup();
             }
         }
@@ -162,7 +174,7 @@ void MainApp::startup()
 //************************************
 void MainApp::render(double currentTime)
 {
-	m_camera->onRender(currentTime);
+    m_camera->onRender(currentTime);
     
     static const GLfloat zeros[] = { 0.0f, 0.0f, 0.0f, 0.0f };
     static const GLfloat gray[]  = { 0.1f, 0.1f, 0.1f, 0.0f };
@@ -178,11 +190,11 @@ void MainApp::render(double currentTime)
                                */
 
     vmath::vec3 view_position = vmath::vec3(0.0f, 0.0f, 50.0f);
-	vmath::mat4 view_matrix = m_camera->createViewMatrix();
-		/*vmath::lookat(view_position,
+    vmath::mat4 view_matrix = m_camera->createViewMatrix();
+        /*vmath::lookat(view_position,
                                             vmath::vec3(0.0f, 0.0f, 0.0f),
                                             vmath::vec3(0.0f, 1.0f, 0.0f));
-											*/
+                                            */
 
     /*vmath::vec3 light_position    = vmath::vec3(-20.0f, -20.0f, 0.0f);
     vmath::mat4 light_proj_matrix = vmath::frustum(-1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 200.0f);
@@ -208,6 +220,7 @@ void MainApp::render(double currentTime)
             }
         }
     }
+    myTabPanel->Render(currentTime);
 }
 
 //************************************
@@ -235,8 +248,8 @@ void MainApp::onKey(int key, int action)
         }
     }
 
-	m_camera->onKey(key, action);
-	m_app_manager->onKey(key, action);
+    m_camera->onKey(key, action);
+    m_app_manager->onKey(key, action);
 }
 
 //************************************
@@ -250,10 +263,13 @@ void MainApp::onKey(int key, int action)
 //************************************
 void MainApp::onMouseMove(int x, int y)
 {
-	m_camera->onMouseMove(x, y);
+    myTabPanel->CheckArea(x, y);
+    m_camera->onMouseMove(x, y);
 }
 
-
+void MainApp::onMouseButton(int button, int action) {
+    myTabPanel->CheckClickedButton(button, action);
+}
 // Note adatczuk: to be removed
 ////************************************
 //// Method:    load_shaders

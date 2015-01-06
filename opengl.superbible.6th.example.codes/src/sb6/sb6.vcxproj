@@ -26,6 +26,7 @@
     <ClCompile Include="TextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\alienrain\unifiedXmlParamsBlock.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

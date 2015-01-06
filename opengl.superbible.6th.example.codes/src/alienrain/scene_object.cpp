@@ -4,13 +4,14 @@
 #include <object.h>
 #include <sb6ktx.h>
 #include <shader.h>
-
+#include <vector>
 #include "scene_object.h"
 
 /* SceneObject constants */
 const float SceneObject::perspective_fovy = 50.0f;
 const float SceneObject::perspective_f    = 0.1f;
 const float SceneObject::perspective_n    = 1000.0f;
+int SceneObject::instanceCounter = 0;
 
 //************************************
 // Method:    SceneObject
@@ -19,10 +20,79 @@ const float SceneObject::perspective_n    = 1000.0f;
 // Returns:   
 // Qualifier: : per_fragment_program(0), per_vertex_program(0), is_per_vertex(false)
 //************************************
-SceneObject::SceneObject() : per_fragment_program(0),
+SceneObject::SceneObject() :
+	per_fragment_program(0),
     per_vertex_program(0),
     is_per_vertex(true)
 {
+
+
+	instanceNum = instanceCounter;
+	instanceCounter++;
+}
+
+
+string SceneObject::getAppName() {
+
+	// !!!!!!!!!!!! 
+	// Note mlaboszc: currently each object read params from one of four *.xml files
+	//                modulo can be deleted after adding more config files to given dir:
+	//				  opengl.superbible.6th.example.codes\build\vs2010\configs
+	// !!!!!!!!!!!!!
+	string name = "object" + to_string(instanceNum % 4);
+	printf("%s:", name);
+	return name;
+}
+// mlaboszc
+vmath::vec3 getXmlVecParam(string xmlParams) {
+	vmath::vec3 vecParams = vmath::vec3(0.0, 0.0, 0.0);
+
+	char *cstr = &xmlParams[0];
+	char * pch;
+	pch = strtok(cstr, ", ");
+	int i = 0;
+	while (pch != NULL) {
+		vecParams[i++] = stof(pch);
+		pch = strtok(NULL, ", ");
+	}
+	return vecParams;
+}
+//mlaboszc
+void SceneObject::handleDocument(XMLDocument* doc) {
+	XMLElement* root = doc->FirstChildElement();
+
+	// !!!!!!!!!!!! 
+	// Note mlaboszc: if you want use numrical vals,
+	//				  commented code conatains example of convertions method getXmlVecParam
+	// !!!!!!!!!!!!!
+
+	// extracted numerical(bool,float,int) values:
+	//XMLElement* ele = root->FirstChildElement("object");
+	//bool is_many_objects = ele->BoolAttribute("many_objects");
+	//is_per_vertex = ele->BoolAttribute("per_vertex");
+
+	//ele = root->FirstChildElement("light");
+	//vmath::vec3 lightPos = getXmlVecParam(ele->Attribute("pos"));
+
+	//ele = root->FirstChildElement("material_properties");
+	//vmath::vec3 diffuseAlbedoVec = getXmlVecParam(ele->Attribute("diffuse_albedo"));
+	//float specular_albedo = ele->FloatAttribute("specular_albedo");
+	//int specular_power = ele->IntAttribute("specular_power");
+
+
+	//extracted strings to display in GUI
+	XMLElement* ele = root->FirstChildElement("object");
+
+	xmlParams.is_many_objects = ele->BoolAttribute("many_objects");
+	xmlParams.is_per_vertex = ele->BoolAttribute("per_vertex");
+
+	ele = root->FirstChildElement("light");
+	xmlParams.light_pos = ele->Attribute("pos");
+
+	ele = root->FirstChildElement("material_properties");
+	xmlParams.diffuse_albedo = ele->Attribute("diffuse_albedo");
+	xmlParams.specular_albedo = ele->Attribute("specular_albedo");
+	xmlParams.specular_power = ele->Attribute("specular_power");
 
 }
 

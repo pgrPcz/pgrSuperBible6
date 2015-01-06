@@ -9,10 +9,27 @@ TabPanel::TabPanel()
 
 	btnMenu1 = new Button();
 	btnMenu2 = new Button();
-	cbOpt1 = new CheckBox();
+
 	dropDownListTest = new DropDownList();
 	dropDownListSlots = new DropDownList();
-	labelTest = new Label();
+
+	cbOpt1 = new CheckBox();
+	cbOpt2 = new CheckBox();
+
+	slotName = new Label();
+	label1 = new Label();
+	label2 = new Label();
+	label3 = new Label();
+	label4 = new Label();
+	label5 = new Label();
+	label6 = new Label();
+	label7 = new Label();
+
+	label8 = new Label();
+	label9 = new Label();
+	label10 = new Label();
+	label11 = new Label();
+	label12 = new Label();
 
 }
 
@@ -23,27 +40,73 @@ TabPanel::~TabPanel()
 	delete panelPage1;
 	delete btnMenu1;
 	delete btnMenu2;
-	delete cbOpt1;
+
 	delete dropDownListTest;
-	delete labelTest;
 	delete buttonShowMenu;
 	delete dropDownListSlots;
+
+	delete cbOpt1;
+	delete cbOpt2;
+
+	delete slotName;
+	delete label1;
+	delete label2;
+	delete label3;
+	delete label4;
+	delete label5;
+	delete label6;
+	delete label7;
+
+	delete label8;
+	delete label9;
+	delete label10;
+	delete label11;
+	delete label12;
 }
 
 void TabPanel::Init()
 {
 	int yOffset = 20;
-	buttonShowMenu->Init(800, 600, 30, 10, 50, 20, "../../bitmap/ButtonShowMenu2.bmp");
-	buttonPage1->Init(800, 600, 30, yOffset + 10, 50, 20, "../../bitmap/panelPage1.bmp");
-	panelPage1->Init(800, 600, 30, yOffset + 30, 400, 400, "../../bitmap/panel2.bmp");
-	buttonPage2->Init(800, 600, 80, yOffset + 10, 50, 20, "../../bitmap/panelPage2.bmp");
-	btnMenu1->Init(800, 600, 50, yOffset + 50, 50, 20, "../../bitmap/Button1.bmp");
-	btnMenu2->Init(800, 600, 50, yOffset + 50, 50, 20, "../../bitmap/Button2.bmp");
-	cbOpt1->Init(800, 600, 50, yOffset + 80, 15, 15, "../../bitmap/CheckBoxUnchecked.bmp");
+	int xOffset = 20;
+	int fontsize = 20;
+	int controlsOffset = 250;
+
+	buttonShowMenu->Init(800, 600, xOffset, 10, 50, xOffset, "../../bitmap/ButtonShowMenu2.bmp");
+	buttonPage1->Init(800, 600, xOffset, yOffset + 10, 50, 20, "../../bitmap/panelPage1.bmp");
+	panelPage1->Init(800, 600, xOffset, yOffset + 30, 500, 400, "../../bitmap/panel2.bmp");
+	buttonPage2->Init(800, 600, xOffset + 50, yOffset + 10, 50, 20, "../../bitmap/panelPage2.bmp");
+
+	btnMenu1->Init(800, 600, xOffset + 320, yOffset + 320, 50, 20, "../../bitmap/Button1.bmp");
+	btnMenu2->Init(800, 600, xOffset + 320, yOffset + 320, 50, 20, "../../bitmap/Button2.bmp");
+
 	
-	dropDownListSlots->Init(800, 600, 80, 10, 100, 20, "../../bitmap/DropDownListSlots.bmp", 27);
-	dropDownListTest->Init(800, 600, 50, 150, 150, 50, "../../bitmap/DropDownList1.bmp", 5);
-	labelTest->Init(800, 600, 50, 320, 20, "napis obrazajacy Marko");
+	dropDownListSlots->Init(800, 600, 80, 10, yOffset + 100, 20, "../../bitmap/DropDownListSlots.bmp", 27);
+	dropDownListTest->Init(800, 600, xOffset + 320, yOffset + 340, 150, 50, "../../bitmap/DropDownList1.bmp", 5);
+
+	slotName->Init(800, 600, xOffset + 20, yOffset + 50, fontsize, "Slot number 0 parameters:");
+	label1->Init(800, 600, xOffset + 30, yOffset + 80, fontsize, "is_many_objects:");
+	label2->Init(800, 600, xOffset + 30, yOffset + 110, fontsize, "is_per_vertex:");
+	label3->Init(800, 600, xOffset + 30, yOffset + 140, fontsize, "light_pos:");
+	label4->Init(800, 600, xOffset + 30, yOffset + 170, fontsize, "diffuse_albedo:");
+	label5->Init(800, 600, xOffset + 30, yOffset + 200, fontsize, "specular_albedo:");
+	label6->Init(800, 600, xOffset + 30, yOffset + 230, fontsize, "specular_power:");
+	label7->Init(800, 600, xOffset + 30, yOffset + 260, fontsize, "other:");
+
+	cbOpt1->Init(800, 600, xOffset + controlsOffset, yOffset + 80, fontsize, fontsize, "../../bitmap/CheckBoxUnchecked.bmp");
+	cbOpt2->Init(800, 600, xOffset + controlsOffset, yOffset + 110, fontsize, fontsize, "../../bitmap/CheckBoxUnchecked.bmp");
+
+
+	label8->Init(800, 600, xOffset + controlsOffset, yOffset + 140, fontsize, "light_pos:");
+	label9->Init(800, 600, xOffset + controlsOffset, yOffset + 170, fontsize, "diffuse_albedo:");
+	label10->Init(800, 600, xOffset + controlsOffset, yOffset + 200, fontsize, "specular_albedo:");
+	label11->Init(800, 600, xOffset + controlsOffset, yOffset + 230, fontsize, "specular_power:");
+	label12->Init(800, 600, xOffset + controlsOffset, yOffset + 260, fontsize, "other:");
+
+
+}
+
+void TabPanel::setXmlParamsStruct(int index, unifiedXmlParamsBlock block) {
+	xmlParams[index] = block;
 }
 
 void TabPanel::Render(double currentTime)
@@ -59,10 +122,28 @@ void TabPanel::Render(double currentTime)
 
 		if (currentPage == 1)
 		{
+			
 			btnMenu1->Render(currentTime);
-			cbOpt1->Render(currentTime);
-			labelTest->Render(currentTime);
+
 			dropDownListTest->Render(currentTime);
+
+			cbOpt1->Render(currentTime);
+			cbOpt2->Render(currentTime);
+
+			slotName->Render(currentTime);
+			label1->Render(currentTime);
+			label2->Render(currentTime);
+			label3->Render(currentTime);
+			label4->Render(currentTime);
+			label5->Render(currentTime);
+			label6->Render(currentTime);
+			label7->Render(currentTime);
+
+			label8->Render(currentTime);
+			label9->Render(currentTime);
+			label10->Render(currentTime);
+			label11->Render(currentTime);
+			label12->Render(currentTime);
 		}
 		if (currentPage == 2)
 		{
@@ -82,21 +163,41 @@ bool TabPanel::CheckArea(int x, int y)
 	btnMenu1->CheckArea(x, y);
 	btnMenu2->CheckArea(x, y);
 	cbOpt1->CheckArea(x, y);
-	//labelTest->CheckArea(x, y);
+	cbOpt2->CheckArea(x, y);
+
 	dropDownListTest->CheckArea(x, y);
 	dropDownListSlots->CheckArea(x, y);
 
 	return true;
 }
+void TabPanel::ChangeTabParams() {
 
+	int slotIndex = dropDownListSlots->GetCurrentElement();
+	std::string text = "Slot number " + to_string(slotIndex);
+	slotName->ChangeText(text);
+
+	cbOpt1->setActive(xmlParams[slotIndex].is_many_objects);
+	cbOpt2->setActive(xmlParams[slotIndex].is_per_vertex);
+
+	label8->ChangeText(xmlParams[slotIndex].light_pos);
+	label9->ChangeText(xmlParams[slotIndex].diffuse_albedo);
+	label10->ChangeText(xmlParams[slotIndex].specular_albedo);
+	label11->ChangeText(xmlParams[slotIndex].specular_power);
+
+}
 void TabPanel::CheckClickedButton(int button, int action)
 {
 	btnMenu1->onMouseButton(button, action);
 	btnMenu2->onMouseButton(button, action);
 	cbOpt1->onMouseButton(button, action);
-	//labelTest->onMouseButton(button, action);
+	cbOpt2->onMouseButton(button, action);
+
 	dropDownListTest->onMouseButton(button, action);
-	dropDownListSlots->onMouseButton(button, action);
+
+	if (dropDownListSlots->onMouseButton(button, action)) {
+		ChangeTabParams();
+
+	}
 
 	if (buttonShowMenu->onMouseButton(button, action))
 	{

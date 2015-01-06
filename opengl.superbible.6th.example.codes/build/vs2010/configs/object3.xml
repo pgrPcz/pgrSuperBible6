@@ -1,0 +1,5 @@
+<app>
+	<object many_objects="0" per_vertex="0"/>
+	<light pos="100.0, 100.0, 100.0"/>
+	<material_properties diffuse_albedo="0.4, 0.6, 0.3" specular_albedo="0.7" specular_power="204" />
+</app>

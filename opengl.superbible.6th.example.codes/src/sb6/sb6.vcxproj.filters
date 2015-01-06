@@ -6,19 +6,39 @@
     <ClCompile Include="sb6shader.cpp" />
     <ClCompile Include="gl3w.c" />
     <ClCompile Include="sb6.cpp" />
-    <ClCompile Include="dropDownList.cpp" />
-    <ClCompile Include="button.cpp" />
-    <ClCompile Include="checkBox.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
-    <ClCompile Include="label.cpp" />
-    <ClCompile Include="panel.cpp" />
-    <ClCompile Include="tabPanel.cpp" />
-    <ClCompile Include="lodepng.cpp" />
+    <ClCompile Include="button.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="checkBox.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="dropDownList.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="label.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="lodepng.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="panel.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="tabPanel.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="..\alienrain\unifiedXmlParamsBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="sb6.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{f21edffe-0433-4b7b-9528-5fa27e338d69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
