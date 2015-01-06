@@ -7,11 +7,11 @@
 
 using namespace std;
 
-class SceneObject : public xml_helper_listener
+class SceneObject
 {
 public:
-    static int instanceCounter;
-    int instanceNum;
+    //static int instanceCounter;
+    //int instanceNum;
 
     SceneObject();
 
@@ -23,6 +23,7 @@ public:
         const char* per_fragment_vs_path, 
         const char* per_fragment_fs_path,
         const char* per_vertex_vs_path, 
+        const char* per_vertex_fs_path );
 
     void LoadShaders();
 
@@ -33,23 +34,18 @@ public:
     void SetCoords( vmath::uvec3 coords );
     void SetScale( vmath::vec3 scale );
 
-    //mlaboszc
-    string  getAppName();
-    void handleDocument(XMLDocument* doc);
+    const SceneObjectParams& GetParams();
 
-    // Main param struct for passing into GUI 
-    // Note mlaboszc: struct should be unified and contatins the same (all) relevant params
-    //                  accros all objects/slots (not used params equal NULL)
-    //                  below params are only examples and are copied from main_app class
-    unifiedXmlParamsBlock xmlParams;
+    //mlaboszc
+    //string getAppName();
+    //void handleDocument(XMLDocument* doc);
 
 protected:
-    // Config from XML
-    string          mModelPath;
-    string          mTexturePath;
-    vmath::vec3     mRotation;
-    vmath::vec3     mScale;
-    vmath::uvec3    mCoords;
+    // Note mlaboszc: struct should be unified and contain the same (all) relevant params
+    //                  across all objects/slots (not used params equal NULL)
+    //                  below params are only examples and are copied from main_app class
+    // Config from XML - main param struct for passing into GUI 
+    SceneObjectParams mParams;   
 
     GLuint          per_fragment_program;
     GLuint          per_vertex_program;

@@ -11,7 +11,7 @@
 const float SceneObject::perspective_fovy = 50.0f;
 const float SceneObject::perspective_f    = 0.1f;
 const float SceneObject::perspective_n    = 1000.0f;
-int SceneObject::instanceCounter = 0;
+//int SceneObject::instanceCounter = 0;
 
 //************************************
 // Method:    SceneObject
@@ -25,29 +25,27 @@ SceneObject::SceneObject() :
     per_vertex_program(0),
     is_per_vertex(true)
 {
-
-
-	instanceNum = instanceCounter;
-	instanceCounter++;
+	//instanceNum = instanceCounter;
+	//instanceCounter++;
 }
 
+//string SceneObject::getAppName() {
+//
+//	// !!!!!!!!!!!! 
+//	// Note mlaboszc: currently each object read params from one of four *.xml files
+//	//                modulo can be deleted after adding more config files to given dir:
+//	//				  opengl.superbible.6th.example.codes\build\vs2010\configs
+//	// !!!!!!!!!!!!!
+//	string name = "object" + to_string(instanceNum % 4);
+//	printf("%s:", name);
+//	return name;
+//}
 
-string SceneObject::getAppName() {
-
-	// !!!!!!!!!!!! 
-	// Note mlaboszc: currently each object read params from one of four *.xml files
-	//                modulo can be deleted after adding more config files to given dir:
-	//				  opengl.superbible.6th.example.codes\build\vs2010\configs
-	// !!!!!!!!!!!!!
-	string name = "object" + to_string(instanceNum % 4);
-	printf("%s:", name);
-	return name;
-}
 // mlaboszc
-vmath::vec3 getXmlVecParam(string xmlParams) {
+vmath::vec3 getXmlVecParam(string mParams) {
 	vmath::vec3 vecParams = vmath::vec3(0.0, 0.0, 0.0);
 
-	char *cstr = &xmlParams[0];
+	char *cstr = &mParams[0];
 	char * pch;
 	pch = strtok(cstr, ", ");
 	int i = 0;
@@ -57,44 +55,45 @@ vmath::vec3 getXmlVecParam(string xmlParams) {
 	}
 	return vecParams;
 }
+
 //mlaboszc
-void SceneObject::handleDocument(XMLDocument* doc) {
-	XMLElement* root = doc->FirstChildElement();
-
-	// !!!!!!!!!!!! 
-	// Note mlaboszc: if you want use numrical vals,
-	//				  commented code conatains example of convertions method getXmlVecParam
-	// !!!!!!!!!!!!!
-
-	// extracted numerical(bool,float,int) values:
-	//XMLElement* ele = root->FirstChildElement("object");
-	//bool is_many_objects = ele->BoolAttribute("many_objects");
-	//is_per_vertex = ele->BoolAttribute("per_vertex");
-
-	//ele = root->FirstChildElement("light");
-	//vmath::vec3 lightPos = getXmlVecParam(ele->Attribute("pos"));
-
-	//ele = root->FirstChildElement("material_properties");
-	//vmath::vec3 diffuseAlbedoVec = getXmlVecParam(ele->Attribute("diffuse_albedo"));
-	//float specular_albedo = ele->FloatAttribute("specular_albedo");
-	//int specular_power = ele->IntAttribute("specular_power");
-
-
-	//extracted strings to display in GUI
-	XMLElement* ele = root->FirstChildElement("object");
-
-	xmlParams.is_many_objects = ele->BoolAttribute("many_objects");
-	xmlParams.is_per_vertex = ele->BoolAttribute("per_vertex");
-
-	ele = root->FirstChildElement("light");
-	xmlParams.light_pos = ele->Attribute("pos");
-
-	ele = root->FirstChildElement("material_properties");
-	xmlParams.diffuse_albedo = ele->Attribute("diffuse_albedo");
-	xmlParams.specular_albedo = ele->Attribute("specular_albedo");
-	xmlParams.specular_power = ele->Attribute("specular_power");
-
-}
+//void SceneObject::handleDocument(XMLDocument* doc) {
+//	XMLElement* root = doc->FirstChildElement();
+//
+//	// !!!!!!!!!!!! 
+//	// Note mlaboszc: if you want use numrical vals,
+//	//				  commented code conatains example of convertions method getXmlVecParam
+//	// !!!!!!!!!!!!!
+//
+//	// extracted numerical(bool,float,int) values:
+//	//XMLElement* ele = root->FirstChildElement("object");
+//	//bool is_many_objects = ele->BoolAttribute("many_objects");
+//	//is_per_vertex = ele->BoolAttribute("per_vertex");
+//
+//	//ele = root->FirstChildElement("light");
+//	//vmath::vec3 lightPos = getXmlVecParam(ele->Attribute("pos"));
+//
+//	//ele = root->FirstChildElement("material_properties");
+//	//vmath::vec3 diffuseAlbedoVec = getXmlVecParam(ele->Attribute("diffuse_albedo"));
+//	//float specular_albedo = ele->FloatAttribute("specular_albedo");
+//	//int specular_power = ele->IntAttribute("specular_power");
+//
+//
+//	//extracted strings to display in GUI
+//    XMLElement* ele = root->FirstChildElement( "object" );
+//
+//    mParams.is_many_objects = ele->BoolAttribute( "many_objects" );
+//    mParams.is_per_vertex = ele->BoolAttribute( "per_vertex" );
+//
+//    ele = root->FirstChildElement( "light" );
+//    mParams.light_pos = ele->Attribute( "pos" );
+//
+//    ele = root->FirstChildElement( "material_properties" );
+//    mParams.diffuse_albedo = ele->Attribute( "diffuse_albedo" );
+//    mParams.specular_albedo = ele->Attribute( "specular_albedo" );
+//    mParams.specular_power = ele->Attribute( "specular_power" );
+//
+//}
 
 //************************************
 // Method:    LoadShaders
@@ -244,9 +243,9 @@ void SceneObject::Startup()
         "media/shaders/phonglighting/per-vertex-phong.fs.glsl");*/
     // Note adatczuk: ^^^^^^ doesn' work for now :(
 
-    if( mModelPath.empty() )
+    if( mParams.ModelPath.empty() )
     {
-        mModelPath = "media/objects/sphere.sbm";
+        mParams.ModelPath = "media/objects/sphere.sbm";
     }
 
     // TODO check error on load shaders and load object
@@ -256,7 +255,7 @@ void SceneObject::Startup()
     glBindBuffer(GL_UNIFORM_BUFFER, uniforms_buffer);
     glBufferData(GL_UNIFORM_BUFFER, sizeof(uniforms_block), NULL, GL_DYNAMIC_DRAW);
 
-    model.load(mModelPath.c_str());
+    model.load( mParams.ModelPath.c_str() );
 
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
@@ -389,7 +388,7 @@ void SceneObject::LoadShaders( const char* per_fragment_vs_path, const char* per
 //************************************
 void SceneObject::SetModel( std::string path )
 {
-    mModelPath = path; 
+    mParams.ModelPath = path;
     /* TODO load model etc */
 }
 
@@ -403,7 +402,7 @@ void SceneObject::SetModel( std::string path )
 //************************************
 void SceneObject::SetTexture( std::string path )
 {
-    mTexturePath = path; 
+    mParams.TexturePath = path; 
     /* TODO load texture etc */
 }
 
@@ -432,7 +431,7 @@ void SceneObject::SetRotation( float x, float y, float z )
 //************************************
 void SceneObject::SetRotation( vmath::vec3 rotation )
 {
-    mRotation = rotation;
+    mParams.Rotation = rotation;
     /* TODO change matrix? */
 }
 
@@ -446,7 +445,7 @@ void SceneObject::SetRotation( vmath::vec3 rotation )
 //************************************
 void SceneObject::SetCoords( vmath::uvec3 coords )
 {
-    mCoords = coords;
+    mParams.Coords = coords;
 }
 
 //************************************
@@ -459,5 +458,17 @@ void SceneObject::SetCoords( vmath::uvec3 coords )
 //************************************
 void SceneObject::SetScale( vmath::vec3 scale )
 {
-    mScale = scale;
+    mParams.Scale = scale;
+}
+
+//************************************
+// Method:    GetParams
+// FullName:  SceneObject::GetParams
+// Access:    public 
+// Returns:   const SceneObjectParams&
+// Qualifier:
+//************************************
+const SceneObjectParams& SceneObject::GetParams()
+{
+    return mParams;
 }

@@ -47,6 +47,7 @@ void application_manager::switchApp( int index )
 
     m_xml_helper->loadXml(m_current_app);
     m_current_app->run(m_current_app);
+    //m_xml_helper->saveGuiState(mapHere, m_current_app);
 }
 
 void application_manager::onKey( int key, int action )

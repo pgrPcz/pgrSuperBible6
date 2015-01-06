@@ -75,6 +75,14 @@ void MainApp::handleDocument( XMLDocument* doc )
     ReadObjectsProperties( root );
 }
 
+//************************************
+// Method:    ReadObjectsProperties
+// FullName:  MainApp::ReadObjectsProperties
+// Access:    protected 
+// Returns:   void
+// Qualifier:
+// Parameter: XMLElement * root
+//************************************
 void MainApp::ReadObjectsProperties( XMLElement* root )
 {
     XMLElement* element = root->FirstChildElement( "objects" );
@@ -128,7 +136,7 @@ void MainApp::init()
 
     //mlaboszc
     myTabPanel = new TabPanel();
-    m_xml_helper = new xml_helper();
+    //m_xml_helper = new xml_helper();
 
     m_camera = new camera(this);
     m_camera->setPosition(-20, 0, 0);
@@ -155,8 +163,8 @@ void MainApp::startup()
             {
                 
                 //mlaboszc
-                m_xml_helper->loadXml(&mSceneObjects[i][j][k]);
-                myTabPanel->setXmlParamsStruct(mSceneObjects[i][j][k].instanceNum, mSceneObjects[i][j][k].xmlParams);
+                //m_xml_helper->loadXml(&mSceneObjects[i][j][k]);
+                myTabPanel->setXmlParamsStruct( i*9 + j*3 + k, mSceneObjects[i][j][k].GetParams() );
 
                 mSceneObjects[i][j][k].Startup();
             }
@@ -267,6 +275,15 @@ void MainApp::onMouseMove(int x, int y)
     m_camera->onMouseMove(x, y);
 }
 
+//************************************
+// Method:    onMouseButton
+// FullName:  MainApp::onMouseButton
+// Access:    protected 
+// Returns:   void
+// Qualifier:
+// Parameter: int button
+// Parameter: int action
+//************************************
 void MainApp::onMouseButton(int button, int action) {
     myTabPanel->CheckClickedButton(button, action);
 }

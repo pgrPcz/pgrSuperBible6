@@ -16,10 +16,10 @@ private:
 	const static unsigned int OBJECT_COUNT_Y = 3;
 	const static unsigned int OBJECT_COUNT_Z = 3;
 
-	unifiedXmlParamsBlock xmlParams[OBJECT_COUNT_X*OBJECT_COUNT_Y*OBJECT_COUNT_Z];
+    SceneObjectParams xmlParams[OBJECT_COUNT_X*OBJECT_COUNT_Y*OBJECT_COUNT_Z];
 public:
 	
-	unifiedXmlParamsBlock TabPanel::getXmlParamsStruct(int index);
+SceneObjectParams TabPanel::getXmlParamsStruct(int index);
 
 	Button* buttonPage1;
 	Button* buttonPage2;
@@ -56,7 +56,7 @@ public:
 	void Render(double currentTime);
 	bool CheckArea(int x, int y);
 	void CheckClickedButton(int button, int action);
-	void setXmlParamsStruct(int index, unifiedXmlParamsBlock block);
+	void setXmlParamsStruct(int index, SceneObjectParams block);
 
 	void ChangeTabParams();
 };

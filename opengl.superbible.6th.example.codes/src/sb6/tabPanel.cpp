@@ -66,12 +66,12 @@ TabPanel::~TabPanel()
 
 void TabPanel::Init()
 {
-	int yOffset = 20;
-	int xOffset = 20;
+	float yOffset = 20.0;
+	float xOffset = 20.0;
 	int fontsize = 20;
 	int controlsOffset = 250;
 
-	buttonShowMenu->Init(800, 600, xOffset, 10, 50, xOffset, "../../bitmap/ButtonShowMenu2.bmp");
+	buttonShowMenu->Init(800, 600, xOffset, 10, 50, (int)xOffset, "../../bitmap/ButtonShowMenu2.bmp");
 	buttonPage1->Init(800, 600, xOffset, yOffset + 10, 50, 20, "../../bitmap/panelPage1.bmp");
 	panelPage1->Init(800, 600, xOffset, yOffset + 30, 500, 400, "../../bitmap/panel2.bmp");
 	buttonPage2->Init(800, 600, xOffset + 50, yOffset + 10, 50, 20, "../../bitmap/panelPage2.bmp");
@@ -80,7 +80,7 @@ void TabPanel::Init()
 	btnMenu2->Init(800, 600, xOffset + 320, yOffset + 320, 50, 20, "../../bitmap/Button2.bmp");
 
 	
-	dropDownListSlots->Init(800, 600, 80, 10, yOffset + 100, 20, "../../bitmap/DropDownListSlots.bmp", 27);
+	dropDownListSlots->Init(800, 600, 80, 10, (int)yOffset + 100, 20, "../../bitmap/DropDownListSlots.bmp", 27);
 	dropDownListTest->Init(800, 600, xOffset + 320, yOffset + 340, 150, 50, "../../bitmap/DropDownList1.bmp", 5);
 
 	slotName->Init(800, 600, xOffset + 20, yOffset + 50, fontsize, "Slot number 0 parameters:");
@@ -105,7 +105,7 @@ void TabPanel::Init()
 
 }
 
-void TabPanel::setXmlParamsStruct(int index, unifiedXmlParamsBlock block) {
+void TabPanel::setXmlParamsStruct(int index, SceneObjectParams block) {
 	xmlParams[index] = block;
 }
 
@@ -176,13 +176,16 @@ void TabPanel::ChangeTabParams() {
 	std::string text = "Slot number " + to_string(slotIndex);
 	slotName->ChangeText(text);
 
-	cbOpt1->setActive(xmlParams[slotIndex].is_many_objects);
-	cbOpt2->setActive(xmlParams[slotIndex].is_per_vertex);
+    // TODO adatczuk: params removed
+	//cbOpt1->setActive(xmlParams[slotIndex].is_many_objects);
+	//cbOpt2->setActive(xmlParams[slotIndex].is_per_vertex);
 
-	label8->ChangeText(xmlParams[slotIndex].light_pos);
-	label9->ChangeText(xmlParams[slotIndex].diffuse_albedo);
-	label10->ChangeText(xmlParams[slotIndex].specular_albedo);
-	label11->ChangeText(xmlParams[slotIndex].specular_power);
+    // TODO adatczuk: displaying Coords, Rotation, Scale
+	label8->ChangeText(xmlParams[slotIndex].ModelPath);
+	label9->ChangeText(xmlParams[slotIndex].TexturePath);
+	//label10->ChangeText(xmlParams[slotIndex].Coords);
+	//label11->ChangeText(xmlParams[slotIndex].Rotation);
+    //label11->ChangeText( xmlParams[slotIndex].Scale );
 
 }
 void TabPanel::CheckClickedButton(int button, int action)

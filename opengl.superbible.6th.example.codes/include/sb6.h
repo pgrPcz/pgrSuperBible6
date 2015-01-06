@@ -221,8 +221,8 @@ public:
         info.majorVersion = 3;
         info.minorVersion = 2;
 #else
-        info.majorVersion = 4;//4; adatczuk
-        info.minorVersion = 0;
+        info.majorVersion = 3;//4; adatczuk
+        info.minorVersion = 3;//3 adatczuk
 #endif
         info.samples = 0;
         info.flags.all = 0;
