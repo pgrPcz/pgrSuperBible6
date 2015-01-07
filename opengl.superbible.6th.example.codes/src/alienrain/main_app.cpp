@@ -14,12 +14,12 @@
 #include "main_app.h"
 
 // TODO here adatczuk
-// - Cube of objects
+// + Cube of objects
 // - Setting shaders
-// - Rendering each object
+// + Rendering each object
 // + Rendering GUI
-// - Saving XML?
-// - Reading XML
+// + Saving XML
+// + Reading XML
 // - Input handling (update)
 
 
@@ -28,12 +28,223 @@
 // FullName:  MainApp::MainApp
 // Access:    public 
 // Returns:   
-// Qualifier: : per_fragment_program(0), managed_application(a)
-// Parameter: application_manager * a
+// Qualifier: : per_fragment_program(0)
 //************************************
-MainApp::MainApp( application_manager * a ) : per_fragment_program(0), managed_application(a)
+MainApp::MainApp() : per_fragment_program(0)
 {
 
+}
+
+//************************************
+// Method:    ~MainApp
+// FullName:  MainApp::~MainApp
+// Access:    public 
+// Returns:   
+// Qualifier:
+//************************************
+MainApp::~MainApp()
+{
+
+}
+
+//************************************
+// Method:    init
+// FullName:  MainApp::init
+// Access:    protected 
+// Returns:   void
+// Qualifier:
+//************************************
+void MainApp::init()
+{
+    static const char title[] = "OpenGL SuperBible - Main test app";
+
+    sb6::application::init();
+
+    //mlaboszc
+    myTabPanel = new TabPanel();
+    mXmlHelper = new xml_helper();
+
+    m_camera = new camera(this);
+    m_camera->setPosition(-20, 0, 0);
+
+    memcpy(info.title, title, sizeof(title));
+}
+
+//************************************
+// Method:    startup
+// FullName:  MainApp::startup
+// Access:    protected 
+// Returns:   void
+// Qualifier:
+//************************************
+void MainApp::startup()
+{
+    LoadXmlConfig();
+
+    myTabPanel->Init();
+    // Init scene objects
+    for(int i = 0; i < OBJECT_COUNT_X; i++)
+    {
+        for(int j = 0; j < OBJECT_COUNT_Y; j++)
+        {
+            for(int k = 0; k < OBJECT_COUNT_Z; k++)
+            {
+                //mlaboszc
+                //m_xml_helper->loadXml(&mSceneObjects[i][j][k]);
+                myTabPanel->setXmlParamsStruct( i*9 + j*3 + k, mSceneObjects[i][j][k].GetParams() );
+
+                mSceneObjects[i][j][k].Startup();
+            }
+        }
+    }
+}
+
+//************************************
+// Method:    render
+// FullName:  MainApp::render
+// Access:    protected 
+// Returns:   void
+// Qualifier:
+// Parameter: double currentTime
+//************************************
+void MainApp::render(double currentTime)
+{
+    m_camera->onRender(currentTime);
+    
+    static const GLfloat zeros[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+    static const GLfloat gray[]  = { 0.1f, 0.1f, 0.1f, 0.0f };
+    static const GLfloat ones[]  = { 1.0f };
+
+    glClearBufferfv(GL_COLOR, 0, gray);
+    glClearBufferfv(GL_DEPTH, 0, ones);
+
+    /*
+    vmath::mat4 model_matrix = vmath::rotate((float)currentTime * 14.5f, 0.0f, 1.0f, 0.0f) *
+                               vmath::rotate(180.0f, 0.0f, 0.0f, 1.0f) *
+                               vmath::rotate(20.0f, 1.0f, 0.0f, 0.0f);
+                               */
+
+    vmath::vec3 view_position = vmath::vec3(0.0f, 0.0f, 50.0f);
+    vmath::mat4 view_matrix = m_camera->createViewMatrix();
+        /*vmath::lookat(view_position,
+                                            vmath::vec3(0.0f, 0.0f, 0.0f),
+                                            vmath::vec3(0.0f, 1.0f, 0.0f));
+                                            */
+
+    /*vmath::vec3 light_position    = vmath::vec3(-20.0f, -20.0f, 0.0f);
+    vmath::mat4 light_proj_matrix = vmath::frustum(-1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 200.0f);
+    vmath::mat4 light_view_matrix = vmath::lookat(light_position, vmath::vec3(0.0f), vmath::vec3(0.0f, 1.0f, 0.0f));*/
+
+    // For every object
+    for(int i = 0; i < OBJECT_COUNT_X; i++)
+    {
+        for(int j = 0; j < OBJECT_COUNT_Y; j++)
+        {
+            for(int k = 0; k < OBJECT_COUNT_Z; k++)
+            {
+                vmath::mat4 model_matrix = 
+                    vmath::translate((float)i * 2.25f - 6.25f, 2.75f - (float)j * 2.25f, (float)k * 2.25f - 2.25f);
+
+                mSceneObjects[i][j][k].Render(
+                    currentTime, 
+                    info.windowWidth, 
+                    info.windowHeight, 
+                    view_position, 
+                    view_matrix,
+                    model_matrix);
+            }
+        }
+    }
+    myTabPanel->Render(currentTime);
+}
+
+//************************************
+// Method:    onKey
+// FullName:  MainApp::onKey
+// Access:    protected 
+// Returns:   void
+// Qualifier:
+// Parameter: int key
+// Parameter: int action
+//************************************
+void MainApp::onKey(int key, int action)
+{
+    if (action)
+    {
+        switch (key)
+        {
+            case 'R': 
+                //load_shaders();
+                /*for(int i = 0; i < OBJECT_COUNT_X; i++)
+                    for(int j = 0; j < OBJECT_COUNT_Y; j++)
+                        for(int k = 0; k < OBJECT_COUNT_Z; k++)
+                            mSceneObjects[i][j][k].load_shaders(...);*/
+                break;
+        }
+        // Not needed anymore - one scene
+        /*if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE)
+        {
+        nextApp();
+        }
+        else if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE)
+        {
+        previousApp();
+        }*/
+    }
+
+    m_camera->onKey(key, action);
+}
+
+//************************************
+// Method:    onMouseMove
+// FullName:  MainApp::onMouseMove
+// Access:    protected 
+// Returns:   void
+// Qualifier:
+// Parameter: int x
+// Parameter: int y
+//************************************
+void MainApp::onMouseMove(int x, int y)
+{
+    myTabPanel->CheckArea(x, y);
+    m_camera->onMouseMove(x, y);
+}
+
+//************************************
+// Method:    onMouseButton
+// FullName:  MainApp::onMouseButton
+// Access:    protected 
+// Returns:   void
+// Qualifier:
+// Parameter: int button
+// Parameter: int action
+//************************************
+void MainApp::onMouseButton(int button, int action) {
+    myTabPanel->CheckClickedButton(button, action);
+}
+
+//************************************
+// Method:    LoadXmlConfig
+// FullName:  MainApp::LoadXmlConfig
+// Access:    protected 
+// Returns:   void
+// Qualifier:
+//************************************
+void MainApp::LoadXmlConfig()
+{
+    mXmlHelper->loadXml( this );
+}
+
+//************************************
+// Method:    SaveXmlConfig
+// FullName:  MainApp::SaveXmlConfig
+// Access:    protected 
+// Returns:   void
+// Qualifier:
+//************************************
+void MainApp::SaveXmlConfig()
+{
+    mXmlHelper->saveXml( this );
 }
 
 //************************************
@@ -196,198 +407,6 @@ void MainApp::WriteObjectsProperties( XMLElement* root )
 
         element = element->NextSiblingElement();
     }
-}
-
-//************************************
-// Method:    init
-// FullName:  MainApp::init
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//************************************
-void MainApp::init()
-{
-    static const char title[] = "OpenGL SuperBible - Main test app";
-
-    sb6::application::init();
-
-    //mlaboszc
-    myTabPanel = new TabPanel();
-    mXmlHelper = new xml_helper();
-
-    m_camera = new camera(this);
-    m_camera->setPosition(-20, 0, 0);
-
-    memcpy(info.title, title, sizeof(title));
-}
-
-//************************************
-// Method:    startup
-// FullName:  MainApp::startup
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//************************************
-void MainApp::startup()
-{
-    LoadXmlConfig();
-
-    myTabPanel->Init();
-    // Init scene objects
-    for(int i = 0; i < OBJECT_COUNT_X; i++)
-    {
-        for(int j = 0; j < OBJECT_COUNT_Y; j++)
-        {
-            for(int k = 0; k < OBJECT_COUNT_Z; k++)
-            {
-                //mlaboszc
-                //m_xml_helper->loadXml(&mSceneObjects[i][j][k]);
-                myTabPanel->setXmlParamsStruct( i*9 + j*3 + k, mSceneObjects[i][j][k].GetParams() );
-
-                mSceneObjects[i][j][k].Startup();
-            }
-        }
-    }
-}
-
-//************************************
-// Method:    render
-// FullName:  MainApp::render
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: double currentTime
-//************************************
-void MainApp::render(double currentTime)
-{
-    m_camera->onRender(currentTime);
-    
-    static const GLfloat zeros[] = { 0.0f, 0.0f, 0.0f, 0.0f };
-    static const GLfloat gray[]  = { 0.1f, 0.1f, 0.1f, 0.0f };
-    static const GLfloat ones[]  = { 1.0f };
-
-    glClearBufferfv(GL_COLOR, 0, gray);
-    glClearBufferfv(GL_DEPTH, 0, ones);
-
-    /*
-    vmath::mat4 model_matrix = vmath::rotate((float)currentTime * 14.5f, 0.0f, 1.0f, 0.0f) *
-                               vmath::rotate(180.0f, 0.0f, 0.0f, 1.0f) *
-                               vmath::rotate(20.0f, 1.0f, 0.0f, 0.0f);
-                               */
-
-    vmath::vec3 view_position = vmath::vec3(0.0f, 0.0f, 50.0f);
-    vmath::mat4 view_matrix = m_camera->createViewMatrix();
-        /*vmath::lookat(view_position,
-                                            vmath::vec3(0.0f, 0.0f, 0.0f),
-                                            vmath::vec3(0.0f, 1.0f, 0.0f));
-                                            */
-
-    /*vmath::vec3 light_position    = vmath::vec3(-20.0f, -20.0f, 0.0f);
-    vmath::mat4 light_proj_matrix = vmath::frustum(-1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 200.0f);
-    vmath::mat4 light_view_matrix = vmath::lookat(light_position, vmath::vec3(0.0f), vmath::vec3(0.0f, 1.0f, 0.0f));*/
-
-    // For every object
-    for(int i = 0; i < OBJECT_COUNT_X; i++)
-    {
-        for(int j = 0; j < OBJECT_COUNT_Y; j++)
-        {
-            for(int k = 0; k < OBJECT_COUNT_Z; k++)
-            {
-                vmath::mat4 model_matrix = 
-                    vmath::translate((float)i * 2.25f - 6.25f, 2.75f - (float)j * 2.25f, (float)k * 2.25f - 2.25f);
-
-                mSceneObjects[i][j][k].Render(
-                    currentTime, 
-                    info.windowWidth, 
-                    info.windowHeight, 
-                    view_position, 
-                    view_matrix,
-                    model_matrix);
-            }
-        }
-    }
-    myTabPanel->Render(currentTime);
-}
-
-//************************************
-// Method:    onKey
-// FullName:  MainApp::onKey
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: int key
-// Parameter: int action
-//************************************
-void MainApp::onKey(int key, int action)
-{
-    if (action)
-    {
-        switch (key)
-        {
-            case 'R': 
-                //load_shaders();
-                /*for(int i = 0; i < OBJECT_COUNT_X; i++)
-                    for(int j = 0; j < OBJECT_COUNT_Y; j++)
-                        for(int k = 0; k < OBJECT_COUNT_Z; k++)
-                            mSceneObjects[i][j][k].load_shaders(...);*/
-                break;
-        }
-    }
-
-    m_camera->onKey(key, action);
-    m_app_manager->onKey(key, action);
-}
-
-//************************************
-// Method:    onMouseMove
-// FullName:  MainApp::onMouseMove
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: int x
-// Parameter: int y
-//************************************
-void MainApp::onMouseMove(int x, int y)
-{
-    myTabPanel->CheckArea(x, y);
-    m_camera->onMouseMove(x, y);
-}
-
-//************************************
-// Method:    onMouseButton
-// FullName:  MainApp::onMouseButton
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: int button
-// Parameter: int action
-//************************************
-void MainApp::onMouseButton(int button, int action) {
-    myTabPanel->CheckClickedButton(button, action);
-}
-
-//************************************
-// Method:    LoadXmlConfig
-// FullName:  MainApp::LoadXmlConfig
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//************************************
-void MainApp::LoadXmlConfig()
-{
-    mXmlHelper->loadXml( this );
-}
-
-//************************************
-// Method:    SaveXmlConfig
-// FullName:  MainApp::SaveXmlConfig
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//************************************
-void MainApp::SaveXmlConfig()
-{
-    mXmlHelper->saveXml( this );
 }
 
 // Note adatczuk: to be removed

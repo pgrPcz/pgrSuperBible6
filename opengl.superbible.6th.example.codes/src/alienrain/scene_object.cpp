@@ -7,6 +7,21 @@
 #include <vector>
 #include "scene_object.h"
 
+// mlaboszc
+vmath::vec3 getXmlVecParam( string mParams ) {
+    vmath::vec3 vecParams = vmath::vec3( 0.0, 0.0, 0.0 );
+
+    char *cstr = &mParams[0];
+    char * pch;
+    pch = strtok( cstr, ", " );
+    int i = 0;
+    while( pch != NULL ) {
+        vecParams[i++] = stof( pch );
+        pch = strtok( NULL, ", " );
+    }
+    return vecParams;
+}
+
 /* SceneObject constants */
 const float SceneObject::perspective_fovy = 50.0f;
 const float SceneObject::perspective_f    = 0.1f;
@@ -40,21 +55,6 @@ SceneObject::SceneObject() :
 //	printf("%s:", name);
 //	return name;
 //}
-
-// mlaboszc
-vmath::vec3 getXmlVecParam(string mParams) {
-	vmath::vec3 vecParams = vmath::vec3(0.0, 0.0, 0.0);
-
-	char *cstr = &mParams[0];
-	char * pch;
-	pch = strtok(cstr, ", ");
-	int i = 0;
-	while (pch != NULL) {
-		vecParams[i++] = stof(pch);
-		pch = strtok(NULL, ", ");
-	}
-	return vecParams;
-}
 
 //mlaboszc
 //void SceneObject::handleDocument(XMLDocument* doc) {

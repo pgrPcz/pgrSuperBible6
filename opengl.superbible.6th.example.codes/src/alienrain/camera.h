@@ -4,8 +4,6 @@
 #include <vmath.h>
 #include <sb6ktx.h>
 
-#include "managed_application.h"
-
 class camera
 {
 protected:
@@ -31,7 +29,7 @@ protected:
 
 	float mouse_speed;
 
-	managed_application *app;
+	sb6::application *app;
 
 	double key_time;
 	double key_interval;
@@ -46,7 +44,7 @@ protected:
 	bool is_shift_preessed;
 
 public:
-	camera(managed_application *ma)
+	camera(sb6::application *ma)
 	{
 		app = ma;
 		eye = vmath::vec3(1, 0, 0);

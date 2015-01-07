@@ -1,6 +1,7 @@
 #pragma once
 
 #include <sb6.h>
+#include <object.h>
 
 #include "xml_helper.h"
 #include "unifiedXmlParamsBlock.h"
@@ -17,7 +18,13 @@ public:
 
     void Startup();
 
-    void Render(double currentTime, int w, int h, vmath::vec3 view_position, vmath::mat4 view_matrix, vmath::mat4 model_matrix);
+    void Render(
+        double      currentTime, 
+        int         w, 
+        int         h, 
+        vmath::vec3 view_position, 
+        vmath::mat4 view_matrix, 
+        vmath::mat4 model_matrix );
 
     void LoadShaders(
         const char* per_fragment_vs_path, 
@@ -73,9 +80,6 @@ protected:
         GLint       specular_albedo;
         GLint       specular_power;
     } uniforms[2];
-
-
-
 
 
     // Constants

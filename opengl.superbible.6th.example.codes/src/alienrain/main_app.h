@@ -1,9 +1,9 @@
 #pragma once
 
 #include <sb6.h>
+#include <sb6ktx.h>
 #include <vmath.h>
 
-#include "managed_application.h"
 #include "camera.h"
 #include "scene_object.h"
 
@@ -16,15 +16,16 @@
 // -  Setting shaders for each object
 // -  Shader parameters (10)
 // -  Rendering GUI
-// -  Saving XML?
-// +- Reading XML
+// +  Saving XML
+// +  Reading XML
 // +- Input handling (update)
 
-class MainApp : public managed_application
+class MainApp : public sb6::application, public xml_helper_listener
 {
 /* Methods */
 public:
-    MainApp(application_manager * a);
+    MainApp();
+    ~MainApp();
 
     /*  DO NOT USE THESE - only for the need of xml_helper 
      *  Use LoadXmlConfig() and SaveXmlConfig() instead.*/

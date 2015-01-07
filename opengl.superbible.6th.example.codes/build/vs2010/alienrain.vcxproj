@@ -16,7 +16,6 @@
     <ClInclude Include="..\..\src\alienrain\camera.h" />
     <ClInclude Include="..\..\src\alienrain\clipdistance_app.h" />
     <ClInclude Include="..\..\src\alienrain\main_app.h" />
-    <ClInclude Include="..\..\src\alienrain\managed_application.h" />
     <ClInclude Include="..\..\src\alienrain\scene_object.h" />
     <ClInclude Include="..\..\src\alienrain\startup.h" />
     <ClInclude Include="..\..\src\alienrain\tessellatedtri.h" />
@@ -27,7 +26,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\alienrain\main_app.cpp" />
-    <ClCompile Include="..\..\src\alienrain\managed_application.cpp" />
     <ClCompile Include="..\..\src\alienrain\scene_object.cpp" />
     <ClCompile Include="..\..\src\alienrain\startup.cpp" />
     <ClCompile Include="..\..\src\alienrain\tinyxml2.cpp" />

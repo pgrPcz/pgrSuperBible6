@@ -31,7 +31,6 @@ using namespace std;
 
 //#include "xml_helper.h"
 #include "camera.h"
-#include "managed_application.h"
 
 /*
 #include "alienrain_app.h"
@@ -39,11 +38,11 @@ using namespace std;
 #include "basicfbo_app.h"
 #include "blendmatrix_app.h"
 */
-#include "blinnphong_app.h"
-#include "bumpmapping.h"
-#include "clipdistance_app.h"
-#include "tessellatedtri.h"
-#include "tunnel.h"
+//#include "blinnphong_app.h"
+//#include "bumpmapping.h"
+//#include "clipdistance_app.h"
+//#include "tessellatedtri.h"
+//#include "tunnel.h"
 
 
 
