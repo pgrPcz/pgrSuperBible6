@@ -49,14 +49,14 @@ std::string MainApp::getAppName()
 }
 
 //************************************
-// Method:    handleDocument
-// FullName:  MainApp::handleDocument
+// Method:    handleOpenDocument
+// FullName:  MainApp::handleOpenDocument
 // Access:    public 
 // Returns:   void
 // Qualifier:
 // Parameter: XMLDocument * doc
 //************************************
-void MainApp::handleDocument( XMLDocument* doc )
+void MainApp::handleOpenDocument( XMLDocument* doc )
 {
     XMLElement* root = doc->FirstChildElement();
 
@@ -73,6 +73,33 @@ void MainApp::handleDocument( XMLDocument* doc )
     specular_power   = ele->Attribute("specular_power");
 
     ReadObjectsProperties( root );
+}
+
+//************************************
+// Method:    handleSaveDocument
+// FullName:  MainApp::handleSaveDocument
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: XMLDocument * doc
+//************************************
+void MainApp::handleSaveDocument( XMLDocument* doc )
+{
+    XMLElement* root = doc->FirstChildElement();
+
+    /*XMLElement* ele  = root->FirstChildElement("object");
+    is_many_objects  = ele->BoolAttribute("many_objects");
+    is_per_vertex    = ele->BoolAttribute("per_vertex");*/
+
+    XMLElement* ele = root->FirstChildElement( "light" );
+    ele->SetAttribute( "pos", light_pos.c_str() );
+
+    ele = root->FirstChildElement("material_properties");
+    ele->SetAttribute( "diffuse_albedo", diffuse_albedo.c_str());
+    ele->SetAttribute( "specular_albedo", specular_albedo.c_str() );
+    ele->SetAttribute( "specular_power", specular_power.c_str() );
+
+    WriteObjectsProperties( root );
 }
 
 //************************************
@@ -103,6 +130,11 @@ void MainApp::ReadObjectsProperties( XMLElement* root )
             element->FloatAttribute( "rotY" ),
             element->FloatAttribute( "rotZ" ) );
 
+        vmath::vec3 scale = vmath::vec3(
+            element->FloatAttribute( "scaleX" ),
+            element->FloatAttribute( "scaleY" ),
+            element->FloatAttribute( "scaleZ" ) );
+
         string modelPath   = element->Attribute( "model" );
         string texturePath = element->Attribute( "texture" );
 
@@ -113,8 +145,53 @@ void MainApp::ReadObjectsProperties( XMLElement* root )
             SceneObject& object = mSceneObjects[coords[0]][coords[1]][coords[2]];
             object.SetCoords( coords );
             object.SetRotation( rotation );
+            object.SetScale( scale );
             object.SetModel( modelPath );
             object.SetTexture( texturePath );
+        }
+
+        element = element->NextSiblingElement();
+    }
+}
+
+//************************************
+// Method:    WriteObjectsProperties
+// FullName:  MainApp::WriteObjectsProperties
+// Access:    protected 
+// Returns:   void
+// Qualifier:
+// Parameter: XMLElement * root
+//************************************
+void MainApp::WriteObjectsProperties( XMLElement* root )
+{
+    XMLElement* element = root->FirstChildElement( "objects" );
+
+    if( !element )
+        return;
+
+    element = element->FirstChildElement( "object" );
+    while( element != NULL )
+    {
+        // Read coords
+        vmath::uvec3 coords = vmath::uvec3(
+            element->UnsignedAttribute( "coordX" ),
+            element->UnsignedAttribute( "coordY" ),
+            element->UnsignedAttribute( "coordZ" ) );
+
+        // Write params
+        if( coords[0] < OBJECT_COUNT_X &&
+            coords[1] < OBJECT_COUNT_Y &&
+            coords[2] < OBJECT_COUNT_Z )
+        {
+            const SceneObjectParams& objectParams = mSceneObjects[coords[0]][coords[1]][coords[2]].GetParams();
+            element->SetAttribute( "rotX", objectParams.Rotation[0] );
+            element->SetAttribute( "rotY", objectParams.Rotation[1] );
+            element->SetAttribute( "rotZ", objectParams.Rotation[2] );
+            element->SetAttribute( "scaleX", objectParams.Scale[0] );
+            element->SetAttribute( "scaleY", objectParams.Scale[1] );
+            element->SetAttribute( "scaleZ", objectParams.Scale[2] );
+            element->SetAttribute( "model", objectParams.ModelPath.c_str() );
+            element->SetAttribute( "texture", objectParams.TexturePath.c_str() );
         }
 
         element = element->NextSiblingElement();
@@ -136,7 +213,7 @@ void MainApp::init()
 
     //mlaboszc
     myTabPanel = new TabPanel();
-    //m_xml_helper = new xml_helper();
+    mXmlHelper = new xml_helper();
 
     m_camera = new camera(this);
     m_camera->setPosition(-20, 0, 0);
@@ -153,6 +230,8 @@ void MainApp::init()
 //************************************
 void MainApp::startup()
 {
+    LoadXmlConfig();
+
     myTabPanel->Init();
     // Init scene objects
     for(int i = 0; i < OBJECT_COUNT_X; i++)
@@ -161,7 +240,6 @@ void MainApp::startup()
         {
             for(int k = 0; k < OBJECT_COUNT_Z; k++)
             {
-                
                 //mlaboszc
                 //m_xml_helper->loadXml(&mSceneObjects[i][j][k]);
                 myTabPanel->setXmlParamsStruct( i*9 + j*3 + k, mSceneObjects[i][j][k].GetParams() );
@@ -287,6 +365,31 @@ void MainApp::onMouseMove(int x, int y)
 void MainApp::onMouseButton(int button, int action) {
     myTabPanel->CheckClickedButton(button, action);
 }
+
+//************************************
+// Method:    LoadXmlConfig
+// FullName:  MainApp::LoadXmlConfig
+// Access:    protected 
+// Returns:   void
+// Qualifier:
+//************************************
+void MainApp::LoadXmlConfig()
+{
+    mXmlHelper->loadXml( this );
+}
+
+//************************************
+// Method:    SaveXmlConfig
+// FullName:  MainApp::SaveXmlConfig
+// Access:    protected 
+// Returns:   void
+// Qualifier:
+//************************************
+void MainApp::SaveXmlConfig()
+{
+    mXmlHelper->saveXml( this );
+}
+
 // Note adatczuk: to be removed
 ////************************************
 //// Method:    load_shaders

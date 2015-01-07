@@ -46,7 +46,7 @@ public:
 		return "bumpmapping";
 	}
 
-	void handleDocument(XMLDocument* doc)
+	void handleOpenDocument(XMLDocument* doc)
 	{
 		XMLElement* root = doc->FirstChildElement();
 

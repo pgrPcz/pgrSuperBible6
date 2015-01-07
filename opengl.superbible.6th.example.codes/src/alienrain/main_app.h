@@ -26,9 +26,14 @@ class MainApp : public managed_application
 public:
     MainApp(application_manager * a);
 
-
+    /*  DO NOT USE THESE - only for the need of xml_helper 
+     *  Use LoadXmlConfig() and SaveXmlConfig() instead.*/
     string  getAppName();
-    void    handleDocument(XMLDocument* doc);
+    void    handleOpenDocument(XMLDocument* doc);
+    void    handleSaveDocument(XMLDocument* doc);
+
+    void    LoadXmlConfig();
+    void    SaveXmlConfig();
 
 protected:
     void    init();
@@ -40,6 +45,7 @@ protected:
     void    onMouseButton(int button, int action);
     
     void    ReadObjectsProperties( XMLElement* root );
+    void    WriteObjectsProperties( XMLElement* root );
     //void    load_shaders();
 
 /* Variables */
@@ -88,5 +94,6 @@ protected:
         GLint       specular_power;
     } uniforms[2];
 
-    SceneObject mSceneObjects[OBJECT_COUNT_X][OBJECT_COUNT_Y][OBJECT_COUNT_Z];
+    SceneObject     mSceneObjects[OBJECT_COUNT_X][OBJECT_COUNT_Y][OBJECT_COUNT_Z];
+    xml_helper*     mXmlHelper;
 };

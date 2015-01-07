@@ -19,17 +19,17 @@ public:
 
 	void reloadXml() 
 	{
-		m_xml_helper->loadXml(this);
+		mXmlHelper->loadXml(this);
 	}
 
 	void saveXml() 
 	{
-		m_xml_helper->saveXml(this);
+		mXmlHelper->saveXml(this);
 	}
 
 protected:
 	application_manager* m_app_manager;
-	xml_helper*          m_xml_helper;
+	xml_helper*          mXmlHelper;
 };
 
 

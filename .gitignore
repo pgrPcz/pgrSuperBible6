@@ -22,3 +22,7 @@ Temp
 Debug
 startup_Debug
 opengl.superbible.6th.example.codes/lib/sb6_d32.lib
+*.lib
+opengl.superbible.6th.example.codes/build/vs2010/win32raw_Debug/win32raw.tlog/win32raw.lastbuildstate
+opengl.superbible.6th.example.codes/build/vs2010/startup_Debug/startup.tlog/startup.lastbuildstate
+opengl.superbible.6th.example.codes/src/sb6/Debug/sb6.tlog/sb6.lastbuildstate
