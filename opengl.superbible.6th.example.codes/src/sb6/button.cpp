@@ -85,6 +85,12 @@ void Button::SetColor(bool mouseOver) {
 		color = vmath::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 }
+
+void Button::ChangeColor(float r, float g, float b, float a) {
+
+	color = vmath::vec4(r, g, b, a);
+}
+
 bool Button::onMouseButton(int button, int action) {
 	if (CheckArea(mousePosX, mousePosY) && action==1) {
 		color = vmath::vec4(0.6f, 0.1f, 0.5f, 1.0f);

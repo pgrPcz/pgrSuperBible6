@@ -23,6 +23,7 @@
     <ClCompile Include="sb6object.cpp" />
     <ClCompile Include="sb6shader.cpp" />
     <ClCompile Include="tabPanel.cpp" />
+    <ClCompile Include="textEdit.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>

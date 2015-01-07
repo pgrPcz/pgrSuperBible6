@@ -242,6 +242,8 @@ void MainApp::render(double currentTime)
 //************************************
 void MainApp::onKey(int key, int action)
 {
+
+	myTabPanel->CheckKey(key, action);
     if (action)
     {
         switch (key)

@@ -31,6 +31,7 @@ TabPanel::TabPanel()
 	label11 = new Label();
 	label12 = new Label();
 
+	testLabel = new TextEdit();
 }
 
 TabPanel::~TabPanel()
@@ -62,6 +63,8 @@ TabPanel::~TabPanel()
 	delete label10;
 	delete label11;
 	delete label12;
+
+	delete testLabel;
 }
 
 void TabPanel::Init()
@@ -102,11 +105,18 @@ void TabPanel::Init()
 	label11->Init(800, 600, xOffset + controlsOffset, yOffset + 230, fontsize, "specular_power:");
 	label12->Init(800, 600, xOffset + controlsOffset, yOffset + 260, fontsize, "other:");
 
-
+	testLabel->Init(800, 600, xOffset + 30, yOffset + 290, 200, fontsize, "../../bitmap/textEdit1.bmp", "testlabel");
 }
 
 void TabPanel::setXmlParamsStruct(int index, SceneObjectParams block) {
 	xmlParams[index] = block;
+}
+
+
+void TabPanel::CheckKey(int key, int action) {
+
+	testLabel->CheckKey(key, action);
+
 }
 
 void TabPanel::Render(double currentTime)
@@ -144,6 +154,8 @@ void TabPanel::Render(double currentTime)
 			label10->Render(currentTime);
 			label11->Render(currentTime);
 			label12->Render(currentTime);
+
+			testLabel->Render(currentTime);
 		}
 		if (currentPage == 2)
 		{
@@ -168,8 +180,10 @@ bool TabPanel::CheckArea(int x, int y)
 	dropDownListTest->CheckArea(x, y);
 	dropDownListSlots->CheckArea(x, y);
 
+	testLabel->CheckArea(x, y);
 	return true;
 }
+
 void TabPanel::ChangeTabParams() {
 
 	int slotIndex = dropDownListSlots->GetCurrentElement();
@@ -190,6 +204,9 @@ void TabPanel::ChangeTabParams() {
 }
 void TabPanel::CheckClickedButton(int button, int action)
 {
+
+	testLabel->onMouseButton(button, action);
+
 	btnMenu1->onMouseButton(button, action);
 	btnMenu2->onMouseButton(button, action);
 	cbOpt1->onMouseButton(button, action);

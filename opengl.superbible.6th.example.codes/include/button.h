@@ -22,6 +22,7 @@ public:
 	bool CheckArea(int x, int y);
 	bool onMouseButton(int a, int b);
 	void SetColor(bool mouseStatus);
+	void ChangeColor(float r, float g, float b, float a);
 
 private:
 	void WinLog(const wchar_t *text, int n );
