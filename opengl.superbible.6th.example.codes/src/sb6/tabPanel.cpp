@@ -31,8 +31,12 @@ TabPanel::TabPanel()
 	label11 = new Label();
 	label12 = new Label();
 
-	testLabel = new TextEdit();
+	textEdit1 = new TextEdit();
+	textEdit2 = new TextEdit();
+	textEdit3 = new TextEdit();
+	textEdit4 = new TextEdit();
 }
+
 
 TabPanel::~TabPanel()
 {
@@ -64,7 +68,11 @@ TabPanel::~TabPanel()
 	delete label11;
 	delete label12;
 
-	delete testLabel;
+	delete textEdit1;
+	delete textEdit2;
+	delete textEdit3;
+	delete textEdit4;
+
 }
 
 void TabPanel::Init()
@@ -99,13 +107,16 @@ void TabPanel::Init()
 	cbOpt2->Init(800, 600, xOffset + controlsOffset, yOffset + 110, fontsize, fontsize, "../../bitmap/CheckBoxUnchecked.bmp");
 
 
-	label8->Init(800, 600, xOffset + controlsOffset, yOffset + 140, fontsize, "light_pos:");
-	label9->Init(800, 600, xOffset + controlsOffset, yOffset + 170, fontsize, "diffuse_albedo:");
-	label10->Init(800, 600, xOffset + controlsOffset, yOffset + 200, fontsize, "specular_albedo:");
-	label11->Init(800, 600, xOffset + controlsOffset, yOffset + 230, fontsize, "specular_power:");
-	label12->Init(800, 600, xOffset + controlsOffset, yOffset + 260, fontsize, "other:");
+	//label8->Init(800, 600, xOffset + controlsOffset, yOffset + 140, fontsize, "light_pos:");
+	//label9->Init(800, 600, xOffset + controlsOffset, yOffset + 170, fontsize, "diffuse_albedo:");
+	//label10->Init(800, 600, xOffset + controlsOffset, yOffset + 200, fontsize, "specular_albedo:");
+	//label11->Init(800, 600, xOffset + controlsOffset, yOffset + 230, fontsize, "specular_power:");
+	//label12->Init(800, 600, xOffset + controlsOffset, yOffset + 260, fontsize, "other:");
 
-	testLabel->Init(800, 600, xOffset + 30, yOffset + 290, 200, fontsize, "../../bitmap/textEdit1.bmp", "testlabel");
+	textEdit1->Init(800, 600, xOffset + controlsOffset, yOffset + 140, 200, fontsize, "../../bitmap/textEdit1.bmp", "edit1");
+	textEdit2->Init(800, 600, xOffset + controlsOffset, yOffset + 170, 200, fontsize, "../../bitmap/textEdit1.bmp", "edit2");
+	textEdit3->Init(800, 600, xOffset + controlsOffset, yOffset + 200, 200, fontsize, "../../bitmap/textEdit1.bmp", "edit3");
+	textEdit4->Init(800, 600, xOffset + controlsOffset, yOffset + 230, 200, fontsize, "../../bitmap/textEdit1.bmp", "edit4");
 }
 
 void TabPanel::setXmlParamsStruct(int index, SceneObjectParams block) {
@@ -115,8 +126,10 @@ void TabPanel::setXmlParamsStruct(int index, SceneObjectParams block) {
 
 void TabPanel::CheckKey(int key, int action) {
 
-	testLabel->CheckKey(key, action);
-
+	textEdit1->CheckKey(key, action);
+	textEdit2->CheckKey(key, action);
+	textEdit3->CheckKey(key, action);
+	textEdit4->CheckKey(key, action);
 }
 
 void TabPanel::Render(double currentTime)
@@ -149,13 +162,16 @@ void TabPanel::Render(double currentTime)
 			label6->Render(currentTime);
 			label7->Render(currentTime);
 
-			label8->Render(currentTime);
-			label9->Render(currentTime);
-			label10->Render(currentTime);
-			label11->Render(currentTime);
-			label12->Render(currentTime);
+			//label8->Render(currentTime);
+			//label9->Render(currentTime);
+			//label10->Render(currentTime);
+			//label11->Render(currentTime);
+			//label12->Render(currentTime);
 
-			testLabel->Render(currentTime);
+			textEdit1->Render(currentTime);
+			textEdit2->Render(currentTime);
+			textEdit3->Render(currentTime);
+			textEdit4->Render(currentTime);
 		}
 		if (currentPage == 2)
 		{
@@ -180,7 +196,10 @@ bool TabPanel::CheckArea(int x, int y)
 	dropDownListTest->CheckArea(x, y);
 	dropDownListSlots->CheckArea(x, y);
 
-	testLabel->CheckArea(x, y);
+	textEdit1->CheckArea(x, y);
+	textEdit2->CheckArea(x, y);
+	textEdit3->CheckArea(x, y);
+	textEdit4->CheckArea(x, y);
 	return true;
 }
 
@@ -195,17 +214,23 @@ void TabPanel::ChangeTabParams() {
 	//cbOpt2->setActive(xmlParams[slotIndex].is_per_vertex);
 
     // TODO adatczuk: displaying Coords, Rotation, Scale
-	label8->ChangeText(xmlParams[slotIndex].ModelPath);
-	label9->ChangeText(xmlParams[slotIndex].TexturePath);
+	//label8->ChangeText(xmlParams[slotIndex].ModelPath);
+	//label9->ChangeText(xmlParams[slotIndex].TexturePath);
+
 	//label10->ChangeText(xmlParams[slotIndex].Coords);
 	//label11->ChangeText(xmlParams[slotIndex].Rotation);
     //label11->ChangeText( xmlParams[slotIndex].Scale );
 
+	textEdit1->setCurrentText(xmlParams[slotIndex].ModelPath);
+	textEdit2->setCurrentText(xmlParams[slotIndex].TexturePath);
 }
 void TabPanel::CheckClickedButton(int button, int action)
 {
 
-	testLabel->onMouseButton(button, action);
+	textEdit1->onMouseButton(button, action);
+	textEdit2->onMouseButton(button, action);
+	textEdit3->onMouseButton(button, action);
+	textEdit4->onMouseButton(button, action);
 
 	btnMenu1->onMouseButton(button, action);
 	btnMenu2->onMouseButton(button, action);

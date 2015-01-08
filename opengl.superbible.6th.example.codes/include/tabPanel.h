@@ -51,7 +51,10 @@ SceneObjectParams TabPanel::getXmlParamsStruct(int index);
 	Label* label11;
 	Label* label12;
 
-	TextEdit* testLabel;
+	TextEdit* textEdit1;
+	TextEdit* textEdit2;
+	TextEdit* textEdit3;
+	TextEdit* textEdit4;
 
 	TabPanel();
 	~TabPanel();

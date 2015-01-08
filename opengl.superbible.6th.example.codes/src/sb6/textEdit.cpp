@@ -4,7 +4,6 @@
 TextEdit::TextEdit():
 	insideArea(false),
 	currentState(false),
-	activeCursor(false),
 	previousTime(0),
     clickCounter(0)
 
@@ -31,7 +30,7 @@ bool TextEdit::onMouseButton(int button, int action) {
 
 	//myLabel->onMouseButton(button, action);
 	
-	currentState= myButton->onMouseButton(button, action);
+	currentState = myButton->onMouseButton(button, action);
 
 
 	if (clickCounter == 1 && action == 1) {
@@ -44,51 +43,59 @@ bool TextEdit::onMouseButton(int button, int action) {
 	}
 
 	if (clickCounter == 2) {
-		myButton->ChangeColor(0.2, 0.1, 0.1, 1.0);
+		myButton->ChangeColor(0.8, 0.9, 0.8, 1.0);
 		clickCounter = 0;
 	}
 
-	return TRUE;
+	return currentState;
 }
 
 void TextEdit::CheckKey(int key, int action) {
 
 
-	if (currentText.length() > 0) {
-		if (currentText.back() == '/') {
-			currentText.pop_back();
-		}
-	}
+	//if (textToDisplay.length() > 0) {
+	//	if (textToDisplay.back() == '/') {
+	//		textToDisplay.pop_back();
+	//	}
+	//}
 
-	if (action) {
+	if (action && clickCounter) {
 
 		switch (key) {
 		case 294://Enter
-			if (clickCounter == 1) {
-				myButton->ChangeColor(0.2, 0.1, 0.1, 1.0);
+				myButton->ChangeColor(0.8, 0.9, 0.8, 1.0);
 				clickCounter++;
-			}
 			break;
 
 		case 295://Backspace
-			currentText.pop_back();
+			if (currentText.length() > 0) {
+				currentText.pop_back();
+			}
 			break;
 				
 		default:
-				currentText += (char)key;
+			currentText += (char)key;
 			break;
-		}
 
-		
-		if (clickCounter == 1) {
-			myLabel->ChangeText(currentText);
 		}
+		myLabel->ChangeText(currentText);
+		textToDisplay = currentText;
+	}	
+}
 
-	}
+std::string TextEdit::getCurrentText() {
+	return currentText;
+}
+
+void TextEdit::setCurrentText(std::string text) {
+	currentText = text;
+	textToDisplay = currentText;	
 }
 
 void TextEdit::Init(int winW, int winH, float posX, float posY, int width, int hight, const char * bitmap, std::string textToDraw) {
 
+	textToDisplay = textToDraw;
+	currentText = textToDraw;
 	myLabel->Init(winW, winH, posX, posY, hight, textToDraw);
 	myButton->Init(winW, winH, posX, posY, width, hight, bitmap);
 }
@@ -100,19 +107,22 @@ void TextEdit::Render(double currentTime) {
 	
 	if (clickCounter == 1) {
 		if (int(currentTime) != previousTime) {
-			if (previousTime % 2 == 0) {
-				currentText += '/';
-			} else {
-				if (currentText.length() > 0) {
-					if (currentText.back() == '/') {
-						currentText.pop_back();
-					}
-				}	
+
+			if (textToDisplay.length() > 0) {
+				if (textToDisplay.back() == '/') {
+					textToDisplay.pop_back();
+				} else {
+					textToDisplay += '/';
+				}
 			}
+			if (textToDisplay.length() == 0) {
+					textToDisplay += '/';
+				}
+			
 		}
 	}
 
-	myLabel->ChangeText(currentText);
+	myLabel->ChangeText(textToDisplay);
 	myLabel->Render(currentTime);
 
 	previousTime = int(currentTime);

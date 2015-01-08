@@ -35,10 +35,12 @@ public:
 	
 	bool insideArea;
 	bool currentState;
-	bool activeCursor;
 
 	int clickCounter;
 	int previousTime;
+
+	std::string getCurrentText();
+	void setCurrentText(std::string text);
 
 private:
 
@@ -46,6 +48,7 @@ private:
 	Button* myButton;
 
 	std::string currentText;
+	std::string textToDisplay;
 };
 
 
