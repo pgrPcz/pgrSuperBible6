@@ -34,6 +34,7 @@ public:
 
     void LoadShaders();
 
+	void SetParams(SceneObjectParams paramsToSet);
     void SetModel( std::string path );
     void SetTexture( std::string path );
     void SetRotation( vmath::vec3 rotation );

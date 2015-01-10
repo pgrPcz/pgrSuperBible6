@@ -152,12 +152,21 @@ void MainApp::render(double currentTime)
                     view_position, 
                     view_matrix,
                     model_matrix);
+
+				if (myTabPanel->modifiedElementIndex == (i*9 + j*3 + k))
+				{				
+					mSceneObjects[i][j][k].SetParams(myTabPanel->getXmlParamsStruct(myTabPanel->modifiedElementIndex));
+					//save changes from GUI to XML
+					//load changes from XML to Model index
+					SaveXmlConfig();
+					myTabPanel->modifiedElementIndex = -1;
+				}
             }
         }
     }
     myTabPanel->Render(currentTime);
-}
 
+}
 //************************************
 // Method:    onKey
 // FullName:  MainApp::onKey
@@ -395,6 +404,9 @@ void MainApp::WriteObjectsProperties( XMLElement* root )
             coords[2] < OBJECT_COUNT_Z )
         {
             const SceneObjectParams& objectParams = mSceneObjects[coords[0]][coords[1]][coords[2]].GetParams();
+
+			//const SceneObjectParams& objectParams = myTabPanel->xmlParams[coords[0]][coords[1]][coords[2]];
+
             element->SetAttribute( "rotX", objectParams.Rotation[0] );
             element->SetAttribute( "rotY", objectParams.Rotation[1] );
             element->SetAttribute( "rotZ", objectParams.Rotation[2] );

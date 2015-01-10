@@ -2,9 +2,14 @@
 
 TabPanel::TabPanel()
 {
+	//modified = false;
+	modifiedElementIndex = -1;
+
 	buttonPage1 = new Button();
 	buttonPage2 = new Button();
 	buttonShowMenu = new Button();
+	buttonSave = new Button();
+
 	panelPage1 = new Panel();
 
 	btnMenu1 = new Button();
@@ -38,6 +43,7 @@ TabPanel::~TabPanel()
 	delete buttonPage1;
 	delete buttonPage2;
 	delete panelPage1;
+	delete buttonSave;
 	delete btnMenu1;
 	delete btnMenu2;
 
@@ -75,6 +81,7 @@ void TabPanel::Init()
 	buttonPage1->Init(800, 600, xOffset, yOffset + 10, 50, 20, "../../bitmap/panelPage1.bmp");
 	panelPage1->Init(800, 600, xOffset, yOffset + 30, 500, 400, "../../bitmap/panel2.bmp");
 	buttonPage2->Init(800, 600, xOffset + 50, yOffset + 10, 50, 20, "../../bitmap/panelPage2.bmp");
+	buttonSave->Init(800, 600, xOffset+5, 415, 100, 30, "../../bitmap/ButtonSave3.bmp");
 
 	btnMenu1->Init(800, 600, xOffset + 320, yOffset + 320, 50, 20, "../../bitmap/Button1.bmp");
 	btnMenu2->Init(800, 600, xOffset + 320, yOffset + 320, 50, 20, "../../bitmap/Button2.bmp");
@@ -109,6 +116,11 @@ void TabPanel::setXmlParamsStruct(int index, SceneObjectParams block) {
 	xmlParams[index] = block;
 }
 
+SceneObjectParams TabPanel::getXmlParamsStruct(int index)
+{
+	return xmlParams[index];
+}
+
 void TabPanel::Render(double currentTime)
 {
 	buttonShowMenu->Render(currentTime);
@@ -121,8 +133,7 @@ void TabPanel::Render(double currentTime)
 		buttonPage2->Render(currentTime);	
 
 		if (currentPage == 1)
-		{
-			
+		{			
 			btnMenu1->Render(currentTime);
 
 			dropDownListTest->Render(currentTime);
@@ -144,6 +155,7 @@ void TabPanel::Render(double currentTime)
 			label10->Render(currentTime);
 			label11->Render(currentTime);
 			label12->Render(currentTime);
+			buttonSave->Render(currentTime);
 		}
 		if (currentPage == 2)
 		{
@@ -160,6 +172,7 @@ bool TabPanel::CheckArea(int x, int y)
 	buttonPage1->CheckArea(x, y);
 	buttonPage2->CheckArea(x, y);
 	buttonShowMenu->CheckArea(x, y);
+	buttonSave->CheckArea(x, y);
 	btnMenu1->CheckArea(x, y);
 	btnMenu2->CheckArea(x, y);
 	cbOpt1->CheckArea(x, y);
@@ -188,18 +201,38 @@ void TabPanel::ChangeTabParams() {
     //label11->ChangeText( xmlParams[slotIndex].Scale );
 
 }
+
+void TabPanel::SaveChanges()
+{
+	modifiedElementIndex = dropDownListSlots->GetCurrentElement();
+
+	if (cbOpt1->checked)
+	{
+		xmlParams[modifiedElementIndex].Scale[0] = 120;
+	}
+	else
+	{
+		xmlParams[modifiedElementIndex].Scale[0] = 0;
+	}
+}
+
 void TabPanel::CheckClickedButton(int button, int action)
 {
 	btnMenu1->onMouseButton(button, action);
 	btnMenu2->onMouseButton(button, action);
 	cbOpt1->onMouseButton(button, action);
 	cbOpt2->onMouseButton(button, action);
-
+	
 	dropDownListTest->onMouseButton(button, action);
 
 	if (dropDownListSlots->onMouseButton(button, action)) {
 		ChangeTabParams();
 
+	}
+
+	if (buttonSave->onMouseButton(button, action))
+	{
+		SaveChanges();
 	}
 
 	if (buttonShowMenu->onMouseButton(button, action))

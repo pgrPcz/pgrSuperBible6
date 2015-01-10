@@ -16,14 +16,17 @@ private:
 	const static unsigned int OBJECT_COUNT_Y = 3;
 	const static unsigned int OBJECT_COUNT_Z = 3;
 
-    SceneObjectParams xmlParams[OBJECT_COUNT_X*OBJECT_COUNT_Y*OBJECT_COUNT_Z];
+    
 public:
-	
-SceneObjectParams TabPanel::getXmlParamsStruct(int index);
+	SceneObjectParams xmlParams[OBJECT_COUNT_X*OBJECT_COUNT_Y*OBJECT_COUNT_Z];
+
+	int modifiedElementIndex;
+	SceneObjectParams TabPanel::getXmlParamsStruct(int index);	
 
 	Button* buttonPage1;
 	Button* buttonPage2;
 	Button* buttonShowMenu;
+	Button* buttonSave;
 	Panel* panelPage1;
 	
 	Button* btnMenu1;
@@ -57,6 +60,7 @@ SceneObjectParams TabPanel::getXmlParamsStruct(int index);
 	bool CheckArea(int x, int y);
 	void CheckClickedButton(int button, int action);
 	void setXmlParamsStruct(int index, SceneObjectParams block);
+	void SaveChanges();
 
 	void ChangeTabParams();
 };

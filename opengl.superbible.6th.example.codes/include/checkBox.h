@@ -3,8 +3,9 @@
 class CheckBox : public Button
 {
 private:
-	bool checked;
+	
 public:
+	bool checked;
 	CheckBox();
 	~CheckBox();
 	void setActive(bool flag);
