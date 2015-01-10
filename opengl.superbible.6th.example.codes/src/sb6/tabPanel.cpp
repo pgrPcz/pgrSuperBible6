@@ -130,6 +130,15 @@ void TabPanel::setXmlParamsStruct(int index, SceneObjectParams block) {
 	xmlParams[index] = block;
 }
 
+SceneObjectParams TabPanel::getXmlParamsStruct(int index)
+{
+	return xmlParams[index];
+}
+
+void TabPanel::CheckKey(int key, int action) 
+{
+	textEdit1->CheckKey(key, action);
+	textEdit2->CheckKey(key, action);
 	textEdit3->CheckKey(key, action);
 	textEdit4->CheckKey(key, action);
 }
