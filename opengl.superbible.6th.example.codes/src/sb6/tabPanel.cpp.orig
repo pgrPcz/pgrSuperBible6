@@ -130,8 +130,19 @@ void TabPanel::setXmlParamsStruct(int index, SceneObjectParams block) {
 	xmlParams[index] = block;
 }
 
+<<<<<<< HEAD
+SceneObjectParams TabPanel::getXmlParamsStruct(int index)
+{
+	return xmlParams[index];
+=======
+
+void TabPanel::CheckKey(int key, int action) {
+
+	textEdit1->CheckKey(key, action);
+	textEdit2->CheckKey(key, action);
 	textEdit3->CheckKey(key, action);
 	textEdit4->CheckKey(key, action);
+>>>>>>> remote
 }
 
 void TabPanel::Render(double currentTime)
@@ -163,16 +174,25 @@ void TabPanel::Render(double currentTime)
 			label6->Render(currentTime);
 			label7->Render(currentTime);
 
+<<<<<<< HEAD
+			label8->Render(currentTime);
+			label9->Render(currentTime);
+			label10->Render(currentTime);
+			label11->Render(currentTime);
+			label12->Render(currentTime);
+			buttonSave->Render(currentTime);
+=======
 			//label8->Render(currentTime);
 			//label9->Render(currentTime);
 			//label10->Render(currentTime);
 			//label11->Render(currentTime);
 			//label12->Render(currentTime);
-			buttonSave->Render(currentTime);
+
 			textEdit1->Render(currentTime);
 			textEdit2->Render(currentTime);
 			textEdit3->Render(currentTime);
 			textEdit4->Render(currentTime);
+>>>>>>> remote
 		}
 		if (currentPage == 2)
 		{

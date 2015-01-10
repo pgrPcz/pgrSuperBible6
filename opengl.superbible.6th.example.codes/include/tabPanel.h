@@ -4,6 +4,7 @@
 #include "checkBox.h"
 #include "label.h"
 #include "dropDownList.h"
+#include "textEdit.h"
 #include "../src/alienrain/unifiedXmlParamsBlock.h"
 
 class TabPanel
@@ -53,6 +54,11 @@ public:
 	Label* label11;
 	Label* label12;
 
+	TextEdit* textEdit1;
+	TextEdit* textEdit2;
+	TextEdit* textEdit3;
+	TextEdit* textEdit4;
+
 	TabPanel();
 	~TabPanel();
 	void Init();
@@ -62,6 +68,7 @@ public:
 	void setXmlParamsStruct(int index, SceneObjectParams block);
 	void SaveChanges();
 
+	void CheckKey(int key, int action);
 	void ChangeTabParams();
 };
 

@@ -28,6 +28,9 @@
     <ClCompile Include="tabPanel.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="textEdit.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
