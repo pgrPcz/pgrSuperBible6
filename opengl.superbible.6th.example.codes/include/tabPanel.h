@@ -57,7 +57,9 @@ public:
 	TextEdit* textEditRotationX;
 	TextEdit* textEditRotationY;
 	TextEdit* textEditRotationZ;
-	TextEdit* textEdit2;
+	TextEdit* textEditScaleX;
+	TextEdit* textEditScaleY;
+	TextEdit* textEditScaleZ;
 	TextEdit* textEdit3;
 	TextEdit* textEdit4;
 
