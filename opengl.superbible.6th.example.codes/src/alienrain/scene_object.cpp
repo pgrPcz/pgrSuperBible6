@@ -235,7 +235,7 @@ void SceneObject::LoadShaders()
 // Qualifier:
 // Parameter: const char * object_path
 //************************************
-void SceneObject::Startup()
+void SceneObject::Startup() 
 {
     /*load_shaders("media/shaders/phonglighting/per-fragment-phong.vs.glsl", 
         "media/shaders/phonglighting/per-fragment-phong.fs.glsl",

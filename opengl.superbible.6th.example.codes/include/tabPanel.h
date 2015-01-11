@@ -54,7 +54,9 @@ public:
 	Label* label11;
 	Label* label12;
 
-	TextEdit* textEdit1;
+	TextEdit* textEditRotationX;
+	TextEdit* textEditRotationY;
+	TextEdit* textEditRotationZ;
 	TextEdit* textEdit2;
 	TextEdit* textEdit3;
 	TextEdit* textEdit4;
@@ -70,5 +72,6 @@ public:
 
 	void CheckKey(int key, int action);
 	void ChangeTabParams();
+	void InitializationOfTabParams();
 };
 

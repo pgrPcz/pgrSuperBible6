@@ -36,7 +36,9 @@ TabPanel::TabPanel()
 	label11 = new Label();
 	label12 = new Label();
 
-	textEdit1 = new TextEdit();
+	textEditRotationX = new TextEdit();
+	textEditRotationY = new TextEdit();
+	textEditRotationZ = new TextEdit();
 	textEdit2 = new TextEdit();
 	textEdit3 = new TextEdit();
 	textEdit4 = new TextEdit();
@@ -74,7 +76,9 @@ TabPanel::~TabPanel()
 	delete label11;
 	delete label12;
 
-	delete textEdit1;
+	delete textEditRotationX;
+	delete textEditRotationY;
+	delete textEditRotationZ;
 	delete textEdit2;
 	delete textEdit3;
 	delete textEdit4;
@@ -104,7 +108,7 @@ void TabPanel::Init()
 	slotName->Init(800, 600, xOffset + 20, yOffset + 50, fontsize, "Slot number 0 parameters:");
 	label1->Init(800, 600, xOffset + 30, yOffset + 80, fontsize, "is_many_objects:");
 	label2->Init(800, 600, xOffset + 30, yOffset + 110, fontsize, "is_per_vertex:");
-	label3->Init(800, 600, xOffset + 30, yOffset + 140, fontsize, "light_pos:");
+	label3->Init(800, 600, xOffset + 30, yOffset + 140, fontsize, "Rotation [x,y,z]:");
 	label4->Init(800, 600, xOffset + 30, yOffset + 170, fontsize, "diffuse_albedo:");
 	label5->Init(800, 600, xOffset + 30, yOffset + 200, fontsize, "specular_albedo:");
 	label6->Init(800, 600, xOffset + 30, yOffset + 230, fontsize, "specular_power:");
@@ -120,10 +124,20 @@ void TabPanel::Init()
 	//label11->Init(800, 600, xOffset + controlsOffset, yOffset + 230, fontsize, "specular_power:");
 	//label12->Init(800, 600, xOffset + controlsOffset, yOffset + 260, fontsize, "other:");
 
-	textEdit1->Init(800, 600, xOffset + controlsOffset, yOffset + 140, 200, fontsize, "../../bitmap/textEdit1.bmp", "edit1");
+	textEditRotationX->Init(800, 600, xOffset + controlsOffset, yOffset + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditRotationY->Init(800, 600, xOffset + controlsOffset + 70, yOffset + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditRotationZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffset + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+
 	textEdit2->Init(800, 600, xOffset + controlsOffset, yOffset + 170, 200, fontsize, "../../bitmap/textEdit1.bmp", "edit2");
 	textEdit3->Init(800, 600, xOffset + controlsOffset, yOffset + 200, 200, fontsize, "../../bitmap/textEdit1.bmp", "edit3");
 	textEdit4->Init(800, 600, xOffset + controlsOffset, yOffset + 230, 200, fontsize, "../../bitmap/textEdit1.bmp", "edit4");
+}
+
+void TabPanel::InitializationOfTabParams()
+{
+	textEditRotationX->setCurrentText(std::to_string(xmlParams[0].Rotation[0]));
+	textEditRotationY->setCurrentText(std::to_string(xmlParams[0].Rotation[1]));
+	textEditRotationZ->setCurrentText(std::to_string(xmlParams[0].Rotation[2]));
 }
 
 void TabPanel::setXmlParamsStruct(int index, SceneObjectParams block) {
@@ -137,7 +151,9 @@ SceneObjectParams TabPanel::getXmlParamsStruct(int index)
 
 void TabPanel::CheckKey(int key, int action) 
 {
-	textEdit1->CheckKey(key, action);
+	textEditRotationX->CheckKey(key, action);
+	textEditRotationY->CheckKey(key, action);
+	textEditRotationZ->CheckKey(key, action);
 	textEdit2->CheckKey(key, action);
 	textEdit3->CheckKey(key, action);
 	textEdit4->CheckKey(key, action);
@@ -178,7 +194,9 @@ void TabPanel::Render(double currentTime)
 			//label11->Render(currentTime);
 			//label12->Render(currentTime);
 			buttonSave->Render(currentTime);
-			textEdit1->Render(currentTime);
+			textEditRotationX->Render(currentTime);
+			textEditRotationY->Render(currentTime);
+			textEditRotationZ->Render(currentTime);
 			textEdit2->Render(currentTime);
 			textEdit3->Render(currentTime);
 			textEdit4->Render(currentTime);
@@ -207,7 +225,9 @@ bool TabPanel::CheckArea(int x, int y)
 	dropDownListTest->CheckArea(x, y);
 	dropDownListSlots->CheckArea(x, y);
 
-	textEdit1->CheckArea(x, y);
+	textEditRotationX->CheckArea(x, y);
+	textEditRotationY->CheckArea(x, y);
+	textEditRotationZ->CheckArea(x, y);
 	textEdit2->CheckArea(x, y);
 	textEdit3->CheckArea(x, y);
 	textEdit4->CheckArea(x, y);
@@ -232,13 +252,21 @@ void TabPanel::ChangeTabParams() {
 	//label11->ChangeText(xmlParams[slotIndex].Rotation);
     //label11->ChangeText( xmlParams[slotIndex].Scale );
 
-	textEdit1->setCurrentText(xmlParams[slotIndex].ModelPath);
+	textEditRotationX->setCurrentText((std::to_string(xmlParams[slotIndex].Rotation[0])).substr(0, 5));
+	textEditRotationY->setCurrentText((std::to_string(xmlParams[slotIndex].Rotation[1])).substr(0, 5));
+	textEditRotationZ->setCurrentText((std::to_string(xmlParams[slotIndex].Rotation[2])).substr(0, 5));
 	textEdit2->setCurrentText(xmlParams[slotIndex].TexturePath);
 }
 
 void TabPanel::SaveChanges()
 {
 	modifiedElementIndex = dropDownListSlots->GetCurrentElement();
+
+	std::string::size_type sz;
+
+	xmlParams[modifiedElementIndex].Rotation[0] = std::stof(textEditRotationX->getCurrentText(), &sz);
+	xmlParams[modifiedElementIndex].Rotation[1] = std::stof(textEditRotationY->getCurrentText(), &sz);
+	xmlParams[modifiedElementIndex].Rotation[2] = std::stof(textEditRotationZ->getCurrentText(), &sz);
 
 	if (cbOpt1->checked)
 	{
@@ -253,7 +281,10 @@ void TabPanel::SaveChanges()
 void TabPanel::CheckClickedButton(int button, int action)
 {
 
-	textEdit1->onMouseButton(button, action);
+	textEditRotationX->onMouseButton(button, action);
+	textEditRotationY->onMouseButton(button, action);
+	textEditRotationZ->onMouseButton(button, action);
+
 	textEdit2->onMouseButton(button, action);
 	textEdit3->onMouseButton(button, action);
 	textEdit4->onMouseButton(button, action);
@@ -278,6 +309,7 @@ void TabPanel::CheckClickedButton(int button, int action)
 	if (buttonShowMenu->onMouseButton(button, action))
 	{
 		showMenuFlag = !showMenuFlag;
+		ChangeTabParams();
 	}
 
 	if (buttonPage1->onMouseButton(button, action))
