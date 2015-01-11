@@ -38,6 +38,7 @@ public:
 	DropDownList* dropDownListTest;
 	DropDownList* dropDownListSlots;
 	DropDownList* dropDownListModels;
+	DropDownList* dropDownListTextures;
 
 	Label* slotName;
 

@@ -18,6 +18,7 @@ TabPanel::TabPanel()
 	dropDownListTest = new DropDownList();
 	dropDownListModels = new DropDownList();
 	dropDownListSlots = new DropDownList();
+	dropDownListTextures = new DropDownList();
 
 	cbOpt1 = new CheckBox();
 	cbOpt2 = new CheckBox();
@@ -61,6 +62,7 @@ TabPanel::~TabPanel()
 	delete dropDownListModels;
 	delete buttonShowMenu;
 	delete dropDownListSlots;
+	delete dropDownListTextures;
 
 	delete cbOpt1;
 	delete cbOpt2;
@@ -114,7 +116,7 @@ void TabPanel::Init()
 
 	slotName->Init(800, 600, xOffset + 20, yOffset + 50, fontsize, "Slot number 0 parameters:");
 	label1->Init(800, 600, xOffset + 30, yOffset + 80, fontsize, "Model:");
-	label2->Init(800, 600, xOffset + 30, yOffset + 110, fontsize, "is_per_vertex:");
+	label2->Init(800, 600, xOffset + 30, yOffset + 110, fontsize, "Texture:");
 	label3->Init(800, 600, xOffset + 30, yOffset + 140, fontsize, "Rotation [x,y,z]:");
 	label4->Init(800, 600, xOffset + 30, yOffset + 170, fontsize, "Scale    [x,y,z]:");
 	label5->Init(800, 600, xOffset + 30, yOffset + 200, fontsize, "specular_albedo:");
@@ -123,8 +125,9 @@ void TabPanel::Init()
 
 	//cbOpt1->Init(800, 600, xOffset + controlsOffset, yOffset + 80, fontsize, fontsize, "../../bitmap/CheckBoxUnchecked.bmp");
 	dropDownListModels->Init(800, 600, xOffset + controlsOffset, yOffset + 80, 200, 20, "../../bitmap/DropDownListModel.bmp", 2);
+	dropDownListTextures->Init(800, 600, xOffset + controlsOffset, yOffset + 110, 200, 20, "../../bitmap/panel.bmp", 2);
 
-	cbOpt2->Init(800, 600, xOffset + controlsOffset, yOffset + 110, fontsize, fontsize, "../../bitmap/CheckBoxUnchecked.bmp");
+	//cbOpt2->Init(800, 600, xOffset + controlsOffset, yOffset + 110, fontsize, fontsize, "../../bitmap/CheckBoxUnchecked.bmp");
 
 
 	//label8->Init(800, 600, xOffset + controlsOffset, yOffset + 140, fontsize, "light_pos:");
@@ -190,10 +193,12 @@ void TabPanel::Render(double currentTime)
 			btnMenu1->Render(currentTime);
 
 			dropDownListTest->Render(currentTime);
+			dropDownListTextures->Render(currentTime);
 			dropDownListModels->Render(currentTime);
+			
 
-			cbOpt1->Render(currentTime);
-			cbOpt2->Render(currentTime);
+			//cbOpt1->Render(currentTime);
+			//cbOpt2->Render(currentTime);
 
 			slotName->Render(currentTime);
 			label1->Render(currentTime);
@@ -238,11 +243,12 @@ bool TabPanel::CheckArea(int x, int y)
 	btnMenu1->CheckArea(x, y);
 	btnMenu2->CheckArea(x, y);
 	//cbOpt1->CheckArea(x, y);
-	cbOpt2->CheckArea(x, y);
+	//cbOpt2->CheckArea(x, y);
 
 	dropDownListTest->CheckArea(x, y);
 	dropDownListModels->CheckArea(x, y);
 	dropDownListSlots->CheckArea(x, y);
+	dropDownListTextures->CheckArea(x, y);
 
 	textEditRotationX->CheckArea(x, y);
 	textEditRotationY->CheckArea(x, y);
@@ -289,6 +295,8 @@ void TabPanel::ChangeTabParams() {
 	{
 		dropDownListModels->SetCurrentElement((int)Models::Bunny_1k);
 	}
+
+
 }
 
 void TabPanel::SaveChanges()
@@ -332,10 +340,11 @@ void TabPanel::CheckClickedButton(int button, int action)
 	btnMenu1->onMouseButton(button, action);
 	btnMenu2->onMouseButton(button, action);
 	//cbOpt1->onMouseButton(button, action);
-	cbOpt2->onMouseButton(button, action);
+	//cbOpt2->onMouseButton(button, action);
 	
 	dropDownListTest->onMouseButton(button, action);
 	dropDownListModels->onMouseButton(button, action);
+	dropDownListTextures->onMouseButton(button, action);
 
 	if (dropDownListSlots->onMouseButton(button, action)) {
 		ChangeTabParams();
