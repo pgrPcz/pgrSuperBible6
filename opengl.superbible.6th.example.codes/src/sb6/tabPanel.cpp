@@ -124,7 +124,7 @@ void TabPanel::Init()
 	label7->Init(800, 600, xOffset + 30, yOffset + 260, fontsize, "other:");
 
 	//cbOpt1->Init(800, 600, xOffset + controlsOffset, yOffset + 80, fontsize, fontsize, "../../bitmap/CheckBoxUnchecked.bmp");
-	dropDownListModels->Init(800, 600, xOffset + controlsOffset, yOffset + 80, 200, 20, "../../bitmap/DropDownListModel.bmp", 2);
+	dropDownListModels->Init(800, 600, xOffset + controlsOffset, yOffset + 80, 200, 20, "../../bitmap/DropDownListModel.bmp", 9);
 	dropDownListTextures->Init(800, 600, xOffset + controlsOffset, yOffset + 110, 200, 20, "../../bitmap/panel.bmp", 2);
 
 	//cbOpt2->Init(800, 600, xOffset + controlsOffset, yOffset + 110, fontsize, fontsize, "../../bitmap/CheckBoxUnchecked.bmp");
@@ -193,8 +193,7 @@ void TabPanel::Render(double currentTime)
 			btnMenu1->Render(currentTime);
 
 			dropDownListTest->Render(currentTime);
-			dropDownListTextures->Render(currentTime);
-			dropDownListModels->Render(currentTime);
+
 			
 
 			//cbOpt1->Render(currentTime);
@@ -223,6 +222,9 @@ void TabPanel::Render(double currentTime)
 			textEditScaleZ->Render(currentTime);
 			textEdit3->Render(currentTime);
 			textEdit4->Render(currentTime);
+
+			dropDownListTextures->Render(currentTime);
+			dropDownListModels->Render(currentTime);
 		}
 		if (currentPage == 2)
 		{
@@ -287,16 +289,42 @@ void TabPanel::ChangeTabParams() {
 	textEditScaleY->setCurrentText((std::to_string(xmlParams[slotIndex].Scale[1])).substr(0, 5));
 	textEditScaleZ->setCurrentText((std::to_string(xmlParams[slotIndex].Scale[2])).substr(0, 5));
 
-	if (xmlParams[slotIndex].ModelPath == "media/objects/sphere.sbm")
+	if (xmlParams[slotIndex].ModelPath == "media/objects/asteroids.sbm")
 	{
-		dropDownListModels->SetCurrentElement((int)Models::Sphere);
+		dropDownListModels->SetCurrentElement((int)Models::Asteroids);
 	}
 	if (xmlParams[slotIndex].ModelPath == "media/objects/bunny_1k.sbm")
 	{
 		dropDownListModels->SetCurrentElement((int)Models::Bunny_1k);
 	}
-
-
+	if (xmlParams[slotIndex].ModelPath == "media/objects/bunny_40k.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Bunny_40k);
+	}
+	if (xmlParams[slotIndex].ModelPath == "media/objects/cube.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Cube);
+	}
+	if (xmlParams[slotIndex].ModelPath == "media/objects/dragon.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Dragon);
+	}
+	if (xmlParams[slotIndex].ModelPath == "media/objects/ladybug.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Ladybug);
+	}
+	if (xmlParams[slotIndex].ModelPath == "media/objects/sphere.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Sphere);
+	}
+	if (xmlParams[slotIndex].ModelPath == "media/objects/torus.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Torus);
+	}
+	if (xmlParams[slotIndex].ModelPath == "media/objects/torus_nrms_tc.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Torus_nrms_tc);
+	}
 }
 
 void TabPanel::SaveChanges()
@@ -313,13 +341,37 @@ void TabPanel::SaveChanges()
 	xmlParams[modifiedElementIndex].Scale[1] = std::stof(textEditScaleY->getCurrentText(), &sz);
 	xmlParams[modifiedElementIndex].Scale[2] = std::stof(textEditScaleZ->getCurrentText(), &sz);
 
-	if (dropDownListModels->GetCurrentElement() == (int)Models::Sphere)
+	switch (dropDownListModels->GetCurrentElement())
 	{
-		xmlParams[modifiedElementIndex].ModelPath = "media/objects/sphere.sbm";
-	}
-	if (dropDownListModels->GetCurrentElement() == (int)Models::Bunny_1k)
-	{
-		xmlParams[modifiedElementIndex].ModelPath = "media/objects/bunny_1k.sbm";
+		case (int)Models::Asteroids:
+			xmlParams[modifiedElementIndex].ModelPath = "media/objects/asteroids.sbm";
+			break;
+		case (int)Models::Bunny_1k:
+			xmlParams[modifiedElementIndex].ModelPath = "media/objects/bunny_1k.sbm";
+			break;
+		case (int)Models::Bunny_40k:
+			xmlParams[modifiedElementIndex].ModelPath = "media/objects/bunny_40k.sbm";
+			break;
+		case (int)Models::Cube:
+			xmlParams[modifiedElementIndex].ModelPath = "media/objects/cube.sbm";
+			break;
+		case (int)Models::Dragon:
+			xmlParams[modifiedElementIndex].ModelPath = "media/objects/dragon.sbm";
+			break;
+		case (int)Models::Ladybug:
+			xmlParams[modifiedElementIndex].ModelPath = "media/objects/ladybug.sbm"; 
+			break;
+		case (int)Models::Sphere:
+			xmlParams[modifiedElementIndex].ModelPath = "media/objects/sphere.sbm";
+			break;
+		case (int)Models::Torus:
+			xmlParams[modifiedElementIndex].ModelPath = "media/objects/torus.sbm";
+			break;
+		case (int)Models::Torus_nrms_tc:
+			xmlParams[modifiedElementIndex].ModelPath = "media/objects/torus_nrms_tc.sbm";
+			break;
+		default :
+			break;
 	}
 }
 

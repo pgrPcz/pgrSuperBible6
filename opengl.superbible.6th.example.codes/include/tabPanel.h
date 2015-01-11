@@ -16,7 +16,7 @@ private:
 	const static unsigned int OBJECT_COUNT_X = 3;
 	const static unsigned int OBJECT_COUNT_Y = 3;
 	const static unsigned int OBJECT_COUNT_Z = 3;
-	enum class Models { Sphere, Bunny_1k };
+	enum class Models { Asteroids, Bunny_1k, Bunny_40k, Cube, Dragon, Ladybug, Sphere, Torus, Torus_nrms_tc };
     
 public:
 	SceneObjectParams xmlParams[OBJECT_COUNT_X*OBJECT_COUNT_Y*OBJECT_COUNT_Z];
