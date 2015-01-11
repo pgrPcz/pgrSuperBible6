@@ -34,6 +34,7 @@ public:
 
     void LoadShaders();
 
+	void Update();
 	void SetParams(SceneObjectParams paramsToSet);
     void SetModel( std::string path );
     void SetTexture( std::string path );

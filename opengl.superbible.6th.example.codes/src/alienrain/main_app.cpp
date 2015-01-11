@@ -159,6 +159,7 @@ void MainApp::render(double currentTime)
 					//save changes from GUI to XML
 					//load changes from XML to Model index
 					SaveXmlConfig();
+					mSceneObjects[i][j][k].Update();
 					myTabPanel->modifiedElementIndex = -1;
 				}
             }

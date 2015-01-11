@@ -262,6 +262,22 @@ void SceneObject::Startup()
     glDepthFunc(GL_LEQUAL);
 }
 
+void SceneObject::Update()
+{
+	// TODO check error on load shaders and load object
+	LoadShaders();
+
+	glGenBuffers(1, &uniforms_buffer);
+	glBindBuffer(GL_UNIFORM_BUFFER, uniforms_buffer);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(uniforms_block), NULL, GL_DYNAMIC_DRAW);
+
+	model.load(mParams.ModelPath.c_str());
+
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+}
+
 //************************************
 // Method:    Render
 // FullName:  SceneObject::render
