@@ -58,6 +58,12 @@ void DropDownList::WinLog(const wchar_t *text, int n = 0) {
 int DropDownList::GetCurrentElement() {
 	return this->currentElement;
 }
+
+void DropDownList::SetCurrentElement(int index)
+{
+	this->currentElement = index;
+}
+
 void DropDownList::SetProjMat(int w, int h) {
 
 	aspect = (float)w / (float)h;

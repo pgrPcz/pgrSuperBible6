@@ -16,6 +16,7 @@ TabPanel::TabPanel()
 	btnMenu2 = new Button();
 
 	dropDownListTest = new DropDownList();
+	dropDownListModels = new DropDownList();
 	dropDownListSlots = new DropDownList();
 
 	cbOpt1 = new CheckBox();
@@ -57,6 +58,7 @@ TabPanel::~TabPanel()
 	delete btnMenu2;
 
 	delete dropDownListTest;
+	delete dropDownListModels;
 	delete buttonShowMenu;
 	delete dropDownListSlots;
 
@@ -111,7 +113,7 @@ void TabPanel::Init()
 	dropDownListTest->Init(800, 600, xOffset + 320, yOffset + 340, 150, 50, "../../bitmap/DropDownList1.bmp", 5);
 
 	slotName->Init(800, 600, xOffset + 20, yOffset + 50, fontsize, "Slot number 0 parameters:");
-	label1->Init(800, 600, xOffset + 30, yOffset + 80, fontsize, "is_many_objects:");
+	label1->Init(800, 600, xOffset + 30, yOffset + 80, fontsize, "Model:");
 	label2->Init(800, 600, xOffset + 30, yOffset + 110, fontsize, "is_per_vertex:");
 	label3->Init(800, 600, xOffset + 30, yOffset + 140, fontsize, "Rotation [x,y,z]:");
 	label4->Init(800, 600, xOffset + 30, yOffset + 170, fontsize, "Scale    [x,y,z]:");
@@ -119,7 +121,9 @@ void TabPanel::Init()
 	label6->Init(800, 600, xOffset + 30, yOffset + 230, fontsize, "specular_power:");
 	label7->Init(800, 600, xOffset + 30, yOffset + 260, fontsize, "other:");
 
-	cbOpt1->Init(800, 600, xOffset + controlsOffset, yOffset + 80, fontsize, fontsize, "../../bitmap/CheckBoxUnchecked.bmp");
+	//cbOpt1->Init(800, 600, xOffset + controlsOffset, yOffset + 80, fontsize, fontsize, "../../bitmap/CheckBoxUnchecked.bmp");
+	dropDownListModels->Init(800, 600, xOffset + controlsOffset, yOffset + 80, 200, 20, "../../bitmap/DropDownListModel.bmp", 2);
+
 	cbOpt2->Init(800, 600, xOffset + controlsOffset, yOffset + 110, fontsize, fontsize, "../../bitmap/CheckBoxUnchecked.bmp");
 
 
@@ -186,6 +190,7 @@ void TabPanel::Render(double currentTime)
 			btnMenu1->Render(currentTime);
 
 			dropDownListTest->Render(currentTime);
+			dropDownListModels->Render(currentTime);
 
 			cbOpt1->Render(currentTime);
 			cbOpt2->Render(currentTime);
@@ -232,10 +237,11 @@ bool TabPanel::CheckArea(int x, int y)
 	buttonSave->CheckArea(x, y);
 	btnMenu1->CheckArea(x, y);
 	btnMenu2->CheckArea(x, y);
-	cbOpt1->CheckArea(x, y);
+	//cbOpt1->CheckArea(x, y);
 	cbOpt2->CheckArea(x, y);
 
 	dropDownListTest->CheckArea(x, y);
+	dropDownListModels->CheckArea(x, y);
 	dropDownListSlots->CheckArea(x, y);
 
 	textEditRotationX->CheckArea(x, y);
@@ -274,6 +280,15 @@ void TabPanel::ChangeTabParams() {
 	textEditScaleX->setCurrentText((std::to_string(xmlParams[slotIndex].Scale[0])).substr(0, 5));
 	textEditScaleY->setCurrentText((std::to_string(xmlParams[slotIndex].Scale[1])).substr(0, 5));
 	textEditScaleZ->setCurrentText((std::to_string(xmlParams[slotIndex].Scale[2])).substr(0, 5));
+
+	if (xmlParams[slotIndex].ModelPath == "media/objects/sphere.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Sphere);
+	}
+	if (xmlParams[slotIndex].ModelPath == "media/objects/bunny_1k.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Bunny_1k);
+	}
 }
 
 void TabPanel::SaveChanges()
@@ -290,6 +305,14 @@ void TabPanel::SaveChanges()
 	xmlParams[modifiedElementIndex].Scale[1] = std::stof(textEditScaleY->getCurrentText(), &sz);
 	xmlParams[modifiedElementIndex].Scale[2] = std::stof(textEditScaleZ->getCurrentText(), &sz);
 
+	if (dropDownListModels->GetCurrentElement() == (int)Models::Sphere)
+	{
+		xmlParams[modifiedElementIndex].ModelPath = "media/objects/sphere.sbm";
+	}
+	if (dropDownListModels->GetCurrentElement() == (int)Models::Bunny_1k)
+	{
+		xmlParams[modifiedElementIndex].ModelPath = "media/objects/bunny_1k.sbm";
+	}
 }
 
 void TabPanel::CheckClickedButton(int button, int action)
@@ -308,10 +331,11 @@ void TabPanel::CheckClickedButton(int button, int action)
 
 	btnMenu1->onMouseButton(button, action);
 	btnMenu2->onMouseButton(button, action);
-	cbOpt1->onMouseButton(button, action);
+	//cbOpt1->onMouseButton(button, action);
 	cbOpt2->onMouseButton(button, action);
 	
 	dropDownListTest->onMouseButton(button, action);
+	dropDownListModels->onMouseButton(button, action);
 
 	if (dropDownListSlots->onMouseButton(button, action)) {
 		ChangeTabParams();

@@ -16,7 +16,7 @@ private:
 	const static unsigned int OBJECT_COUNT_X = 3;
 	const static unsigned int OBJECT_COUNT_Y = 3;
 	const static unsigned int OBJECT_COUNT_Z = 3;
-
+	enum class Models { Sphere, Bunny_1k };
     
 public:
 	SceneObjectParams xmlParams[OBJECT_COUNT_X*OBJECT_COUNT_Y*OBJECT_COUNT_Z];
@@ -37,6 +37,7 @@ public:
 
 	DropDownList* dropDownListTest;
 	DropDownList* dropDownListSlots;
+	DropDownList* dropDownListModels;
 
 	Label* slotName;
 

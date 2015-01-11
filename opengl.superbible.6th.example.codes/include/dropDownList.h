@@ -26,7 +26,9 @@ public:
 	bool onMouseButton(int a, int b);
 
 	int GetCurrentElement();
-
+	void ChangeToElement(int index);
+	int activeElement;
+	void SetCurrentElement(int index);
 private:
 
 	void WinLog(const wchar_t *text, int n);
@@ -37,7 +39,7 @@ private:
 	void SetWinSize(int w, int h);
 
 	void SetColor(bool mouseStatus);
-	void ChangeToElement(int index);
+	
 
 
 
@@ -51,7 +53,7 @@ private:
 	int mousePosX, mousePosY;
 
 	int numOfElements;
-	int activeElement;
+	
 	int currentElement;
 	float offsetValue;
 	bool insideWholeArea;
