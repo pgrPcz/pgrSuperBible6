@@ -2,7 +2,9 @@
 
 TabPanel::TabPanel()
 {
-	//modified = false;
+	width = 800;
+	hight = 600;
+
 	modifiedElementIndex = -1;
 
 	buttonPage1 = new Button();
@@ -123,7 +125,7 @@ TabPanel::~TabPanel()
 
 }
 
-void TabPanel::Init()
+void TabPanel::Init(int winWidth, int winHight)
 {
 	float yOffset = 20.0 + 5;
 	float xOffset = 20.0;
@@ -349,6 +351,52 @@ bool TabPanel::CheckArea(int x, int y)
 	textEdit3->CheckArea(x, y);
 	textEdit4->CheckArea(x, y);
 	return true;
+}
+
+void TabPanel::onResizeChangeGUI(int w, int h) {
+	buttonShowMenu->UpdateSize(w, h);
+
+	buttonPage1->UpdateSize(w, h);
+	buttonPage2->UpdateSize(w, h);
+	buttonShowMenu->UpdateSize(w, h);
+	buttonSave->UpdateSize(w, h);
+
+	panelPage1->UpdateSize(w, h);
+
+	btnMenu1->UpdateSize(w, h);
+	btnMenu2->UpdateSize(w, h);
+
+	dropDownListTest->UpdateSize(w, h);
+	dropDownListModels->UpdateSize(w, h);
+	dropDownListSlots->UpdateSize(w, h);
+	dropDownListTextures->UpdateSize(w, h);
+
+	cbOpt1->UpdateSize(w, h);
+	cbOpt2->UpdateSize(w, h);
+
+	slotName->UpdateSize(w, h);
+	label1->UpdateSize(w, h);
+	label2->UpdateSize(w, h);
+	label3->UpdateSize(w, h);
+	label4->UpdateSize(w, h);
+	label5->UpdateSize(w, h);
+	label6->UpdateSize(w, h);
+	label7->UpdateSize(w, h);
+
+	label8->UpdateSize(w, h);
+	label9->UpdateSize(w, h);
+	label10->UpdateSize(w, h);
+	label11->UpdateSize(w, h);
+	label12->UpdateSize(w, h);
+
+	textEditRotationX->UpdateSize(w, h);
+	textEditRotationY->UpdateSize(w, h);
+	textEditRotationZ->UpdateSize(w, h);
+	textEditScaleX->UpdateSize(w, h);
+	textEditScaleY->UpdateSize(w, h);
+	textEditScaleZ->UpdateSize(w, h);
+	textEdit3->UpdateSize(w, h);
+	textEdit4->UpdateSize(w, h);
 }
 
 void TabPanel::ChangeTabParams() {

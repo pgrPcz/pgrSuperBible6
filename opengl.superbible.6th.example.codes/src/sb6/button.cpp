@@ -51,17 +51,7 @@ void Button::SetProjMat(int w, int h) {
 
 	aspect = (float)w / (float)h;
 }
-void Button::SetWinSize(int w, int h) {
-	winWidth = w;
-	winHeight = h;
 
-	//Normalizacja potrzebna w przeliczaniu wspó³rzednych
-	x /= winWidth;
-	y /= winHeight;
-
-	width /= winWidth;
-	height /= winHeight;
-}
 bool Button::CheckArea(int posX, int posY) {
 
 	mousePosX = posX;
@@ -100,21 +90,18 @@ bool Button::onMouseButton(int button, int action) {
 	}
 }
 
-void Button::generate_texture(float * data, int width, int height) {
-	int x, y;
+void Button::UpdateSize(int winW, int winH) {
 
-	for (y = 0; y < height; y++) {
-		for (x = 0; x < width; x++) {
-			data[(y * width + x) * 2 + 0] =  0.5f;
-			data[(y * width + x) * 2 + 1] =  0.5f;
-			//data[(y * width + x) * 4 + 2] = (float)((x ^ y) & 0xFF) / 255.0f;
-			//data[(y * width + x) * 4 + 3] = 1.0f;
-		}
-	}
+	winWidth = winW;
+	winHeight = winH;	
+
+	x = (float)ix / winWidth;
+	y = (float)iy / winHeight;
+
+	width = (float)iwidth / winWidth;
+	height = (float)iheight / winHeight;
+
 }
-
-
-
 void Button::Init(int winW, int winH, float posX, float posY, int btnWidth, int btnHeight, const char * bitmap) {
 
 	winWidth = winW;
@@ -169,8 +156,6 @@ void Button::Init(int winW, int winH, float posX, float posY, int btnWidth, int 
 		"#version 410 core                                                  \n"
 		"                                                                   \n"
 		"in vec4 position2;										            \n"
-		//"in vec2 texPos;													     \n"
-		//"layout (location = 14) in vec2 tc;                                  \n"
 		"out VS_OUT                                                         \n"
 		"{                                                                  \n"
 		"    vec4 color;													\n"
@@ -200,7 +185,6 @@ void Button::Init(int winW, int winH, float posX, float posY, int btnWidth, int 
 		"#version 410 core                                                  \n"
 		"                                                                   \n"
 		"out vec4 color;                                                    \n"
-		//"layout (binding = 10) uniform sampler2D tex_object;                \n"
 		"uniform sampler2D sss;												\n"
 		"in VS_OUT                                                          \n"
 		"{                                                                  \n"
@@ -211,9 +195,6 @@ void Button::Init(int winW, int winH, float posX, float posY, int btnWidth, int 
 		"void main(void)                                                    \n"
 		"{                                                                  \n"
 		"    color = texture(sss, fs_in.tc )*fs_in.color;	\n"
-		//"    color = texture(sss, (gl_FragCoord.xy)/ textureSize(sss, 0) )*fs_in.color;	\n"
-		//"    color = texture(sss, (vec2(30.0,1.0)+gl_FragCoord.xy) / textureSize(sss, 0));	\n"
-		//"    color = fs_in.color;									        \n"
 		"}                                                                  \n"
 	};
 
@@ -317,9 +298,6 @@ GLuint Button::LoadBMPTexture(const char * imagepath) {
 	float * data;
 	// Define some data to upload into the texture
 	data = new float[fileWidth * fileHeight * 4];
-
-	// generate_texture() is a function that fills memory with image data
-	generate_texture(data, fileWidth, fileHeight);
 
 	// Create one OpenGL texture
 	glGenTextures(1, &textureID);

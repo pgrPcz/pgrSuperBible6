@@ -44,9 +44,14 @@ protected:
     void    onKey(int key, int action);
     void    onMouseMove(int x, int y);
     void    onMouseButton(int button, int action);
+<<<<<<< HEAD
+    
+	void    ReadObjectsProperties(XMLElement* root, vmath::vec3 lightPos, vmath::vec3 diffuseAlbedo, float specularAlbedo, float specularPower);
+=======
 	void	onResizeChangeGUI(int w,int h);
 
-	void    ReadObjectsProperties(XMLElement* root, vmath::vec3 lightPos, vmath::vec3 diffuseAlbedo, float specularAlbedo, float specularPower);
+    void    ReadObjectsProperties( XMLElement* root );
+>>>>>>> global
     void    WriteObjectsProperties( XMLElement* root );
     //void    load_shaders();
 

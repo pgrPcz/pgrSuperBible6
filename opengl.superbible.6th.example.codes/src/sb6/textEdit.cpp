@@ -92,6 +92,11 @@ void TextEdit::setCurrentText(std::string text) {
 	textToDisplay = currentText;	
 }
 
+void TextEdit::UpdateSize(int winW, int winH) {
+	myLabel->UpdateSize(winW, winH);
+	myButton->UpdateSize(winW, winH);
+}
+
 void TextEdit::Init(int winW, int winH, float posX, float posY, int width, int hight, const char * bitmap, std::string textToDraw) {
 
 	textToDisplay = textToDraw;

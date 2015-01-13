@@ -22,6 +22,7 @@ public:
 
 	void Init(int winW, int winH, float x, float y, int fontsize, std::string labeltext);
 	void Render(double currentTime);
+	void UpdateSize(int winW, int winH);
 	void ShoutDown();
 
 	bool CheckArea(int x, int y);
@@ -38,7 +39,6 @@ private:
 	void generate_texture(unsigned char * data, int width, int height);
 
 	void SetProjMat(int w, int h);
-	void SetWinSize(int w, int h);
 
 	void SetColor(bool mouseStatus);
 

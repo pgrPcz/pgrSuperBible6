@@ -194,6 +194,19 @@ static GLfloat tex_coords_pos2[] =
 //	2, 4, 0
 //};
 
+void DropDownList::UpdateSize(int winW, int winH) {
+
+	winWidth = winW;
+	winHeight = winH;
+
+	x = (float)ix / winWidth;
+	y = (float)iy / winHeight;
+
+	width = (float)iwidth / winWidth;
+	height = (float)iheight / winHeight;
+
+}
+
 void DropDownList::Init(int winW, int winH, float posX, float posY, int btnWidth, int btnHeight, const char * bitmap, int numOfElementsInList) {
 
 	winWidth = winW;

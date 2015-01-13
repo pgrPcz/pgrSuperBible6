@@ -81,7 +81,7 @@ void MainApp::startup()
 {
     LoadXmlConfig();
 
-    myTabPanel->Init();
+    myTabPanel->Init(800,600);
     // Init scene objects
     for(int i = 0; i < OBJECT_COUNT_X; i++)
     {
@@ -136,6 +136,11 @@ void MainApp::render(double currentTime)
     vmath::mat4 light_view_matrix = vmath::lookat(light_position, vmath::vec3(0.0f), vmath::vec3(0.0f, 1.0f, 0.0f));*/
 
     // For every object
+	float spacing = 3.25;
+	float distanceFromCamera = 6.25;
+	float yTrans = 2.75;
+	float zTrans = 2.25;
+
     for(int i = 0; i < OBJECT_COUNT_X; i++)
     {
         for(int j = 0; j < OBJECT_COUNT_Y; j++)
@@ -143,7 +148,7 @@ void MainApp::render(double currentTime)
             for(int k = 0; k < OBJECT_COUNT_Z; k++)
             {
                 vmath::mat4 model_matrix = 
-                    vmath::translate((float)i * 2.25f - 6.25f, 2.75f - (float)j * 2.25f, (float)k * 2.25f - 2.25f);
+					vmath::translate((float)i * spacing - distanceFromCamera, yTrans - (float)j * spacing, (float)k * spacing - zTrans);
 
                 mSceneObjects[i][j][k].Render(
                     currentTime, 
@@ -239,6 +244,19 @@ void MainApp::onMouseButton(int button, int action) {
     myTabPanel->CheckClickedButton(button, action);
 
 	buttonMouseClicked = action;
+}
+
+//************************************
+// Method:    onMouseButton
+// FullName:  MainApp::onMouseButton
+// Access:    protected 
+// Returns:   void
+// Qualifier:
+// Parameter: int button
+// Parameter: int action
+//************************************
+void MainApp::onResizeChangeGUI(int w, int h) {
+	myTabPanel->onResizeChangeGUI(w, h);
 }
 
 //************************************

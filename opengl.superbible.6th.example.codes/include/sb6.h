@@ -251,7 +251,12 @@ public:
     {
         info.windowWidth = w;
         info.windowHeight = h;
+
+		app->onResizeChangeGUI(w, h);
     }
+	virtual void onResizeChangeGUI(int w, int h) {
+
+	}
 
     virtual void onKey(int key, int action)
     {

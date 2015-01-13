@@ -11,6 +11,8 @@
 class TabPanel
 {
 private:
+	int width;
+	int hight;
 	int currentPage = 1;
 
 
@@ -86,10 +88,12 @@ public:
 
 	TabPanel();
 	~TabPanel();
-	void Init();
+	void Init(int w,int h);
 	void Render(double currentTime);
 	bool CheckArea(int x, int y);
 	void CheckClickedButton(int button, int action);
+	void onResizeChangeGUI(int w, int h);
+
 	void setXmlParamsStruct(int index, SceneObjectParams block);
 	void SaveChanges();
 
