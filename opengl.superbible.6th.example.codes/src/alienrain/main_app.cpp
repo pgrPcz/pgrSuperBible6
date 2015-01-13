@@ -288,14 +288,17 @@ void MainApp::handleOpenDocument( XMLDocument* doc )
     is_per_vertex    = ele->BoolAttribute("per_vertex");*/
 
     XMLElement* ele  = root->FirstChildElement( "light" );
-    light_pos        = ele->Attribute("pos");
+	vmath::vec3 lightPos = vmath::vec3( ele->FloatAttribute("posX"), ele->FloatAttribute("posY"), ele->FloatAttribute("posZ"));
 
     ele              = root->FirstChildElement("material_properties");
-    diffuse_albedo   = ele->Attribute("diffuse_albedo");
-    specular_albedo  = ele->Attribute("specular_albedo");
-    specular_power   = ele->Attribute("specular_power");
+	vmath::vec3 diffuseAlbedo = vmath::vec3(ele->FloatAttribute("diffuse_albedoX"), ele->FloatAttribute("diffuse_albedoY"), ele->FloatAttribute("diffuse_albedoZ"));
+	float specularAlbedo = ele->FloatAttribute("specular_albedo");
+	float specularPower = ele->FloatAttribute("specular_power");
+    //diffuse_albedo   = ele->Attribute("diffuse_albedo");
+    //specular_albedo  = ele->Attribute("specular_albedo");
+    //specular_power   = ele->Attribute("specular_power");
 
-    ReadObjectsProperties( root );
+    ReadObjectsProperties( root, lightPos, diffuseAlbedo, specularAlbedo, specularPower );
 }
 
 //************************************
@@ -315,12 +318,20 @@ void MainApp::handleSaveDocument( XMLDocument* doc )
     is_per_vertex    = ele->BoolAttribute("per_vertex");*/
 
     XMLElement* ele = root->FirstChildElement( "light" );
-    ele->SetAttribute( "pos", light_pos.c_str() );
+    ele->SetAttribute( "posX", (mSceneObjects[0][0][0].GetParams()).LightPosition[0]);
+	ele->SetAttribute( "posY", (mSceneObjects[0][0][0].GetParams()).LightPosition[1]);
+	ele->SetAttribute( "posZ", (mSceneObjects[0][0][0].GetParams()).LightPosition[2]);
 
     ele = root->FirstChildElement("material_properties");
-    ele->SetAttribute( "diffuse_albedo", diffuse_albedo.c_str());
-    ele->SetAttribute( "specular_albedo", specular_albedo.c_str() );
-    ele->SetAttribute( "specular_power", specular_power.c_str() );
+    //ele->SetAttribute( "diffuse_albedo", diffuse_albedo.c_str());
+    //ele->SetAttribute( "specular_albedo", specular_albedo.c_str() );
+    //ele->SetAttribute( "specular_power", specular_power.c_str() );
+	
+	ele->SetAttribute("diffuse_albedoX", (mSceneObjects[0][0][0].GetParams()).DiffuseAlbedo[0]);
+	ele->SetAttribute("diffuse_albedoY", (mSceneObjects[0][0][0].GetParams()).DiffuseAlbedo[1]);
+	ele->SetAttribute("diffuse_albedoZ", (mSceneObjects[0][0][0].GetParams()).DiffuseAlbedo[2]);
+	ele->SetAttribute("specular_albedo", (mSceneObjects[0][0][0].GetParams()).SpecularAlbedo);
+	ele->SetAttribute("specular_power", (mSceneObjects[0][0][0].GetParams()).SpecularPower);
 
     WriteObjectsProperties( root );
 }
@@ -333,7 +344,7 @@ void MainApp::handleSaveDocument( XMLDocument* doc )
 // Qualifier:
 // Parameter: XMLElement * root
 //************************************
-void MainApp::ReadObjectsProperties( XMLElement* root )
+void MainApp::ReadObjectsProperties(XMLElement* root, vmath::vec3 lightPos, vmath::vec3 diffuseAlbedo, float specularAlbedo, float specularPower)
 {
     XMLElement* element = root->FirstChildElement( "objects" );
 
@@ -371,6 +382,10 @@ void MainApp::ReadObjectsProperties( XMLElement* root )
             object.SetScale( scale );
             object.SetModel( modelPath );
             object.SetTexture( texturePath );
+			object.SetLightPosition( lightPos );
+			object.SetDiffuseAlbedo(diffuseAlbedo);
+			object.SetSpecularAlbedo(specularAlbedo);
+			object.SetSpecularPower(specularPower);
         }
 
         element = element->NextSiblingElement();

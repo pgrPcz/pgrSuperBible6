@@ -100,6 +100,7 @@ public:
 	void SetGlobalParams(vmath::vec3 _lightPosition, vmath::vec3 _diffuseAlbedo, float _specularAlbedo, float _specularPower);
 	void CheckKey(int key, int action);
 	void ChangeTabParams();
+	void ChangeTabGlobalParams();
 	void InitializationOfTabParams();
 };
 

@@ -406,6 +406,21 @@ void TabPanel::ChangeTabParams() {
 	}
 }
 
+void TabPanel::ChangeTabGlobalParams() 
+{
+	textEditGlobalSettingsLightPosX->setCurrentText((std::to_string(xmlParams[0].LightPosition[0])).substr(0, 5));
+	textEditGlobalSettingsLightPosY->setCurrentText((std::to_string(xmlParams[0].LightPosition[1])).substr(0, 5));
+	textEditGlobalSettingsLightPosZ->setCurrentText((std::to_string(xmlParams[0].LightPosition[2])).substr(0, 5));
+
+	textEditGlobalSettingsDiffuseAlbedoX->setCurrentText((std::to_string(xmlParams[0].DiffuseAlbedo[0])).substr(0, 5));
+	textEditGlobalSettingsDiffuseAlbedoY->setCurrentText((std::to_string(xmlParams[0].DiffuseAlbedo[1])).substr(0, 5));
+	textEditGlobalSettingsDiffuseAlbedoZ->setCurrentText((std::to_string(xmlParams[0].DiffuseAlbedo[2])).substr(0, 5));
+
+	textEditGlobalSettingsSpecularAlbedo->setCurrentText((std::to_string(xmlParams[0].SpecularAlbedo)).substr(0, 5));
+
+	textEditGlobalSettingsSpecularPower->setCurrentText((std::to_string(xmlParams[0].SpecularPower)).substr(0, 5));
+}
+
 void TabPanel::SaveChanges()
 {
 	if (showMenuFlag)
@@ -513,6 +528,7 @@ void TabPanel::CheckClickedButton(int button, int action)
 	{
 		showMenuGlobalSettings = !showMenuGlobalSettings;
 		showMenuFlag = false;
+		ChangeTabGlobalParams();
 	}
 
 	if (buttonPage1->onMouseButton(button, action))

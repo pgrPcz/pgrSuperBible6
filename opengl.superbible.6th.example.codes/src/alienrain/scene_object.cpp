@@ -406,7 +406,37 @@ void SceneObject::SetParams(SceneObjectParams paramsToSet)
 	mParams.Rotation = paramsToSet.Rotation;
 	mParams.Scale = paramsToSet.Scale;
 	mParams.TexturePath = paramsToSet.TexturePath;
+	mParams.LightPosition = paramsToSet.LightPosition;
+	mParams.DiffuseAlbedo = paramsToSet.DiffuseAlbedo;
+	mParams.SpecularAlbedo = paramsToSet.SpecularAlbedo;
+	mParams.SpecularPower = paramsToSet.SpecularPower;
 }
+
+void SceneObject::SetLightPosition(string lightPosition)
+{
+	mParams.LightPosition = getXmlVecParam( lightPosition );
+}
+
+void SceneObject::SetLightPosition(vmath::vec3 lightPosition)
+{
+	mParams.LightPosition = lightPosition;
+}
+
+void SceneObject::SetDiffuseAlbedo(vmath::vec3 diffuseAlbedo)
+{
+	mParams.DiffuseAlbedo = diffuseAlbedo;
+}
+
+void SceneObject::SetSpecularAlbedo(float specularAlbedo)
+{
+	mParams.SpecularAlbedo = specularAlbedo;
+}
+
+void SceneObject::SetSpecularPower(float specularPower)
+{
+	mParams.SpecularPower = specularPower;
+}
+
 //************************************
 // Method:    SetModel
 // FullName:  SceneObject::SetModel

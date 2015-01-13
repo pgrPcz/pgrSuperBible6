@@ -11,6 +11,11 @@ struct SceneObjectParams
     vmath::vec3  Scale;
     vmath::uvec3 Coords;        // Position in the 'cube'
 
+	vmath::vec3 LightPosition;
+	vmath::vec3 DiffuseAlbedo;
+	float SpecularAlbedo;
+	float SpecularPower;
+
  //   bool    is_many_objects;
  //   bool    is_per_vertex;
 

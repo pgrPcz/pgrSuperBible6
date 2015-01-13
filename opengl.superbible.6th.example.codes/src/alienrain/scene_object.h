@@ -35,6 +35,11 @@ public:
     void LoadShaders();
 
 	void Update();
+	void SetLightPosition(string lightPosition);
+	void SetLightPosition(vmath::vec3 lightPosition);
+	void SetDiffuseAlbedo(vmath::vec3 diffuseAlbedo);
+	void SetSpecularAlbedo(float specularAlbedo);
+	void SetSpecularPower(float specularPower);
 	void SetParams(SceneObjectParams paramsToSet);
     void SetModel( std::string path );
     void SetTexture( std::string path );

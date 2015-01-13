@@ -45,7 +45,7 @@ protected:
     void    onMouseMove(int x, int y);
     void    onMouseButton(int button, int action);
     
-    void    ReadObjectsProperties( XMLElement* root );
+	void    ReadObjectsProperties(XMLElement* root, vmath::vec3 lightPos, vmath::vec3 diffuseAlbedo, float specularAlbedo, float specularPower);
     void    WriteObjectsProperties( XMLElement* root );
     //void    load_shaders();
 
@@ -65,12 +65,17 @@ protected:
     bool    is_per_vertex;
 
     // Light
-    string  light_pos;    
+    //string  light_pos;    
 
     // Material properties    
-    string  diffuse_albedo;
-    string  specular_albedo;
-    string  specular_power;
+    //string  diffuse_albedo;
+    //string  specular_albedo;
+    //string  specular_power;
+
+	//vmath::vec3 lightPosition;
+	//vmath::vec3 diffuseAlbedo;
+	//float specularAlbedo;
+	//float specularPower;
 
     GLuint  per_fragment_program; // TODO adatczuk to be removed
 
