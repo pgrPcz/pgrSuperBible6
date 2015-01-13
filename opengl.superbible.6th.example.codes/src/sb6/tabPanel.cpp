@@ -131,7 +131,7 @@ void TabPanel::Init()
 	int controlsOffset = 250;
 
 	buttonShowMenu->Init(800, 600, xOffset, 10, 50, (int)xOffset, "../../bitmap/ButtonShowMenu2.bmp");
-	buttonShowGlobalSettings->Init(800, 600, xOffset + 100 + 100, 10, 50, (int)xOffset, "../../bitmap/ButtonShowMenu2.bmp");
+	buttonShowGlobalSettings->Init(800, 600, xOffset + 100 + 90, 10, 150, (int)xOffset, "../../bitmap/ButtonShowMenu3.bmp");
 
 	buttonPage1->Init(800, 600, xOffset, yOffset + 10, 50, 20, "../../bitmap/panelPage1.bmp");
 	panelPage1->Init(800, 600, xOffset, yOffset + 30, 500, 400, "../../bitmap/panel2.bmp");
@@ -213,6 +213,15 @@ SceneObjectParams TabPanel::getXmlParamsStruct(int index)
 
 void TabPanel::CheckKey(int key, int action) 
 {
+	textEditGlobalSettingsLightPosX->CheckKey(key, action);
+	textEditGlobalSettingsLightPosY->CheckKey(key, action);
+	textEditGlobalSettingsLightPosZ->CheckKey(key, action);
+	textEditGlobalSettingsDiffuseAlbedoX->CheckKey(key, action);
+	textEditGlobalSettingsDiffuseAlbedoY->CheckKey(key, action);
+	textEditGlobalSettingsDiffuseAlbedoZ->CheckKey(key, action);
+	textEditGlobalSettingsSpecularAlbedo->CheckKey(key, action);
+	textEditGlobalSettingsSpecularPower->CheckKey(key, action);
+
 	textEditRotationX->CheckKey(key, action);
 	textEditRotationY->CheckKey(key, action);
 	textEditRotationZ->CheckKey(key, action);
@@ -423,11 +432,12 @@ void TabPanel::ChangeTabGlobalParams()
 
 void TabPanel::SaveChanges()
 {
+	modifiedElementIndex = dropDownListSlots->GetCurrentElement();
+	std::string::size_type sz;
+
 	if (showMenuFlag)
 	{
-		modifiedElementIndex = dropDownListSlots->GetCurrentElement();
 
-		std::string::size_type sz;
 
 		xmlParams[modifiedElementIndex].Rotation[0] = std::stof(textEditRotationX->getCurrentText(), &sz);
 		xmlParams[modifiedElementIndex].Rotation[1] = std::stof(textEditRotationY->getCurrentText(), &sz);
@@ -472,6 +482,17 @@ void TabPanel::SaveChanges()
 	}
 	if (showMenuGlobalSettings)
 	{
+		xmlParams[modifiedElementIndex].LightPosition[0] = std::stof(textEditGlobalSettingsLightPosX->getCurrentText(), &sz);
+		xmlParams[modifiedElementIndex].LightPosition[1] = std::stof(textEditGlobalSettingsLightPosY->getCurrentText(), &sz);
+		xmlParams[modifiedElementIndex].LightPosition[2] = std::stof(textEditGlobalSettingsLightPosZ->getCurrentText(), &sz);
+
+		xmlParams[modifiedElementIndex].DiffuseAlbedo[0] = std::stof(textEditGlobalSettingsDiffuseAlbedoX->getCurrentText(), &sz);
+		xmlParams[modifiedElementIndex].DiffuseAlbedo[1] = std::stof(textEditGlobalSettingsDiffuseAlbedoY->getCurrentText(), &sz);
+		xmlParams[modifiedElementIndex].DiffuseAlbedo[2] = std::stof(textEditGlobalSettingsDiffuseAlbedoZ->getCurrentText(), &sz);
+
+		xmlParams[modifiedElementIndex].SpecularAlbedo = std::stof(textEditGlobalSettingsSpecularAlbedo->getCurrentText(), &sz);
+
+		xmlParams[modifiedElementIndex].SpecularPower = std::stof(textEditGlobalSettingsSpecularPower->getCurrentText(), &sz);
 
 	}
 }

@@ -1,7 +1,7 @@
 <app>
     <!-- <object many_objects="0" per_vertex="1" scaleX="1" scaleY="1" scaleZ="1"/> -->
-    <light posX="100.0" posY="100.0" posZ="100.0"/>
-    <material_properties diffuse_albedoX="0.4" diffuse_albedoY="0.9" diffuse_albedoZ="0.3" specular_albedo="0.7" specular_power="200"/>
+    <light posX="200" posY="100" posZ="100"/>
+    <material_properties diffuse_albedoX="0.40000001" diffuse_albedoY="0.89999998" diffuse_albedoZ="0.30000001" specular_albedo="0.69999999" specular_power="202"/>
     <objects>
         <object coordX="0" coordY="0" coordZ="0" model="media/objects/sphere.sbm" texture="costam" rotX="14.88" rotY="11.22" rotZ="0.30000001" scaleX="0" scaleY="1" scaleZ="1"/>
         <object coordX="0" coordY="0" coordZ="1" model="media/objects/bunny_1k.sbm" texture="costam" rotX="13.13" rotY="0.2" rotZ="0.30000001" scaleX="0" scaleY="1" scaleZ="1"/>
