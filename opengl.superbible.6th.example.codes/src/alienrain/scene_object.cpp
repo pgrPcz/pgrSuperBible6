@@ -159,24 +159,24 @@ void SceneObject::LoadShaders()
         ;
     static const char * vs_source[] = {vs_source_str.c_str()};
 
-    static string fs_source_str =
-        "#version 410 core										\n"
-        "														\n"
-        "// Output												\n"
-        "layout (location = 0) out vec4 color;					\n"
-        "														\n"
-        "// Input from vertex shader							\n"
-        "in VS_OUT												\n"
-        "{														\n"
-        "    vec3 N;											\n"
-        "    vec3 L;											\n"
-        "    vec3 V;											\n"
-        "} fs_in;												\n"
-        "														\n"
-        "// Material properties									\n"
-        "uniform vec3 diffuse_albedo = vec3(" "1.0, 0.0, 0.0" ");				\n"
-        "uniform vec3 specular_albedo = vec3(" "0.7" ");			\n"
-        "uniform float specular_power = " "200" ";					\n"
+	static string fs_source_str =
+		"#version 410 core										\n"
+		"														\n"
+		"// Output												\n"
+		"layout (location = 0) out vec4 color;					\n"
+		"														\n"
+		"// Input from vertex shader							\n"
+		"in VS_OUT												\n"
+		"{														\n"
+		"    vec3 N;											\n"
+		"    vec3 L;											\n"
+		"    vec3 V;											\n"
+		"} fs_in;												\n"
+		"														\n"
+		"// Material properties									\n"
+		"uniform vec3 diffuse_albedo;				\n"
+		"uniform vec3 specular_albedo;			\n"
+		"uniform float specular_power;					\n"
         "														\n"
         "void main(void)										\n"
         "{														\n"
@@ -336,9 +336,14 @@ void SceneObject::Render( double currentTime, int w, int h, vmath::vec3 view_pos
     block->proj_matrix = vmath::perspective(perspective_fovy, (float)w / (float)h, perspective_f, perspective_n);
 
     glUnmapBuffer(GL_UNIFORM_BUFFER);
+	
+	//mlaboszc
+	//glUniform1f(uniforms[is_per_vertex ? 1 : 0].specular_power, mParams.SpecularPower);
+	//glUniform3fv(uniforms[is_per_vertex ? 1 : 0].specular_albedo, 1, vmath::vec3(0.1f));
 
-    glUniform1f(uniforms[is_per_vertex ? 1 : 0].specular_power, powf(2.0f, (float)0 + 2.0f));
-    glUniform3fv(uniforms[is_per_vertex ? 1 : 0].specular_albedo, 1, vmath::vec3((float)0 / 9.0f + 1.0f / 9.0f));
+	glUniform1f(uniforms[0].specular_power, mParams.SpecularPower);
+	glUniform3fv(uniforms[0].specular_albedo, 1, vmath::vec3(mParams.SpecularAlbedo));
+	glUniform3fv(uniforms[0].diffuse_albedo, 1, mParams.DiffuseAlbedo);
 
     model.render();
 }
