@@ -499,11 +499,14 @@ void TabPanel::SaveChanges()
 	if (showMenuFlag)
 	{
 
-		xmlParams[modifiedElementIndex].DiffuseAlbedo[0] = std::stof(textEditGlobalSettingsDiffuseAlbedoX->getCurrentText(), &sz);
-		xmlParams[modifiedElementIndex].DiffuseAlbedo[1] = std::stof(textEditGlobalSettingsDiffuseAlbedoY->getCurrentText(), &sz);
-		xmlParams[modifiedElementIndex].DiffuseAlbedo[2] = std::stof(textEditGlobalSettingsDiffuseAlbedoZ->getCurrentText(), &sz);
-		xmlParams[modifiedElementIndex].SpecularAlbedo = std::stof(textEditGlobalSettingsSpecularAlbedo->getCurrentText(), &sz);
-		xmlParams[modifiedElementIndex].SpecularPower = std::stof(textEditGlobalSettingsSpecularPower->getCurrentText(), &sz);
+		for (int i = 0; i < 27 ; i++) {
+			xmlParams[i].DiffuseAlbedo[0] = std::stof(textEditGlobalSettingsDiffuseAlbedoX->getCurrentText(), &sz);
+			xmlParams[i].DiffuseAlbedo[1] = std::stof(textEditGlobalSettingsDiffuseAlbedoY->getCurrentText(), &sz);
+			xmlParams[i].DiffuseAlbedo[2] = std::stof(textEditGlobalSettingsDiffuseAlbedoZ->getCurrentText(), &sz);
+			xmlParams[i].SpecularAlbedo = std::stof(textEditGlobalSettingsSpecularAlbedo->getCurrentText(), &sz);
+			xmlParams[i].SpecularPower = std::stof(textEditGlobalSettingsSpecularPower->getCurrentText(), &sz);
+		}
+		
 
 		xmlParams[modifiedElementIndex].Rotation[0] = std::stof(textEditRotationX->getCurrentText(), &sz);
 		xmlParams[modifiedElementIndex].Rotation[1] = std::stof(textEditRotationY->getCurrentText(), &sz);

@@ -158,9 +158,12 @@ void MainApp::render(double currentTime)
                     view_matrix,
                     model_matrix);
 
+
+					mSceneObjects[i][j][k].SetParams(myTabPanel->getXmlParamsStruct((i * 9 + j * 3 + k)));
+
 				if (myTabPanel->modifiedElementIndex == (i*9 + j*3 + k))
 				{				
-					mSceneObjects[i][j][k].SetParams(myTabPanel->getXmlParamsStruct(myTabPanel->modifiedElementIndex));
+					//mSceneObjects[i][j][k].SetParams(myTabPanel->getXmlParamsStruct(myTabPanel->modifiedElementIndex));
 					//save changes from GUI to XML
 					//load changes from XML to Model index
 					SaveXmlConfig();
