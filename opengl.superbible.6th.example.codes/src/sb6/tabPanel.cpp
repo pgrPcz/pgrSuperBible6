@@ -432,11 +432,11 @@ void TabPanel::ChangeTabParams() {
 	//label10->ChangeText(xmlParams[slotIndex].Coords);
 	//label11->ChangeText(xmlParams[slotIndex].Rotation);
     //label11->ChangeText( xmlParams[slotIndex].Scale );
-	textEditGlobalSettingsDiffuseAlbedoX->setCurrentText((std::to_string(xmlParams[0].DiffuseAlbedo[0])).substr(0, 5));
-	textEditGlobalSettingsDiffuseAlbedoY->setCurrentText((std::to_string(xmlParams[0].DiffuseAlbedo[1])).substr(0, 5));
-	textEditGlobalSettingsDiffuseAlbedoZ->setCurrentText((std::to_string(xmlParams[0].DiffuseAlbedo[2])).substr(0, 5));
-	textEditGlobalSettingsSpecularAlbedo->setCurrentText((std::to_string(xmlParams[0].SpecularAlbedo)).substr(0, 5));
-	textEditGlobalSettingsSpecularPower->setCurrentText((std::to_string(xmlParams[0].SpecularPower)).substr(0, 5));
+	textEditGlobalSettingsDiffuseAlbedoX->setCurrentText((std::to_string(xmlParams[slotIndex].DiffuseAlbedo[0])).substr(0, 5));
+	textEditGlobalSettingsDiffuseAlbedoY->setCurrentText((std::to_string(xmlParams[slotIndex].DiffuseAlbedo[1])).substr(0, 5));
+	textEditGlobalSettingsDiffuseAlbedoZ->setCurrentText((std::to_string(xmlParams[slotIndex].DiffuseAlbedo[2])).substr(0, 5));
+	textEditGlobalSettingsSpecularAlbedo->setCurrentText((std::to_string(xmlParams[slotIndex].SpecularAlbedo)).substr(0, 5));
+	textEditGlobalSettingsSpecularPower->setCurrentText((std::to_string(xmlParams[slotIndex].SpecularPower)).substr(0, 5));
 
 	textEditRotationX->setCurrentText((std::to_string(xmlParams[slotIndex].Rotation[0])).substr(0, 5));
 	textEditRotationY->setCurrentText((std::to_string(xmlParams[slotIndex].Rotation[1])).substr(0, 5));
