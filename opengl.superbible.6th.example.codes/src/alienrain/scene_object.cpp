@@ -174,7 +174,7 @@ void SceneObject::LoadShaders()
         "} fs_in;												\n"
         "														\n"
         "// Material properties									\n"
-        "uniform vec3 diffuse_albedo = vec3(" "0.4, 0.9, 0.3" ");				\n"
+        "uniform vec3 diffuse_albedo = vec3(" "1.0, 0.0, 0.0" ");				\n"
         "uniform vec3 specular_albedo = vec3(" "0.7" ");			\n"
         "uniform float specular_power = " "200" ";					\n"
         "														\n"

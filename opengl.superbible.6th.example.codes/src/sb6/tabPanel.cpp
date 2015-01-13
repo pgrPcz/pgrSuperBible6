@@ -147,12 +147,13 @@ void TabPanel::Init(int winWidth, int winHight)
 	dropDownListSlots->Init(800, 600, 80, 10, 20 + 100, 20, "../../bitmap/DropDownListSlots.bmp", 27);
 	dropDownListTest->Init(800, 600, xOffset + 320, yOffset + 340, 150, 50, "../../bitmap/DropDownList1.bmp", 5);
 
+	int yOffSetDiffuse = 90;
 	slotName->Init(800, 600, xOffset + 20, yOffset + 50, fontsize, "Slot number 0 parameters:");
 	labelGlobalSettings->Init(800, 600, xOffset + 20, yOffset + 50, fontsize, "Global Settings:");
 	labelGlobalSettingsLightPosition->Init(800, 600, xOffset + 30, yOffset + 80, fontsize, "Light Position[x,y,z]");
-	labelGlobalSettingsDiffuseAlbedo->Init(800, 600, xOffset + 30, yOffset + 110, fontsize, "Diffuse Albedo[x,y,z]");
-	labelGlobalSettingsSpecularAlbedo->Init(800, 600, xOffset + 30, yOffset + 140, fontsize, "Specular Albedo:");
-	labelGlobalSettingsSpecularPower->Init(800, 600, xOffset + 30, yOffset + 170, fontsize, "Specular Power:");
+	labelGlobalSettingsDiffuseAlbedo->Init(800, 600, xOffset + 30, yOffset + 110 + yOffSetDiffuse, fontsize, "Diffuse Albedo[x,y,z]");
+	labelGlobalSettingsSpecularAlbedo->Init(800, 600, xOffset + 30, yOffset + 140 + yOffSetDiffuse, fontsize, "Specular Albedo:");
+	labelGlobalSettingsSpecularPower->Init(800, 600, xOffset + 30, yOffset + 170 + yOffSetDiffuse, fontsize, "Specular Power:");
 
 	label1->Init(800, 600, xOffset + 30, yOffset + 80, fontsize, "Model:");
 	label2->Init(800, 600, xOffset + 30, yOffset + 110, fontsize, "Texture:");
@@ -175,15 +176,15 @@ void TabPanel::Init(int winWidth, int winHight)
 	//label11->Init(800, 600, xOffset + controlsOffset, yOffset + 230, fontsize, "specular_power:");
 	//label12->Init(800, 600, xOffset + controlsOffset, yOffset + 260, fontsize, "other:");
 
-	int yOffsetForGlobal = -40;
+	int yOffsetForGlobal = -35;
 	textEditGlobalSettingsLightPosX->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
 	textEditGlobalSettingsLightPosY->Init(800, 600, xOffset + controlsOffset + 70, yOffsetForGlobal + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
 	textEditGlobalSettingsLightPosZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffsetForGlobal + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditGlobalSettingsDiffuseAlbedoX->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 170, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditGlobalSettingsDiffuseAlbedoY->Init(800, 600, xOffset + controlsOffset + 70, yOffsetForGlobal + 170, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditGlobalSettingsDiffuseAlbedoZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffsetForGlobal + 170, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditGlobalSettingsSpecularAlbedo->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 200, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditGlobalSettingsSpecularPower->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 230, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGlobalSettingsDiffuseAlbedoX->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 170 + yOffSetDiffuse, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGlobalSettingsDiffuseAlbedoY->Init(800, 600, xOffset + controlsOffset + 70, yOffsetForGlobal + 170 + yOffSetDiffuse, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGlobalSettingsDiffuseAlbedoZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffsetForGlobal + 170 + yOffSetDiffuse, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGlobalSettingsSpecularAlbedo->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 200 + yOffSetDiffuse, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGlobalSettingsSpecularPower->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 230 + yOffSetDiffuse, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
 
 	textEditRotationX->Init(800, 600, xOffset + controlsOffset, yOffset + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
 	textEditRotationY->Init(800, 600, xOffset + controlsOffset + 70, yOffset + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
@@ -245,19 +246,12 @@ void TabPanel::Render(double currentTime)
 		panelPage1->Render(currentTime);
 		labelGlobalSettings->Render(currentTime);
 		labelGlobalSettingsLightPosition->Render(currentTime);
-		labelGlobalSettingsDiffuseAlbedo->Render(currentTime);
-		labelGlobalSettingsSpecularAlbedo->Render(currentTime);
-		labelGlobalSettingsSpecularPower->Render(currentTime);
+
 
 
 		textEditGlobalSettingsLightPosX->Render(currentTime);
 		textEditGlobalSettingsLightPosY->Render(currentTime);
 		textEditGlobalSettingsLightPosZ->Render(currentTime);
-		textEditGlobalSettingsDiffuseAlbedoX->Render(currentTime);
-		textEditGlobalSettingsDiffuseAlbedoY->Render(currentTime);
-		textEditGlobalSettingsDiffuseAlbedoZ->Render(currentTime);
-		textEditGlobalSettingsSpecularAlbedo->Render(currentTime);
-		textEditGlobalSettingsSpecularPower->Render(currentTime);
 		buttonSave->Render(currentTime);
 	}
 
@@ -284,15 +278,17 @@ void TabPanel::Render(double currentTime)
 			label2->Render(currentTime);
 			label3->Render(currentTime);
 			label4->Render(currentTime);
-			label5->Render(currentTime);
-			label6->Render(currentTime);
-			label7->Render(currentTime);
 
-			//label8->Render(currentTime);
-			//label9->Render(currentTime);
-			//label10->Render(currentTime);
-			//label11->Render(currentTime);
-			//label12->Render(currentTime);
+			labelGlobalSettingsDiffuseAlbedo->Render(currentTime);
+			labelGlobalSettingsSpecularAlbedo->Render(currentTime);
+			labelGlobalSettingsSpecularPower->Render(currentTime);
+
+			textEditGlobalSettingsDiffuseAlbedoX->Render(currentTime);
+			textEditGlobalSettingsDiffuseAlbedoY->Render(currentTime);
+			textEditGlobalSettingsDiffuseAlbedoZ->Render(currentTime);
+			textEditGlobalSettingsSpecularAlbedo->Render(currentTime);
+			textEditGlobalSettingsSpecularPower->Render(currentTime);
+
 			buttonSave->Render(currentTime);
 			textEditRotationX->Render(currentTime);
 			textEditRotationY->Render(currentTime);
@@ -300,8 +296,8 @@ void TabPanel::Render(double currentTime)
 			textEditScaleX->Render(currentTime);
 			textEditScaleY->Render(currentTime);
 			textEditScaleZ->Render(currentTime);
-			textEdit3->Render(currentTime);
-			textEdit4->Render(currentTime);
+			//textEdit3->Render(currentTime);
+			//textEdit4->Render(currentTime);
 
 			dropDownListTextures->Render(currentTime);
 			dropDownListModels->Render(currentTime);
@@ -389,6 +385,8 @@ void TabPanel::onResizeChangeGUI(int w, int h) {
 	label11->UpdateSize(w, h);
 	label12->UpdateSize(w, h);
 
+
+
 	textEditRotationX->UpdateSize(w, h);
 	textEditRotationY->UpdateSize(w, h);
 	textEditRotationZ->UpdateSize(w, h);
@@ -397,6 +395,24 @@ void TabPanel::onResizeChangeGUI(int w, int h) {
 	textEditScaleZ->UpdateSize(w, h);
 	textEdit3->UpdateSize(w, h);
 	textEdit4->UpdateSize(w, h);
+
+	//Global Settings panel
+	buttonShowGlobalSettings->UpdateSize(w, h);
+
+	textEditGlobalSettingsLightPosX->UpdateSize(w, h);
+	textEditGlobalSettingsLightPosY->UpdateSize(w, h);
+	textEditGlobalSettingsLightPosZ->UpdateSize(w, h);
+	textEditGlobalSettingsDiffuseAlbedoX->UpdateSize(w, h);
+	textEditGlobalSettingsDiffuseAlbedoY->UpdateSize(w, h);
+	textEditGlobalSettingsDiffuseAlbedoZ->UpdateSize(w, h);
+	textEditGlobalSettingsSpecularAlbedo->UpdateSize(w, h);
+	textEditGlobalSettingsSpecularPower->UpdateSize(w, h);
+
+	labelGlobalSettings->UpdateSize(w, h);
+	labelGlobalSettingsLightPosition->UpdateSize(w, h);
+	labelGlobalSettingsDiffuseAlbedo->UpdateSize(w, h);
+	labelGlobalSettingsSpecularAlbedo->UpdateSize(w, h);
+	labelGlobalSettingsSpecularPower->UpdateSize(w, h);
 }
 
 void TabPanel::ChangeTabParams() {
@@ -416,6 +432,11 @@ void TabPanel::ChangeTabParams() {
 	//label10->ChangeText(xmlParams[slotIndex].Coords);
 	//label11->ChangeText(xmlParams[slotIndex].Rotation);
     //label11->ChangeText( xmlParams[slotIndex].Scale );
+	textEditGlobalSettingsDiffuseAlbedoX->setCurrentText((std::to_string(xmlParams[0].DiffuseAlbedo[0])).substr(0, 5));
+	textEditGlobalSettingsDiffuseAlbedoY->setCurrentText((std::to_string(xmlParams[0].DiffuseAlbedo[1])).substr(0, 5));
+	textEditGlobalSettingsDiffuseAlbedoZ->setCurrentText((std::to_string(xmlParams[0].DiffuseAlbedo[2])).substr(0, 5));
+	textEditGlobalSettingsSpecularAlbedo->setCurrentText((std::to_string(xmlParams[0].SpecularAlbedo)).substr(0, 5));
+	textEditGlobalSettingsSpecularPower->setCurrentText((std::to_string(xmlParams[0].SpecularPower)).substr(0, 5));
 
 	textEditRotationX->setCurrentText((std::to_string(xmlParams[slotIndex].Rotation[0])).substr(0, 5));
 	textEditRotationY->setCurrentText((std::to_string(xmlParams[slotIndex].Rotation[1])).substr(0, 5));
@@ -468,14 +489,6 @@ void TabPanel::ChangeTabGlobalParams()
 	textEditGlobalSettingsLightPosX->setCurrentText((std::to_string(xmlParams[0].LightPosition[0])).substr(0, 5));
 	textEditGlobalSettingsLightPosY->setCurrentText((std::to_string(xmlParams[0].LightPosition[1])).substr(0, 5));
 	textEditGlobalSettingsLightPosZ->setCurrentText((std::to_string(xmlParams[0].LightPosition[2])).substr(0, 5));
-
-	textEditGlobalSettingsDiffuseAlbedoX->setCurrentText((std::to_string(xmlParams[0].DiffuseAlbedo[0])).substr(0, 5));
-	textEditGlobalSettingsDiffuseAlbedoY->setCurrentText((std::to_string(xmlParams[0].DiffuseAlbedo[1])).substr(0, 5));
-	textEditGlobalSettingsDiffuseAlbedoZ->setCurrentText((std::to_string(xmlParams[0].DiffuseAlbedo[2])).substr(0, 5));
-
-	textEditGlobalSettingsSpecularAlbedo->setCurrentText((std::to_string(xmlParams[0].SpecularAlbedo)).substr(0, 5));
-
-	textEditGlobalSettingsSpecularPower->setCurrentText((std::to_string(xmlParams[0].SpecularPower)).substr(0, 5));
 }
 
 void TabPanel::SaveChanges()
@@ -486,6 +499,11 @@ void TabPanel::SaveChanges()
 	if (showMenuFlag)
 	{
 
+		xmlParams[modifiedElementIndex].DiffuseAlbedo[0] = std::stof(textEditGlobalSettingsDiffuseAlbedoX->getCurrentText(), &sz);
+		xmlParams[modifiedElementIndex].DiffuseAlbedo[1] = std::stof(textEditGlobalSettingsDiffuseAlbedoY->getCurrentText(), &sz);
+		xmlParams[modifiedElementIndex].DiffuseAlbedo[2] = std::stof(textEditGlobalSettingsDiffuseAlbedoZ->getCurrentText(), &sz);
+		xmlParams[modifiedElementIndex].SpecularAlbedo = std::stof(textEditGlobalSettingsSpecularAlbedo->getCurrentText(), &sz);
+		xmlParams[modifiedElementIndex].SpecularPower = std::stof(textEditGlobalSettingsSpecularPower->getCurrentText(), &sz);
 
 		xmlParams[modifiedElementIndex].Rotation[0] = std::stof(textEditRotationX->getCurrentText(), &sz);
 		xmlParams[modifiedElementIndex].Rotation[1] = std::stof(textEditRotationY->getCurrentText(), &sz);
@@ -533,15 +551,6 @@ void TabPanel::SaveChanges()
 		xmlParams[modifiedElementIndex].LightPosition[0] = std::stof(textEditGlobalSettingsLightPosX->getCurrentText(), &sz);
 		xmlParams[modifiedElementIndex].LightPosition[1] = std::stof(textEditGlobalSettingsLightPosY->getCurrentText(), &sz);
 		xmlParams[modifiedElementIndex].LightPosition[2] = std::stof(textEditGlobalSettingsLightPosZ->getCurrentText(), &sz);
-
-		xmlParams[modifiedElementIndex].DiffuseAlbedo[0] = std::stof(textEditGlobalSettingsDiffuseAlbedoX->getCurrentText(), &sz);
-		xmlParams[modifiedElementIndex].DiffuseAlbedo[1] = std::stof(textEditGlobalSettingsDiffuseAlbedoY->getCurrentText(), &sz);
-		xmlParams[modifiedElementIndex].DiffuseAlbedo[2] = std::stof(textEditGlobalSettingsDiffuseAlbedoZ->getCurrentText(), &sz);
-
-		xmlParams[modifiedElementIndex].SpecularAlbedo = std::stof(textEditGlobalSettingsSpecularAlbedo->getCurrentText(), &sz);
-
-		xmlParams[modifiedElementIndex].SpecularPower = std::stof(textEditGlobalSettingsSpecularPower->getCurrentText(), &sz);
-
 	}
 }
 

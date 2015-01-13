@@ -225,7 +225,7 @@ void MainApp::onMouseMove(int x, int y)
 {
     myTabPanel->CheckArea(x, y);
     
-	if (!myTabPanel->showMenuFlag && !myTabPanel->showMenuGlobalSettings && buttonMouseClicked)
+	if (/*!myTabPanel->showMenuFlag && !myTabPanel->showMenuGlobalSettings &&*/ buttonMouseClicked)
 	{
 		m_camera->onMouseMove(x, y);
 	}
