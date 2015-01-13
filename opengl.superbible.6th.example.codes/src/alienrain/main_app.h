@@ -44,7 +44,8 @@ protected:
     void    onKey(int key, int action);
     void    onMouseMove(int x, int y);
     void    onMouseButton(int button, int action);
-    
+	void	onResizeChangeGUI(int w,int h);
+
     void    ReadObjectsProperties( XMLElement* root );
     void    WriteObjectsProperties( XMLElement* root );
     //void    load_shaders();

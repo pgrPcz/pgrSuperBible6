@@ -26,9 +26,7 @@ proj_matrix(0),
 tex_object(0),
 text2Change(0)
 {
-
 	textColor = vmath::vec4(0.5f, 0.1f, 0.7f, 1.0f);
-
 }
 Label::~Label() {
 	ShoutDown();
@@ -53,17 +51,7 @@ void Label::SetProjMat(int w, int h) {
 
 	aspect = (float)w / (float)h;
 }
-void Label::SetWinSize(int w, int h) {
-	winWidth = w;
-	winHeight = h;
 
-	//Normalizacja potrzebna w przeliczaniu wspó³rzednych
-	x /= winWidth;
-	y /= winHeight;
-
-	width /= winWidth;
-	height /= winHeight;
-}
 bool Label::CheckArea(int posX, int posY) {
 
 	mousePosX = posX;
@@ -96,20 +84,6 @@ bool Label::onMouseButton(int button, int action) {
 	}
 }
 
-void Label::generate_texture(unsigned char * data, int width, int height) {
-	int x, y;
-
-	for (y = 0; y < height; y++) {
-		for (x = 0; x < width; x++) {
-			data[(y * width + x) * 4 + 0] = (unsigned char)((x ^ y) & 0xFF) / 255.0f;
-			data[(y * width + x) * 4 + 1] = (unsigned char)((x ^ y) & 0xFF) / 255.0f;
-			data[(y * width + x) * 4 + 2] = (unsigned char)((x ^ y) & 0xFF) / 255.0f;
-			data[(y * width + x) * 4 + 3] = 0.5f;
-		}
-	}
-}
-
-
 static GLfloat tex_coords_pos[] =
 {
 	0.0f, 0.0f,
@@ -122,6 +96,19 @@ static GLfloat tex_coords_pos[] =
 
 void Label::ChangeText(std::string text2Change) {
 	labelText = text2Change;
+}
+
+void Label::UpdateSize(int winW, int winH) {
+
+	winWidth = winW;
+	winHeight = winH;
+
+	x = (float)ix / winWidth;
+	y = (float)iy / winHeight;
+
+	width = (float)iwidth / winWidth;
+	height = (float)iheight / winHeight;
+
 }
 
 void Label::Init(int winW, int winH, float posX, float posY, int fontsize, std::string textToDraw) {
@@ -171,7 +158,6 @@ void Label::Init(int winW, int winH, float posX, float posY, int fontsize, std::
 		"                                                                   \n"
 		"in vec4 position2;										            \n"
 		"in vec2 texPos;													     \n"
-		//"layout (location = 14) in vec2 tc;                                  \n"
 		"out VS_OUT                                                         \n"
 		"{                                                                  \n"
 		"    vec4 color;													\n"
@@ -192,7 +178,6 @@ void Label::Init(int winW, int winH, float posX, float posY, int fontsize, std::
 		"{                                                                  \n"
 		"    gl_Position =  mv_matrix*position2;							\n"
 		"    vs_out.tc = texPos.xy;							\n"
-		//"    vs_out.tc = texPos2[gl_VertexID].xy;							\n"
 		"    vs_out.color = btnColor;										\n"
 		"}                                                                  \n"
 	};
@@ -202,7 +187,6 @@ void Label::Init(int winW, int winH, float posX, float posY, int fontsize, std::
 		"#version 410 core                                                  \n"
 		"                                                                   \n"
 		"out vec4 color;                                                    \n"
-		//"layout (binding = 10) uniform sampler2D tex_object;                \n"
 		"uniform sampler2D sss;												\n"
 		"in VS_OUT                                                          \n"
 		"{                                                                  \n"
@@ -213,12 +197,6 @@ void Label::Init(int winW, int winH, float posX, float posY, int fontsize, std::
 		"void main(void)                                                    \n"
 		"{                                                                  \n"
 		"    color = texture(sss, fs_in.tc )*fs_in.color;	\n"
-		//"    color = textureOffset(sss, fs_in.tc ,vec2(0.0625,0.0625);	\n"
-		//"    color = vec4(0.4,0.2,0.6,0.5);									        \n"
-		//"    color = fs_in.color;									        \n"
-		//"    color = texture(sss, fs_in.tc )*fs_in.color;	\n"
-		//"    color = texture(sss, (gl_FragCoord.xy)/ textureSize(sss, 0) )*fs_in.color;	\n"
-		//"    color = texture(sss, (vec2(30.0,1.0)+gl_FragCoord.xy) / textureSize(sss, 0));	\n"
 		"}                                                                  \n"
 	};
 

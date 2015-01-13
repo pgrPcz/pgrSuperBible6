@@ -27,6 +27,7 @@ public:
 
 	void Init(int winW, int winH, float x, float y, int width, int hight, const char * bitmap, std::string labeltext);
 	void Render(double currentTime);
+	void UpdateSize(int winW, int winH);
 	void ShoutDown();
 
 	bool CheckArea(int x, int y);
