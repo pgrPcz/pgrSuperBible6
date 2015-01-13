@@ -125,7 +125,7 @@ TabPanel::~TabPanel()
 
 void TabPanel::Init()
 {
-	float yOffset = 20.0;
+	float yOffset = 20.0 + 5;
 	float xOffset = 20.0;
 	int fontsize = 20;
 	int controlsOffset = 250;
@@ -135,14 +135,14 @@ void TabPanel::Init()
 
 	buttonPage1->Init(800, 600, xOffset, yOffset + 10, 50, 20, "../../bitmap/panelPage1.bmp");
 	panelPage1->Init(800, 600, xOffset, yOffset + 30, 500, 400, "../../bitmap/panel2.bmp");
-	buttonPage2->Init(800, 600, xOffset + 50, yOffset + 10, 50, 20, "../../bitmap/panelPage2.bmp");
+	buttonPage2->Init(800, 600, xOffset + 50 + 10, yOffset + 10, 50, 20, "../../bitmap/panelPage2.bmp");
 	buttonSave->Init(800, 600, xOffset+5, 415, 100, 30, "../../bitmap/ButtonSave3.bmp");
 
 	btnMenu1->Init(800, 600, xOffset + 320, yOffset + 320, 50, 20, "../../bitmap/Button1.bmp");
 	btnMenu2->Init(800, 600, xOffset + 320, yOffset + 320, 50, 20, "../../bitmap/Button2.bmp");
 
 	
-	dropDownListSlots->Init(800, 600, 80, 10, (int)yOffset + 100, 20, "../../bitmap/DropDownListSlots.bmp", 27);
+	dropDownListSlots->Init(800, 600, 80, 10, 20 + 100, 20, "../../bitmap/DropDownListSlots.bmp", 27);
 	dropDownListTest->Init(800, 600, xOffset + 320, yOffset + 340, 150, 50, "../../bitmap/DropDownList1.bmp", 5);
 
 	slotName->Init(800, 600, xOffset + 20, yOffset + 50, fontsize, "Slot number 0 parameters:");
@@ -268,9 +268,9 @@ void TabPanel::Render(double currentTime)
 
 		if (currentPage == 1)
 		{			
-			btnMenu1->Render(currentTime);
+			//btnMenu1->Render(currentTime);
 
-			dropDownListTest->Render(currentTime);
+			//dropDownListTest->Render(currentTime);
 
 			
 
@@ -306,7 +306,7 @@ void TabPanel::Render(double currentTime)
 		}
 		if (currentPage == 2)
 		{
-			btnMenu2->Render(currentTime);
+			//btnMenu2->Render(currentTime);
 		}
 	}
 
@@ -560,12 +560,4 @@ void TabPanel::CheckClickedButton(int button, int action)
 	{
 		currentPage = 2;
 	}
-}
-
-void TabPanel::SetGlobalParams(vmath::vec3 _lightPosition, vmath::vec3 _diffuseAlbedo, float _specularAlbedo, float _specularPower)
-{
-	this->lightPosition = _lightPosition;
-	this->diffuseAlbedo = _diffuseAlbedo;
-	this->specularAlbedo = _specularAlbedo;
-	this->specularPower = _specularPower;
 }

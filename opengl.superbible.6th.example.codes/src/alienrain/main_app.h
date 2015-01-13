@@ -56,6 +56,7 @@ public:
     const static unsigned int OBJECT_COUNT_Z = 3;
 
 protected:
+	bool buttonMouseClicked = false;
     TabPanel* myTabPanel;
 
     camera* m_camera;

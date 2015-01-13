@@ -64,7 +64,7 @@ public:
 
 		key_time = 0;
 		key_interval = 400;
-		key_fast_interval = 50;
+		key_fast_interval = 1;
 
 		is_w_preessed = false;
 		is_s_preessed = false;

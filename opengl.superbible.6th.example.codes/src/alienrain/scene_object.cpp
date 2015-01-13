@@ -399,6 +399,7 @@ void SceneObject::LoadShaders( const char* per_fragment_vs_path, const char* per
     uniforms[1].specular_albedo = glGetUniformLocation(per_vertex_program, "specular_albedo");
     uniforms[1].specular_power = glGetUniformLocation(per_vertex_program, "specular_power");
 }
+
 void SceneObject::SetParams(SceneObjectParams paramsToSet)
 {
 	mParams.Coords = paramsToSet.Coords;

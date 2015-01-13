@@ -12,20 +12,16 @@ class TabPanel
 {
 private:
 	int currentPage = 1;
-	bool showMenuFlag = false;
-	bool showMenuGlobalSettings = false;
+
 
 	const static unsigned int OBJECT_COUNT_X = 3;
 	const static unsigned int OBJECT_COUNT_Y = 3;
 	const static unsigned int OBJECT_COUNT_Z = 3;
 	enum class Models { Asteroids, Bunny_1k, Bunny_40k, Cube, Dragon, Ladybug, Sphere, Torus, Torus_nrms_tc };
-	
-	vmath::vec3 lightPosition;
-	vmath::vec3 diffuseAlbedo;
-	float specularAlbedo;
-	float specularPower;
     
 public:
+	bool showMenuFlag = false;
+	bool showMenuGlobalSettings = false;
 	SceneObjectParams xmlParams[OBJECT_COUNT_X*OBJECT_COUNT_Y*OBJECT_COUNT_Z];
 
 	int modifiedElementIndex;
