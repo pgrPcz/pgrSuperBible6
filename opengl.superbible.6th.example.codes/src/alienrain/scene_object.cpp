@@ -318,10 +318,10 @@ void SceneObject::Render( double currentTime, int w, int h, vmath::vec3 view_pos
     vmath::vec3(0.0f), vmath::vec3(0.0f, 1.0f, 0.0f));
     */
 
-	view_matrix *= vmath::rotate(-45.0f, 0.0f, 1.0f, 0.0f);
-	view_matrix *= vmath::scale(2.0f, 2.0f, 2.0f);
+	//view_matrix *= vmath::rotate(-45.0f, 0.0f, 1.0f, 0.0f);
+	//view_matrix *= vmath::scale(mParams.Scale); //vmath::scale(mParams.Scale[0], mParams.Scale[1], mParams.Scale[2]);
 
-	model_matrix *= vmath::translate(0.0f, - 4.0f, 0.0f);
+	//model_matrix *= vmath::translate(0.0f, - 4.0f, 0.0f);
 
 
     glUseProgram(/*is_per_vertex ? per_vertex_program : */per_fragment_program);
