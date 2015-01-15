@@ -36,64 +36,9 @@ const float SceneObject::perspective_n    = 1000.0f;
 // Qualifier: : per_fragment_program(0), per_vertex_program(0), is_per_vertex(false)
 //************************************
 SceneObject::SceneObject() :
-	per_fragment_program(0),
-    per_vertex_program(0),
-    is_per_vertex(true)
+	mProgram(0)
 {
-	//instanceNum = instanceCounter;
-	//instanceCounter++;
 }
-
-//string SceneObject::getAppName() {
-//
-//	// !!!!!!!!!!!! 
-//	// Note mlaboszc: currently each object read params from one of four *.xml files
-//	//                modulo can be deleted after adding more config files to given dir:
-//	//				  opengl.superbible.6th.example.codes\build\vs2010\configs
-//	// !!!!!!!!!!!!!
-//	string name = "object" + to_string(instanceNum % 4);
-//	printf("%s:", name);
-//	return name;
-//}
-
-//mlaboszc
-//void SceneObject::handleDocument(XMLDocument* doc) {
-//	XMLElement* root = doc->FirstChildElement();
-//
-//	// !!!!!!!!!!!! 
-//	// Note mlaboszc: if you want use numrical vals,
-//	//				  commented code conatains example of convertions method getXmlVecParam
-//	// !!!!!!!!!!!!!
-//
-//	// extracted numerical(bool,float,int) values:
-//	//XMLElement* ele = root->FirstChildElement("object");
-//	//bool is_many_objects = ele->BoolAttribute("many_objects");
-//	//is_per_vertex = ele->BoolAttribute("per_vertex");
-//
-//	//ele = root->FirstChildElement("light");
-//	//vmath::vec3 lightPos = getXmlVecParam(ele->Attribute("pos"));
-//
-//	//ele = root->FirstChildElement("material_properties");
-//	//vmath::vec3 diffuseAlbedoVec = getXmlVecParam(ele->Attribute("diffuse_albedo"));
-//	//float specular_albedo = ele->FloatAttribute("specular_albedo");
-//	//int specular_power = ele->IntAttribute("specular_power");
-//
-//
-//	//extracted strings to display in GUI
-//    XMLElement* ele = root->FirstChildElement( "object" );
-//
-//    mParams.is_many_objects = ele->BoolAttribute( "many_objects" );
-//    mParams.is_per_vertex = ele->BoolAttribute( "per_vertex" );
-//
-//    ele = root->FirstChildElement( "light" );
-//    mParams.light_pos = ele->Attribute( "pos" );
-//
-//    ele = root->FirstChildElement( "material_properties" );
-//    mParams.diffuse_albedo = ele->Attribute( "diffuse_albedo" );
-//    mParams.specular_albedo = ele->Attribute( "specular_albedo" );
-//    mParams.specular_power = ele->Attribute( "specular_power" );
-//
-//}
 
 //************************************
 // Method:    LoadShaders
@@ -102,129 +47,107 @@ SceneObject::SceneObject() :
 // Returns:   void
 // Qualifier:
 //************************************
-void SceneObject::LoadShaders()
+bool SceneObject::LoadShaders()
 {
-    // !!!!!!!!!!!! 
-    // Note adatczuk: just a temp method, a target is to load shaders from files, 
-    //                current method/shader from file doesn't work
-    // !!!!!!!!!!!!!
+    GLuint fs = 0, vs = 0, gs = 0, tes = 0, tcs = 0;
+    bool ret = true;
 
-    GLuint vs;
-    GLuint fs;
-
-    static string vs_source_str =
-        "#version 410 core										\n"
-        "														\n"
-        "// Per-vertex inputs									\n"
-        "layout (location = 0) in vec4 position;				\n"
-        "layout (location = 1) in vec3 normal;					\n"
-        "														\n"
-        "// Matrices we'll need									\n"
-        "layout (std140) uniform constants						\n"
-        "{														\n"
-        "    mat4 mv_matrix;									\n"
-        "    mat4 view_matrix;									\n"
-        "    mat4 proj_matrix;									\n"
-        "};														\n"
-        "														\n"
-        "// Inputs from vertex shader							\n"
-        "out VS_OUT												\n"
-        "{														\n"
-        "    vec3 N;											\n"
-        "    vec3 L;											\n"
-        "    vec3 V;											\n"
-        "} vs_out;												\n"
-        "														\n"
-        "// Position of light									\n"
-        "uniform vec3 light_pos = vec3(" "100.0, 100.0, 100.0" ");		\n"
-        "														\n"
-        "void main(void)										\n"
-        "{														\n"
-        "    // Calculate view-space coordinate					\n"
-        "    vec4 P = mv_matrix * position;						\n"
-        "														\n"
-        "    // Calculate normal in view-space					\n"
-        "    vs_out.N = mat3(mv_matrix) * normal;				\n"
-        "														\n"
-        "    // Calculate light vector							\n"
-        "    vs_out.L = mat3(mv_matrix) * light_pos - P.xyz;						\n"
-        "														\n"
-        "    // Calculate view vector							\n"
-        "    vs_out.V = -P.xyz;									\n"
-        "														\n"
-        "    // Calculate the clip-space position of each vertex\n"
-        "    gl_Position = proj_matrix * P;						\n"
-        "}														\n"
-        ""
-        ;
-    static const char * vs_source[] = {vs_source_str.c_str()};
-
-	static string fs_source_str =
-		"#version 410 core										\n"
-		"														\n"
-		"// Output												\n"
-		"layout (location = 0) out vec4 color;					\n"
-		"														\n"
-		"// Input from vertex shader							\n"
-		"in VS_OUT												\n"
-		"{														\n"
-		"    vec3 N;											\n"
-		"    vec3 L;											\n"
-		"    vec3 V;											\n"
-		"} fs_in;												\n"
-		"														\n"
-		"// Material properties									\n"
-		"uniform vec3 diffuse_albedo;				\n"
-		"uniform vec3 specular_albedo;			\n"
-		"uniform float specular_power;					\n"
-        "														\n"
-        "void main(void)										\n"
-        "{														\n"
-        "    // Normalize the incoming N, L and V vectors		\n"
-        "    vec3 N = normalize(fs_in.N);						\n"
-        "    vec3 L = normalize(fs_in.L);						\n"
-        "    vec3 V = normalize(fs_in.V);						\n"
-        "    vec3 H = normalize(L + V);							\n"
-        "														\n"
-        "    // Compute the diffuse and specular components for each fragment				\n"
-        "    vec3 diffuse = max(dot(N, L), 0.0) * diffuse_albedo;							\n"
-        "    vec3 specular = pow(max(dot(N, H), 0.0), specular_power) * specular_albedo;	\n"
-        "																					\n"
-        "    // Write final color to the framebuffer										\n"
-        "    color = vec4(diffuse + specular, 1.0);											\n"
-        "}																					\n"
-        ""
-        ;
-    static const char * fs_source[] = {fs_source_str.c_str()};
-
-    char buffer[4024];
-    vs = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vs, 1, vs_source, NULL);
-    glCompileShader(vs);
-
-    glGetShaderInfoLog(vs, 1024, NULL, buffer);
-
-    fs = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fs, 1, fs_source, NULL);
-    glCompileShader(fs);
-
-    glGetShaderInfoLog(vs, 1024, NULL, buffer);
-
+    if( !mParams.VertexShaderPath.empty() )
+        vs = LoadShaderFromFile( mParams.VertexShaderPath, GL_VERTEX_SHADER );
+    if( !mParams.FragmentShaderPath.empty() )
+        fs = LoadShaderFromFile( mParams.FragmentShaderPath, GL_FRAGMENT_SHADER );
+    if( !mParams.GeometryShaderPath.empty() )
+        gs = LoadShaderFromFile( mParams.GeometryShaderPath, GL_GEOMETRY_SHADER );
+    if( !mParams.TessControlShaderPath.empty() )
+        tcs = LoadShaderFromFile( mParams.TessControlShaderPath, GL_TESS_CONTROL_SHADER );
+    if( !mParams.TessEvaluationShaderPath.empty() )
+        tes = LoadShaderFromFile( mParams.TessEvaluationShaderPath, GL_TESS_EVALUATION_SHADER );
 
     //vs = sb6::shader::load("media/shaders/blinnphong/blinnphong.vs.glsl", GL_VERTEX_SHADER);
     //fs = sb6::shader::load("media/shaders/blinnphong/blinnphong.fs.glsl", GL_FRAGMENT_SHADER);
 
-    if (per_fragment_program)
-        glDeleteProgram(per_fragment_program);
+    if (mProgram)
+        glDeleteProgram(mProgram);
 
-    per_fragment_program = glCreateProgram();
-    glAttachShader(per_fragment_program, vs);
-    glAttachShader(per_fragment_program, fs);
-    glLinkProgram(per_fragment_program);
+    mProgram = glCreateProgram();
+    if( vs )  
+        glAttachShader( mProgram, vs );
+    if( fs )  
+        glAttachShader( mProgram, fs );
+    if( gs )
+        glAttachShader( mProgram, gs );
+    if( tcs )
+        glAttachShader( mProgram, tcs );
+    if( tes )
+        glAttachShader( mProgram, tes );
+    glLinkProgram(mProgram);
 
-    uniforms[0].diffuse_albedo = glGetUniformLocation(per_fragment_program, "diffuse_albedo");
-    uniforms[0].specular_albedo = glGetUniformLocation(per_fragment_program, "specular_albedo");
-    uniforms[0].specular_power = glGetUniformLocation(per_fragment_program, "specular_power");
+    //Check for errors 
+    GLint programSuccess = GL_TRUE; 
+    glGetProgramiv( mProgram, GL_LINK_STATUS, &programSuccess );
+    if( programSuccess != GL_TRUE ) 
+    { 
+        // Linking errors
+        glDeleteProgram( mProgram ); 
+        mProgram = 0;
+        ret = false;
+        goto shaderCleanup;
+    }
+
+    uniforms[0].diffuse_albedo  = glGetUniformLocation(mProgram, "diffuse_albedo");
+    uniforms[0].specular_albedo = glGetUniformLocation(mProgram, "specular_albedo");
+    uniforms[0].specular_power  = glGetUniformLocation(mProgram, "specular_power");
+
+shaderCleanup:
+    if( vs ) glDeleteShader( vs );
+    if( fs ) glDeleteShader( fs );
+    if( gs ) glDeleteShader( gs );
+    if( tcs ) glDeleteShader( tcs );
+    if( tes ) glDeleteShader( tes );
+    return ret;
+}
+
+//************************************
+// Method:    LoadShaderFromFile
+// FullName:  SceneObject::LoadShaderFromFile
+// Access:    public 
+// Returns:   GLuint
+// Qualifier:
+// Parameter: const string path
+// Parameter: GLenum shaderType
+//************************************
+GLuint SceneObject::LoadShaderFromFile( const string path, GLenum shaderType ) 
+{
+    GLuint shaderID = 0; 
+    string shaderString;
+    ifstream sourceFile( path.c_str() );
+
+    if( sourceFile ) 
+    {
+        // Copy to string
+        shaderString.assign( istreambuf_iterator<char>(sourceFile), istreambuf_iterator<char>() );
+        const GLchar* shaderSource = shaderString.c_str();
+
+        shaderID = glCreateShader( shaderType );
+        glShaderSource( shaderID, 1, (const GLchar**)&shaderSource, NULL ); 
+        glCompileShader( shaderID ); 
+
+        //Check shader for errors 
+        GLint shaderCompiled = GL_FALSE; 
+        glGetShaderiv( shaderID, GL_COMPILE_STATUS, &shaderCompiled ); 
+        if( shaderCompiled != GL_TRUE ) 
+        { 
+            // Compiling error 
+            glDeleteShader( shaderID ); 
+            shaderID = 0;
+        }
+    }
+    else 
+    { 
+        // Error opening file
+    } 
+    
+    return shaderID;
 }
 
 //************************************
@@ -237,12 +160,6 @@ void SceneObject::LoadShaders()
 //************************************
 void SceneObject::Startup() 
 {
-    /*load_shaders("media/shaders/phonglighting/per-fragment-phong.vs.glsl", 
-        "media/shaders/phonglighting/per-fragment-phong.fs.glsl",
-        "media/shaders/phonglighting/per-vertex-phong.vs.glsl", 
-        "media/shaders/phonglighting/per-vertex-phong.fs.glsl");*/
-    // Note adatczuk: ^^^^^^ doesn' work for now :(
-
     if( mParams.ModelPath.empty() )
     {
         mParams.ModelPath = "media/objects/sphere.sbm";
@@ -324,7 +241,7 @@ void SceneObject::Render( double currentTime, int w, int h, vmath::vec3 view_pos
 	//model_matrix *= vmath::translate(0.0f, - 4.0f, 0.0f);
 
 
-    glUseProgram(/*is_per_vertex ? per_vertex_program : */per_fragment_program);
+    glUseProgram(/*is_per_vertex ? per_vertex_program : */mProgram);
     glViewport(0, 0, w, h);
 
     glBindBufferBase(GL_UNIFORM_BUFFER, 0, uniforms_buffer);
@@ -359,63 +276,55 @@ void SceneObject::Render( double currentTime, int w, int h, vmath::vec3 view_pos
 // Parameter: const char * per_vertex_vs_path
 // Parameter: const char * per_vertex_fs_path
 //************************************
-void SceneObject::LoadShaders( const char* per_fragment_vs_path, const char* per_fragment_fs_path, const char* per_vertex_vs_path, const char* per_vertex_fs_path )
-{
-    GLuint vs;
-    GLuint fs;
-
-    /* MUST BE PASSED TO A FUNCTION NOW
-    vs = sb6::shader::load("media/shaders/phonglighting/per-fragment-phong.vs.glsl", GL_VERTEX_SHADER);
-    fs = sb6::shader::load("media/shaders/phonglighting/per-fragment-phong.fs.glsl", GL_FRAGMENT_SHADER);
-    */
-
-    vs = sb6::shader::load(per_fragment_vs_path);
-    fs = sb6::shader::load(per_fragment_fs_path);
-
-    if (per_fragment_program)
-        glDeleteProgram(per_fragment_program);
-
-    per_fragment_program = glCreateProgram();
-    glAttachShader(per_fragment_program, vs);
-    glAttachShader(per_fragment_program, fs);
-    glLinkProgram(per_fragment_program);
-
-    uniforms[0].diffuse_albedo = glGetUniformLocation(per_fragment_program, "diffuse_albedo");
-    uniforms[0].specular_albedo = glGetUniformLocation(per_fragment_program, "specular_albedo");
-    uniforms[0].specular_power = glGetUniformLocation(per_fragment_program, "specular_power");
-
-    /* MUST BE PASSED TO A FUNCTION NOW
-    vs = sb6::shader::load("media/shaders/phonglighting/per-vertex-phong.vs.glsl", GL_VERTEX_SHADER);
-    fs = sb6::shader::load("media/shaders/phonglighting/per-vertex-phong.fs.glsl", GL_FRAGMENT_SHADER);
-    */
-
-    vs = sb6::shader::load(per_vertex_vs_path);
-    fs = sb6::shader::load(per_vertex_fs_path);
-
-    if (per_vertex_program)
-        glDeleteProgram(per_vertex_program);
-
-    per_vertex_program = glCreateProgram();
-    glAttachShader(per_vertex_program, vs);
-    glAttachShader(per_vertex_program, fs);
-    glLinkProgram(per_vertex_program);
-
-    uniforms[1].diffuse_albedo = glGetUniformLocation(per_vertex_program, "diffuse_albedo");
-    uniforms[1].specular_albedo = glGetUniformLocation(per_vertex_program, "specular_albedo");
-    uniforms[1].specular_power = glGetUniformLocation(per_vertex_program, "specular_power");
-}
+//void SceneObject::LoadShaders( const char* per_fragment_vs_path, const char* per_fragment_fs_path, const char* per_vertex_vs_path, const char* per_vertex_fs_path )
+//{
+//    GLuint vs;
+//    GLuint fs;
+//
+//    /* MUST BE PASSED TO A FUNCTION NOW
+//    vs = sb6::shader::load("media/shaders/phonglighting/per-fragment-phong.vs.glsl", GL_VERTEX_SHADER);
+//    fs = sb6::shader::load("media/shaders/phonglighting/per-fragment-phong.fs.glsl", GL_FRAGMENT_SHADER);
+//    */
+//
+//    vs = sb6::shader::load(per_fragment_vs_path);
+//    fs = sb6::shader::load(per_fragment_fs_path);
+//
+//    if (per_fragment_program)
+//        glDeleteProgram(per_fragment_program);
+//
+//    per_fragment_program = glCreateProgram();
+//    glAttachShader(per_fragment_program, vs);
+//    glAttachShader(per_fragment_program, fs);
+//    glLinkProgram(per_fragment_program);
+//
+//    uniforms[0].diffuse_albedo = glGetUniformLocation(per_fragment_program, "diffuse_albedo");
+//    uniforms[0].specular_albedo = glGetUniformLocation(per_fragment_program, "specular_albedo");
+//    uniforms[0].specular_power = glGetUniformLocation(per_fragment_program, "specular_power");
+//
+//    /* MUST BE PASSED TO A FUNCTION NOW
+//    vs = sb6::shader::load("media/shaders/phonglighting/per-vertex-phong.vs.glsl", GL_VERTEX_SHADER);
+//    fs = sb6::shader::load("media/shaders/phonglighting/per-vertex-phong.fs.glsl", GL_FRAGMENT_SHADER);
+//    */
+//
+//    vs = sb6::shader::load(per_vertex_vs_path);
+//    fs = sb6::shader::load(per_vertex_fs_path);
+//
+//    if (per_vertex_program)
+//        glDeleteProgram(per_vertex_program);
+//
+//    per_vertex_program = glCreateProgram();
+//    glAttachShader(per_vertex_program, vs);
+//    glAttachShader(per_vertex_program, fs);
+//    glLinkProgram(per_vertex_program);
+//
+//    uniforms[1].diffuse_albedo = glGetUniformLocation(per_vertex_program, "diffuse_albedo");
+//    uniforms[1].specular_albedo = glGetUniformLocation(per_vertex_program, "specular_albedo");
+//    uniforms[1].specular_power = glGetUniformLocation(per_vertex_program, "specular_power");
+//}
 
 void SceneObject::SetParams(SceneObjectParams paramsToSet)
 {
-	mParams.Coords = paramsToSet.Coords;
-	mParams.ModelPath = paramsToSet.ModelPath;
-	mParams.Rotation = paramsToSet.Rotation;
-	mParams.Scale = paramsToSet.Scale;
-	mParams.TexturePath = paramsToSet.TexturePath;
-	mParams.LightPosition = paramsToSet.LightPosition;
-	mParams.DiffuseAlbedo = paramsToSet.DiffuseAlbedo;
-	mParams.SpecularAlbedo = paramsToSet.SpecularAlbedo;
-	mParams.SpecularPower = paramsToSet.SpecularPower;
+    mParams = paramsToSet;
 }
 
 void SceneObject::SetLightPosition(string lightPosition)
@@ -454,7 +363,6 @@ void SceneObject::SetSpecularPower(float specularPower)
 void SceneObject::SetModel( std::string path )
 {
     mParams.ModelPath = path;
-    /* TODO load model etc */
 }
 
 //************************************
@@ -468,7 +376,6 @@ void SceneObject::SetModel( std::string path )
 void SceneObject::SetTexture( std::string path )
 {
     mParams.TexturePath = path; 
-    /* TODO load texture etc */
 }
 
 //************************************
@@ -497,7 +404,6 @@ void SceneObject::SetRotation( float x, float y, float z )
 void SceneObject::SetRotation( vmath::vec3 rotation )
 {
     mParams.Rotation = rotation;
-    /* TODO change matrix? */
 }
 
 //************************************

@@ -11,8 +11,7 @@ using namespace std;
 class SceneObject
 {
 public:
-    //static int instanceCounter;
-    //int instanceNum;
+    static const int SHADER_PARAMS_NUM = 10;
 
     SceneObject();
 
@@ -26,21 +25,23 @@ public:
         vmath::mat4 view_matrix, 
         vmath::mat4 model_matrix );
 
-    void LoadShaders(
-        const char* per_fragment_vs_path, 
-        const char* per_fragment_fs_path,
-        const char* per_vertex_vs_path, 
-        const char* per_vertex_fs_path );
+    bool LoadShaders();
+    GLuint LoadShaderFromFile( const string path, GLenum shaderType );
 
-    void LoadShaders();
+    //void SetVertexShader( const string path );
+    //void SetFragmentShader( const string path );
+    //void SetGeometryShader( const string path );
+    //void SetTessEvaluationShader( const string path );
+    //void SetTessControlShader( const string path );
 
 	void Update();
+    void SetParams( SceneObjectParams paramsToSet );
+
 	void SetLightPosition(string lightPosition);
 	void SetLightPosition(vmath::vec3 lightPosition);
 	void SetDiffuseAlbedo(vmath::vec3 diffuseAlbedo);
 	void SetSpecularAlbedo(float specularAlbedo);
 	void SetSpecularPower(float specularPower);
-	void SetParams(SceneObjectParams paramsToSet);
     void SetModel( std::string path );
     void SetTexture( std::string path );
     void SetRotation( vmath::vec3 rotation );
@@ -59,12 +60,9 @@ protected:
     //                  across all objects/slots (not used params equal NULL)
     //                  below params are only examples and are copied from main_app class
     // Config from XML - main param struct for passing into GUI 
-    SceneObjectParams mParams;   
+    SceneObjectParams mParams;
 
-    GLuint          per_fragment_program;
-    GLuint          per_vertex_program;
-    bool            is_per_vertex;
-
+    GLuint          mProgram;
     sb6::object     model;
 
     struct

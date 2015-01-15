@@ -15,11 +15,12 @@
 
 // TODO here adatczuk
 // + Cube of objects
-// - Setting shaders
+// + Setting shaders
 // + Rendering each object
 // + Rendering GUI
 // + Saving XML
 // + Reading XML
+// - Shader parameters (uniforms)
 // - Input handling (update)
 
 
@@ -310,17 +311,19 @@ void MainApp::handleOpenDocument( XMLDocument* doc )
 {
     XMLElement* root = doc->FirstChildElement();
 
-    /*XMLElement* ele  = root->FirstChildElement("object");
-    is_many_objects  = ele->BoolAttribute("many_objects");
-    is_per_vertex    = ele->BoolAttribute("per_vertex");*/
+    XMLElement* ele = root->FirstChildElement( "light" );
+	vmath::vec3 lightPos = vmath::vec3( 
+        ele->FloatAttribute("posX"), 
+        ele->FloatAttribute("posY"), 
+        ele->FloatAttribute("posZ"));
 
-    XMLElement* ele  = root->FirstChildElement( "light" );
-	vmath::vec3 lightPos = vmath::vec3( ele->FloatAttribute("posX"), ele->FloatAttribute("posY"), ele->FloatAttribute("posZ"));
-
-    ele              = root->FirstChildElement("material_properties");
-	vmath::vec3 diffuseAlbedo = vmath::vec3(ele->FloatAttribute("diffuse_albedoX"), ele->FloatAttribute("diffuse_albedoY"), ele->FloatAttribute("diffuse_albedoZ"));
-	float specularAlbedo = ele->FloatAttribute("specular_albedo");
-	float specularPower = ele->FloatAttribute("specular_power");
+    ele = root->FirstChildElement("material_properties");
+	vmath::vec3 diffuseAlbedo = vmath::vec3(
+        ele->FloatAttribute("diffuse_albedoX"), 
+        ele->FloatAttribute("diffuse_albedoY"), 
+        ele->FloatAttribute("diffuse_albedoZ"));
+	float specularAlbedo      = ele->FloatAttribute("specular_albedo");
+	float specularPower       = ele->FloatAttribute("specular_power");
     //diffuse_albedo   = ele->Attribute("diffuse_albedo");
     //specular_albedo  = ele->Attribute("specular_albedo");
     //specular_power   = ele->Attribute("specular_power");
@@ -339,10 +342,6 @@ void MainApp::handleOpenDocument( XMLDocument* doc )
 void MainApp::handleSaveDocument( XMLDocument* doc )
 {
     XMLElement* root = doc->FirstChildElement();
-
-    /*XMLElement* ele  = root->FirstChildElement("object");
-    is_many_objects  = ele->BoolAttribute("many_objects");
-    is_per_vertex    = ele->BoolAttribute("per_vertex");*/
 
     XMLElement* ele = root->FirstChildElement( "light" );
     ele->SetAttribute( "posX", (mSceneObjects[0][0][0].GetParams()).LightPosition[0]);
@@ -381,38 +380,44 @@ void MainApp::ReadObjectsProperties(XMLElement* root, vmath::vec3 lightPos, vmat
     element = element->FirstChildElement( "object" );
     while( element != NULL )
     {
-        vmath::uvec3 coords  = vmath::uvec3(
+        SceneObjectParams objectParams;
+        objectParams.Coords = vmath::uvec3(
             element->UnsignedAttribute( "coordX" ),
             element->UnsignedAttribute( "coordY" ),
             element->UnsignedAttribute( "coordZ" ) );
 
-        vmath::vec3 rotation = vmath::vec3(
-            element->FloatAttribute( "rotX" ),
-            element->FloatAttribute( "rotY" ),
-            element->FloatAttribute( "rotZ" ) );
-
-        vmath::vec3 scale = vmath::vec3(
-            element->FloatAttribute( "scaleX" ),
-            element->FloatAttribute( "scaleY" ),
-            element->FloatAttribute( "scaleZ" ) );
-
-        string modelPath   = element->Attribute( "model" );
-        string texturePath = element->Attribute( "texture" );
-
-        if( coords[0] < OBJECT_COUNT_X && 
-            coords[1] < OBJECT_COUNT_Y && 
-            coords[2] < OBJECT_COUNT_Z )
+        if( objectParams.Coords[0] < OBJECT_COUNT_X &&
+            objectParams.Coords[1] < OBJECT_COUNT_Y &&
+            objectParams.Coords[2] < OBJECT_COUNT_Z )
         {
-            SceneObject& object = mSceneObjects[coords[0]][coords[1]][coords[2]];
-            object.SetCoords( coords );
-            object.SetRotation( rotation );
-            object.SetScale( scale );
-            object.SetModel( modelPath );
-            object.SetTexture( texturePath );
-			object.SetLightPosition( lightPos );
-			object.SetDiffuseAlbedo(diffuseAlbedo);
-			object.SetSpecularAlbedo(specularAlbedo);
-			object.SetSpecularPower(specularPower);
+            objectParams.Rotation = vmath::vec3(
+                element->FloatAttribute( "rotX" ),
+                element->FloatAttribute( "rotY" ),
+                element->FloatAttribute( "rotZ" ) );
+
+            objectParams.Scale = vmath::vec3(
+                element->FloatAttribute( "scaleX" ),
+                element->FloatAttribute( "scaleY" ),
+                element->FloatAttribute( "scaleZ" ) );
+
+            objectParams.ModelPath      = element->AttributeText( "model" );
+            objectParams.TexturePath    = element->AttributeText( "texture" );
+
+            objectParams.LightPosition  = lightPos;
+            objectParams.DiffuseAlbedo  = diffuseAlbedo;
+            objectParams.SpecularAlbedo = specularAlbedo;
+            objectParams.SpecularPower  = specularPower;
+
+            objectParams.VertexShaderPath         = element->AttributeText( "vsPath" );
+            objectParams.FragmentShaderPath       = element->AttributeText( "fsPath" );
+            objectParams.GeometryShaderPath       = element->AttributeText( "gsPath" );
+            objectParams.TessEvaluationShaderPath = element->AttributeText( "tesPath" );
+            objectParams.TessControlShaderPath    = element->AttributeText( "tcsPath" );
+
+            SceneObject& object = mSceneObjects[objectParams.Coords[0]]
+                                               [objectParams.Coords[1]]
+                                               [objectParams.Coords[2]];
+            object.SetParams( objectParams );
         }
 
         element = element->NextSiblingElement();
@@ -450,8 +455,6 @@ void MainApp::WriteObjectsProperties( XMLElement* root )
         {
             const SceneObjectParams& objectParams = mSceneObjects[coords[0]][coords[1]][coords[2]].GetParams();
 
-			//const SceneObjectParams& objectParams = myTabPanel->xmlParams[coords[0]][coords[1]][coords[2]];
-
             element->SetAttribute( "rotX", objectParams.Rotation[0] );
             element->SetAttribute( "rotY", objectParams.Rotation[1] );
             element->SetAttribute( "rotZ", objectParams.Rotation[2] );
@@ -460,136 +463,13 @@ void MainApp::WriteObjectsProperties( XMLElement* root )
             element->SetAttribute( "scaleZ", objectParams.Scale[2] );
             element->SetAttribute( "model", objectParams.ModelPath.c_str() );
             element->SetAttribute( "texture", objectParams.TexturePath.c_str() );
+            element->SetAttribute( "fsPath", objectParams.FragmentShaderPath.c_str() );
+            element->SetAttribute( "vsPath", objectParams.VertexShaderPath.c_str() );
+            element->SetAttribute( "gsPath", objectParams.GeometryShaderPath.c_str() );
+            element->SetAttribute( "tesPath", objectParams.TessEvaluationShaderPath.c_str() );
+            element->SetAttribute( "tcsPath", objectParams.TessControlShaderPath.c_str() );
         }
 
         element = element->NextSiblingElement();
     }
 }
-
-// Note adatczuk: to be removed
-////************************************
-//// Method:    load_shaders
-//// FullName:  MainApp::load_shaders
-//// Access:    protected 
-//// Returns:   void
-//// Qualifier:
-////************************************
-//void MainApp::load_shaders()
-//{
-//		GLuint vs;
-//		GLuint fs;
-//
-//		 static string vs_source_str =
-//			"#version 410 core										\n"
-//			"														\n"
-//			"// Per-vertex inputs									\n"
-//			"layout (location = 0) in vec4 position;				\n"
-//			"layout (location = 1) in vec3 normal;					\n"
-//			"														\n"
-//			"// Matrices we'll need									\n"
-//			"layout (std140) uniform constants						\n"
-//			"{														\n"
-//			"    mat4 mv_matrix;									\n"
-//			"    mat4 view_matrix;									\n"
-//			"    mat4 proj_matrix;									\n"
-//			"};														\n"
-//			"														\n"
-//			"// Inputs from vertex shader							\n"
-//			"out VS_OUT												\n"
-//			"{														\n"
-//			"    vec3 N;											\n"
-//			"    vec3 L;											\n"
-//			"    vec3 V;											\n"
-//			"} vs_out;												\n"
-//			"														\n"
-//			"// Position of light									\n"
-//			"uniform vec3 light_pos = vec3(" + light_pos + ");		\n"
-//			"														\n"
-//			"void main(void)										\n"
-//			"{														\n"
-//			"    // Calculate view-space coordinate					\n"
-//			"    vec4 P = mv_matrix * position;						\n"
-//			"														\n"
-//			"    // Calculate normal in view-space					\n"
-//			"    vs_out.N = mat3(mv_matrix) * normal;				\n"
-//			"														\n"
-//			"    // Calculate light vector							\n"
-//			"    vs_out.L = mat3(mv_matrix) * light_pos - P.xyz;						\n"
-//			"														\n"
-//			"    // Calculate view vector							\n"
-//			"    vs_out.V = -P.xyz;									\n"
-//			"														\n"
-//			"    // Calculate the clip-space position of each vertex\n"
-//			"    gl_Position = proj_matrix * P;						\n"
-//			"}														\n"
-//			""
-//		;
-//        static const char * vs_source[] = {vs_source_str.c_str()};
-//
-//        static string fs_source_str =
-//			"#version 410 core										\n"
-//			"														\n"
-//			"// Output												\n"
-//			"layout (location = 0) out vec4 color;					\n"
-//			"														\n"
-//			"// Input from vertex shader							\n"
-//			"in VS_OUT												\n"
-//			"{														\n"
-//			"    vec3 N;											\n"
-//			"    vec3 L;											\n"
-//			"    vec3 V;											\n"
-//			"} fs_in;												\n"
-//			"														\n"
-//			"// Material properties									\n"
-//			"uniform vec3 diffuse_albedo = vec3(" + diffuse_albedo +");				\n"
-//			"uniform vec3 specular_albedo = vec3(" + specular_albedo + ");			\n"
-//			"uniform float specular_power = " +specular_power + ";					\n"
-//			"														\n"
-//			"void main(void)										\n"
-//			"{														\n"
-//			"    // Normalize the incoming N, L and V vectors		\n"
-//			"    vec3 N = normalize(fs_in.N);						\n"
-//			"    vec3 L = normalize(fs_in.L);						\n"
-//			"    vec3 V = normalize(fs_in.V);						\n"
-//			"    vec3 H = normalize(L + V);							\n"
-//			"														\n"
-//			"    // Compute the diffuse and specular components for each fragment				\n"
-//			"    vec3 diffuse = max(dot(N, L), 0.0) * diffuse_albedo;							\n"
-//			"    vec3 specular = pow(max(dot(N, H), 0.0), specular_power) * specular_albedo;	\n"
-//			"																					\n"
-//			"    // Write final color to the framebuffer										\n"
-//			"    color = vec4(diffuse + specular, 1.0);											\n"
-//			"}																					\n"
-//			""
-//        ;
-//		static const char * fs_source[] = {fs_source_str.c_str()};
-//
-//		char buffer[4024];
-//        vs = glCreateShader(GL_VERTEX_SHADER);
-//        glShaderSource(vs, 1, vs_source, NULL);
-//        glCompileShader(vs);
-//
-//        glGetShaderInfoLog(vs, 1024, NULL, buffer);
-//
-//        fs = glCreateShader(GL_FRAGMENT_SHADER);
-//		glShaderSource(fs, 1, fs_source, NULL);
-//        glCompileShader(fs);
-//
-//        glGetShaderInfoLog(vs, 1024, NULL, buffer);
-//		
-//
-//		//vs = sb6::shader::load("media/shaders/blinnphong/blinnphong.vs.glsl", GL_VERTEX_SHADER);
-//		//fs = sb6::shader::load("media/shaders/blinnphong/blinnphong.fs.glsl", GL_FRAGMENT_SHADER);
-//
-//    if (per_fragment_program)
-//        glDeleteProgram(per_fragment_program);
-//
-//    per_fragment_program = glCreateProgram();
-//    glAttachShader(per_fragment_program, vs);
-//    glAttachShader(per_fragment_program, fs);
-//    glLinkProgram(per_fragment_program);
-//
-//    uniforms[0].diffuse_albedo = glGetUniformLocation(per_fragment_program, "diffuse_albedo");
-//    uniforms[0].specular_albedo = glGetUniformLocation(per_fragment_program, "specular_albedo");
-//    uniforms[0].specular_power = glGetUniformLocation(per_fragment_program, "specular_power");
-//}

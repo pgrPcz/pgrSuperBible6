@@ -1251,6 +1251,19 @@ const char* XMLElement::Attribute( const char* name, const char* value ) const
 }
 
 
+const char* XMLElement::AttributeText( const char* name, const char* value ) const
+{
+    const XMLAttribute* a = FindAttribute( name );
+    if( !a ) {
+        return "";
+    }
+    if( !value || XMLUtil::StringEqual( a->Value(), value ) ) {
+        return a->Value();
+    }
+    return "";
+}
+
+
 const char* XMLElement::GetText() const
 {
     if ( FirstChild() && FirstChild()->ToText() ) {
