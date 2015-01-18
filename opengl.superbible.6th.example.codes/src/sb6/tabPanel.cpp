@@ -12,6 +12,7 @@ TabPanel::TabPanel()
 	buttonShowMenu = new Button();
 	buttonShowGlobalSettings = new Button();
 	buttonSave = new Button();
+	buttonSaveGlobal = new Button();
 
 	panelPage1 = new Panel();
 
@@ -46,6 +47,8 @@ TabPanel::TabPanel()
 	label10 = new Label();
 	label11 = new Label();
 	label12 = new Label();
+	LabelXmlFileDir = new Label();
+
 
 	textEditGlobalSettingsLightPosX = new TextEdit();
 	textEditGlobalSettingsLightPosY = new TextEdit();
@@ -63,6 +66,9 @@ TabPanel::TabPanel()
 	textEditScaleZ = new TextEdit();
 	textEdit3 = new TextEdit();
 	textEdit4 = new TextEdit();
+
+
+	textEditXmlFileDir = new TextEdit();
 }
 
 
@@ -72,6 +78,7 @@ TabPanel::~TabPanel()
 	delete buttonPage2;
 	delete panelPage1;
 	delete buttonSave;
+	delete buttonSaveGlobal;
 	delete btnMenu1;
 	delete btnMenu2;
 	delete buttonShowGlobalSettings;
@@ -98,7 +105,8 @@ TabPanel::~TabPanel()
 	delete label5;
 	delete label6;
 	delete label7;
-
+	delete LabelXmlFileDir;
+	
 	delete label8;
 	delete label9;
 	delete label10;
@@ -123,6 +131,8 @@ TabPanel::~TabPanel()
 	delete textEdit3;
 	delete textEdit4;
 
+	delete textEditXmlFileDir;
+
 }
 
 void TabPanel::Init(int winWidth, int winHight)
@@ -139,6 +149,7 @@ void TabPanel::Init(int winWidth, int winHight)
 	panelPage1->Init(800, 600, xOffset, yOffset + 30, 500, 400, "../../bitmap/panel2.bmp");
 	buttonPage2->Init(800, 600, xOffset + 50 + 10, yOffset + 10, 50, 20, "../../bitmap/panelPage2.bmp");
 	buttonSave->Init(800, 600, xOffset+5, 415, 100, 30, "../../bitmap/ButtonSave3.bmp");
+	buttonSaveGlobal->Init(800, 600, xOffset + 5, 415, 100, 30, "../../bitmap/ButtonSave3.bmp");
 
 	btnMenu1->Init(800, 600, xOffset + 320, yOffset + 320, 50, 20, "../../bitmap/Button1.bmp");
 	btnMenu2->Init(800, 600, xOffset + 320, yOffset + 320, 50, 20, "../../bitmap/Button2.bmp");
@@ -196,6 +207,10 @@ void TabPanel::Init(int winWidth, int winHight)
 
 	textEdit3->Init(800, 600, xOffset + controlsOffset, yOffset + 200, 200, fontsize, "../../bitmap/textEdit1.bmp", "edit3");
 	textEdit4->Init(800, 600, xOffset + controlsOffset, yOffset + 230, 200, fontsize, "../../bitmap/textEdit1.bmp", "edit4");
+
+	string xmlPathDir = "configs/MainApp.xml";
+	LabelXmlFileDir->Init(800, 600, xOffset + 30, yOffset + 260, fontsize, "Xml dir:");
+	textEditXmlFileDir->Init(800, 600, xOffset + 120, yOffset + 260, 320, fontsize, "../../bitmap/textEdit1.bmp", xmlPathDir);
 }
 
 void TabPanel::InitializationOfTabParams()
@@ -234,6 +249,8 @@ void TabPanel::CheckKey(int key, int action)
 
 	textEdit3->CheckKey(key, action);
 	textEdit4->CheckKey(key, action);
+
+	textEditXmlFileDir->CheckKey(key, action);
 }
 
 void TabPanel::Render(double currentTime)
@@ -247,12 +264,13 @@ void TabPanel::Render(double currentTime)
 		labelGlobalSettings->Render(currentTime);
 		labelGlobalSettingsLightPosition->Render(currentTime);
 
-
+		LabelXmlFileDir->Render(currentTime);
+		textEditXmlFileDir->Render(currentTime);
 
 		textEditGlobalSettingsLightPosX->Render(currentTime);
 		textEditGlobalSettingsLightPosY->Render(currentTime);
 		textEditGlobalSettingsLightPosZ->Render(currentTime);
-		buttonSave->Render(currentTime);
+		buttonSaveGlobal->Render(currentTime);
 	}
 
 
@@ -267,8 +285,6 @@ void TabPanel::Render(double currentTime)
 			//btnMenu1->Render(currentTime);
 
 			//dropDownListTest->Render(currentTime);
-
-			
 
 			//cbOpt1->Render(currentTime);
 			//cbOpt2->Render(currentTime);
@@ -305,6 +321,8 @@ void TabPanel::Render(double currentTime)
 		if (currentPage == 2)
 		{
 			//btnMenu2->Render(currentTime);
+
+			
 		}
 	}
 
@@ -319,6 +337,7 @@ bool TabPanel::CheckArea(int x, int y)
 	buttonShowMenu->CheckArea(x, y);
 	buttonShowGlobalSettings->CheckArea(x, y);
 	buttonSave->CheckArea(x, y);
+	buttonSaveGlobal->CheckArea(x, y);
 	btnMenu1->CheckArea(x, y);
 	btnMenu2->CheckArea(x, y);
 	//cbOpt1->CheckArea(x, y);
@@ -346,6 +365,8 @@ bool TabPanel::CheckArea(int x, int y)
 	textEditScaleZ->CheckArea(x, y);
 	textEdit3->CheckArea(x, y);
 	textEdit4->CheckArea(x, y);
+	textEditXmlFileDir->CheckArea(x, y);
+
 	return true;
 }
 
@@ -356,6 +377,7 @@ void TabPanel::onResizeChangeGUI(int w, int h) {
 	buttonPage2->UpdateSize(w, h);
 	buttonShowMenu->UpdateSize(w, h);
 	buttonSave->UpdateSize(w, h);
+	buttonSaveGlobal->UpdateSize(w, h);
 
 	panelPage1->UpdateSize(w, h);
 
@@ -385,7 +407,7 @@ void TabPanel::onResizeChangeGUI(int w, int h) {
 	label11->UpdateSize(w, h);
 	label12->UpdateSize(w, h);
 
-
+	LabelXmlFileDir->UpdateSize(w, h);
 
 	textEditRotationX->UpdateSize(w, h);
 	textEditRotationY->UpdateSize(w, h);
@@ -395,6 +417,7 @@ void TabPanel::onResizeChangeGUI(int w, int h) {
 	textEditScaleZ->UpdateSize(w, h);
 	textEdit3->UpdateSize(w, h);
 	textEdit4->UpdateSize(w, h);
+	textEditXmlFileDir->UpdateSize(w, h);
 
 	//Global Settings panel
 	buttonShowGlobalSettings->UpdateSize(w, h);
@@ -578,6 +601,7 @@ void TabPanel::CheckClickedButton(int button, int action)
 
 	textEdit3->onMouseButton(button, action);
 	textEdit4->onMouseButton(button, action);
+	textEditXmlFileDir->onMouseButton(button, action);
 
 	btnMenu1->onMouseButton(button, action);
 	btnMenu2->onMouseButton(button, action);
@@ -598,6 +622,11 @@ void TabPanel::CheckClickedButton(int button, int action)
 		SaveChanges();
 	}
 
+	if (buttonSaveGlobal->onMouseButton(button, action)) {
+		//SaveChanges();
+		xmlDirChanged = true;
+	}
+
 	if (buttonShowMenu->onMouseButton(button, action))
 	{
 		showMenuFlag = !showMenuFlag;
@@ -606,7 +635,7 @@ void TabPanel::CheckClickedButton(int button, int action)
 	}
 
 	if (buttonShowGlobalSettings->onMouseButton(button, action))
-	{
+	{	
 		showMenuGlobalSettings = !showMenuGlobalSettings;
 		showMenuFlag = false;
 		ChangeTabGlobalParams();

@@ -33,7 +33,7 @@
 //************************************
 MainApp::MainApp() : per_fragment_program(0)
 {
-
+	xmlPathDir = "C:/Users/mlaboszc/Documents/Visual Studio 2013/Projects/pgrSuperBible6/opengl.superbible.6th.example.codes/build/vs2010/configs/MainApp.xml";
 }
 
 //************************************
@@ -247,6 +247,10 @@ void MainApp::onMouseMove(int x, int y)
 void MainApp::onMouseButton(int button, int action) {
     myTabPanel->CheckClickedButton(button, action);
 
+	if (myTabPanel->xmlDirChanged)
+		xmlPathDir = myTabPanel->textEditXmlFileDir->getCurrentText();
+		myTabPanel->xmlDirChanged = false;
+
 	buttonMouseClicked = action;
 }
 
@@ -296,7 +300,7 @@ void MainApp::SaveXmlConfig()
 //************************************
 std::string MainApp::getAppName()
 {
-    return "MainApp";
+	return xmlPathDir;
 }
 
 //************************************

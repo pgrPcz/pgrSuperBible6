@@ -104,4 +104,6 @@ protected:
 
     SceneObject     mSceneObjects[OBJECT_COUNT_X][OBJECT_COUNT_Y][OBJECT_COUNT_Z];
     xml_helper*     mXmlHelper;
+
+	string xmlPathDir;
 };

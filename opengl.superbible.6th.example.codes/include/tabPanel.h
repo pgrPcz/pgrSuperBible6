@@ -24,6 +24,7 @@ private:
 public:
 	bool showMenuFlag = false;
 	bool showMenuGlobalSettings = false;
+	bool xmlDirChanged = false;
 	SceneObjectParams xmlParams[OBJECT_COUNT_X*OBJECT_COUNT_Y*OBJECT_COUNT_Z];
 
 	int modifiedElementIndex;
@@ -34,6 +35,7 @@ public:
 	Button* buttonShowMenu;
 	Button* buttonShowGlobalSettings;
 	Button* buttonSave;
+	Button* buttonSaveGlobal;
 	Panel* panelPage1;
 	
 	Button* btnMenu1;
@@ -67,6 +69,7 @@ public:
 	Label* label10;
 	Label* label11;
 	Label* label12;
+	Label* LabelXmlFileDir;
 
 
 	TextEdit* textEditGlobalSettingsLightPosX;
@@ -85,6 +88,7 @@ public:
 	TextEdit* textEditScaleZ;
 	TextEdit* textEdit3;
 	TextEdit* textEdit4;
+	TextEdit* textEditXmlFileDir;
 
 	TabPanel();
 	~TabPanel();

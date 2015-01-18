@@ -32,7 +32,7 @@ public:
 		string path = m_assets_path + app_name + m_config_file_extension;
 
 		XMLDocument* doc = new XMLDocument();
-		doc->LoadFile(path.c_str());
+		doc->LoadFile(app_name.c_str());
 
 		listener->handleOpenDocument(doc);
 
@@ -46,7 +46,7 @@ public:
 
         listener->handleSaveDocument( m_doc );
 
-		m_doc->SaveFile(path.c_str());
+		m_doc->SaveFile(app_name.c_str());
 	}
 
 	void saveGuiState(map<string ,map<string ,string>> * mapGui, xml_helper_listener * listener) 
