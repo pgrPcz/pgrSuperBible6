@@ -90,10 +90,7 @@ void MainApp::startup()
         {
             for(int k = 0; k < OBJECT_COUNT_Z; k++)
             {
-                //mlaboszc
-                //m_xml_helper->loadXml(&mSceneObjects[i][j][k]);
                 myTabPanel->setXmlParamsStruct( i*9 + j*3 + k, mSceneObjects[i][j][k].GetParams() );
-
                 mSceneObjects[i][j][k].Startup();
             }
         }
@@ -255,7 +252,6 @@ void MainApp::onMouseButton(int button, int action) {
 
 	if (myTabPanel->LoadXMLToDir) {
 
-		string tempStr = xmlPathDir;
 		xmlPathDir = myTabPanel->textEditXmlFileDir->getCurrentText();
 		LoadXmlConfig();
 
@@ -268,7 +264,6 @@ void MainApp::onMouseButton(int button, int action) {
 				}
 			}
 		}
-		xmlPathDir = tempStr;
 		myTabPanel->LoadXMLToDir = false;
 	}
 
