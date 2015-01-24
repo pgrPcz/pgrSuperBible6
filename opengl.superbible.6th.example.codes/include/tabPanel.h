@@ -36,6 +36,8 @@ public:
 	Button* buttonShowGlobalSettings;
 	Button* buttonSave;
 	Button* buttonSaveGlobal;
+	Button* buttonSaveXML;
+	Button* buttonLoadXML;
 	Panel* panelPage1;
 	
 	Button* btnMenu1;

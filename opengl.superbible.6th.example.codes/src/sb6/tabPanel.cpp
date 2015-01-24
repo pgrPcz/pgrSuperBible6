@@ -13,6 +13,8 @@ TabPanel::TabPanel()
 	buttonShowGlobalSettings = new Button();
 	buttonSave = new Button();
 	buttonSaveGlobal = new Button();
+	buttonLoadXML = new Button();
+	buttonSaveXML = new Button();
 
 	panelPage1 = new Panel();
 
@@ -79,6 +81,9 @@ TabPanel::~TabPanel()
 	delete panelPage1;
 	delete buttonSave;
 	delete buttonSaveGlobal;
+	delete buttonLoadXML;
+	delete buttonSaveXML;
+
 	delete btnMenu1;
 	delete btnMenu2;
 	delete buttonShowGlobalSettings;
@@ -150,6 +155,9 @@ void TabPanel::Init(int winWidth, int winHight)
 	buttonPage2->Init(800, 600, xOffset + 50 + 10, yOffset + 10, 50, 20, "../../bitmap/panelPage2.bmp");
 	buttonSave->Init(800, 600, xOffset+5, 415, 100, 30, "../../bitmap/ButtonSave3.bmp");
 	buttonSaveGlobal->Init(800, 600, xOffset + 5, 415, 100, 30, "../../bitmap/ButtonSave3.bmp");
+
+	buttonLoadXML->Init(800, 600, xOffset + 5, 315, 100, 30, "../../bitmap/ButtonLoadXML.bmp");
+	buttonSaveXML->Init(800, 600, xOffset + 5, 355, 100, 30, "../../bitmap/ButtonSaveXML.bmp");
 
 	btnMenu1->Init(800, 600, xOffset + 320, yOffset + 320, 50, 20, "../../bitmap/Button1.bmp");
 	btnMenu2->Init(800, 600, xOffset + 320, yOffset + 320, 50, 20, "../../bitmap/Button2.bmp");
@@ -271,6 +279,8 @@ void TabPanel::Render(double currentTime)
 		textEditGlobalSettingsLightPosY->Render(currentTime);
 		textEditGlobalSettingsLightPosZ->Render(currentTime);
 		buttonSaveGlobal->Render(currentTime);
+		buttonLoadXML->Render(currentTime);
+		buttonSaveXML->Render(currentTime);
 	}
 
 
@@ -338,6 +348,8 @@ bool TabPanel::CheckArea(int x, int y)
 	buttonShowGlobalSettings->CheckArea(x, y);
 	buttonSave->CheckArea(x, y);
 	buttonSaveGlobal->CheckArea(x, y);
+	buttonLoadXML->CheckArea(x, y);
+	buttonSaveXML->CheckArea(x, y);
 	btnMenu1->CheckArea(x, y);
 	btnMenu2->CheckArea(x, y);
 	//cbOpt1->CheckArea(x, y);
@@ -378,6 +390,8 @@ void TabPanel::onResizeChangeGUI(int w, int h) {
 	buttonShowMenu->UpdateSize(w, h);
 	buttonSave->UpdateSize(w, h);
 	buttonSaveGlobal->UpdateSize(w, h);
+	buttonLoadXML->UpdateSize(w, h);
+	buttonSaveXML->UpdateSize(w, h);
 
 	panelPage1->UpdateSize(w, h);
 
