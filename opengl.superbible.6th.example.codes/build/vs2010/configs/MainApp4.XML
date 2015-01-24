@@ -1,6 +1,6 @@
 <app>
     <!-- <object many_objects="0" per_vertex="1" scaleX="1" scaleY="1" scaleZ="1"/> -->
-    <light posX="98" posY="100" posZ="100"/>
+    <light posX="100" posY="100" posZ="100"/>
     <material_properties diffuse_albedoX="1" diffuse_albedoY="0.30000001" diffuse_albedoZ="0.2" specular_albedo="20" specular_power="200"/>
     <objects>
         <object coordX="0" coordY="0" coordZ="0" model="media/objects/cube.sbm" texture="" rotX="-0" rotY="0" rotZ="0" scaleX="1" scaleY="1" scaleZ="1" vsPath="media/shaders/default/default.vs.glsl" fsPath="media/shaders/default/default.fs.glsl" gsPath="" tesPath="" tcsPath=""/>
