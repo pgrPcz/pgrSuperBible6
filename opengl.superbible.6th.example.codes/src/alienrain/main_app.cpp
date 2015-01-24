@@ -260,7 +260,7 @@ void MainApp::onMouseButton(int button, int action) {
 			for (int j = 0; j < OBJECT_COUNT_Y; j++) {
 				for (int k = 0; k < OBJECT_COUNT_Z; k++) {
 					myTabPanel->setXmlParamsStruct(i * 9 + j * 3 + k, mSceneObjects[i][j][k].GetParams());
-
+					mSceneObjects[i][j][k].Update();
 				}
 			}
 		}
