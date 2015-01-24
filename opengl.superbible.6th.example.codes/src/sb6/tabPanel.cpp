@@ -154,7 +154,8 @@ void TabPanel::Init(int winWidth, int winHight)
 	panelPage1->Init(800, 600, xOffset, yOffset + 30, 500, 400, "../../bitmap/panel2.bmp");
 	buttonPage2->Init(800, 600, xOffset + 50 + 10, yOffset + 10, 50, 20, "../../bitmap/panelPage2.bmp");
 	buttonSave->Init(800, 600, xOffset+5, 415, 100, 30, "../../bitmap/ButtonSave3.bmp");
-	buttonSaveGlobal->Init(800, 600, xOffset + 5, 415, 100, 30, "../../bitmap/ButtonSave3.bmp");
+
+	buttonSaveGlobal->Init(800, 600, xOffset + 5, 135, 100, 30, "../../bitmap/ButtonSave3.bmp");
 
 	buttonLoadXML->Init(800, 600, xOffset + 5, 315, 100, 30, "../../bitmap/ButtonLoadXML.bmp");
 	buttonSaveXML->Init(800, 600, xOffset + 5, 355, 100, 30, "../../bitmap/ButtonSaveXML.bmp");
@@ -637,10 +638,16 @@ void TabPanel::CheckClickedButton(int button, int action)
 	}
 
 	if (buttonSaveGlobal->onMouseButton(button, action)) {
-		//SaveChanges();
-		xmlDirChanged = true;
+		SaveChanges();
 	}
 
+	if (buttonLoadXML->onMouseButton(button, action)) {
+		LoadXMLToDir = true;
+	}
+
+	if (buttonSaveXML->onMouseButton(button, action)) {
+		SaveXMLToDir = true;
+	}
 	if (buttonShowMenu->onMouseButton(button, action))
 	{
 		showMenuFlag = !showMenuFlag;

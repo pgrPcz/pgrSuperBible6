@@ -33,7 +33,7 @@
 //************************************
 MainApp::MainApp() : per_fragment_program(0)
 {
-	xmlPathDir = "C:/Users/mlaboszc/Documents/Visual Studio 2013/Projects/pgrSuperBible6/opengl.superbible.6th.example.codes/build/vs2010/configs/MainApp.xml";
+	xmlPathDir = "configs/MainApp.xml";
 }
 
 //************************************
@@ -164,10 +164,6 @@ void MainApp::render(double currentTime)
 
 				if (myTabPanel->modifiedElementIndex == (i*9 + j*3 + k))
 				{				
-					//mSceneObjects[i][j][k].SetParams(myTabPanel->getXmlParamsStruct(myTabPanel->modifiedElementIndex));
-					//save changes from GUI to XML
-					//load changes from XML to Model index
-					SaveXmlConfig();
 					mSceneObjects[i][j][k].Update();
 					myTabPanel->modifiedElementIndex = -1;
 				}
@@ -247,9 +243,34 @@ void MainApp::onMouseMove(int x, int y)
 void MainApp::onMouseButton(int button, int action) {
     myTabPanel->CheckClickedButton(button, action);
 
-	if (myTabPanel->xmlDirChanged)
+	if (myTabPanel->SaveXMLToDir) {
+
+		string tempStr = xmlPathDir;
 		xmlPathDir = myTabPanel->textEditXmlFileDir->getCurrentText();
-		myTabPanel->xmlDirChanged = false;
+		SaveXmlConfig();
+
+		xmlPathDir = tempStr;
+		myTabPanel->SaveXMLToDir = false;
+	}
+
+	if (myTabPanel->LoadXMLToDir) {
+
+		string tempStr = xmlPathDir;
+		xmlPathDir = myTabPanel->textEditXmlFileDir->getCurrentText();
+		LoadXmlConfig();
+
+		// Init scene objects
+		for (int i = 0; i < OBJECT_COUNT_X; i++) {
+			for (int j = 0; j < OBJECT_COUNT_Y; j++) {
+				for (int k = 0; k < OBJECT_COUNT_Z; k++) {
+					myTabPanel->setXmlParamsStruct(i * 9 + j * 3 + k, mSceneObjects[i][j][k].GetParams());
+
+				}
+			}
+		}
+		xmlPathDir = tempStr;
+		myTabPanel->LoadXMLToDir = false;
+	}
 
 	buttonMouseClicked = action;
 }

@@ -1,13 +1,13 @@
 <app>
     <!-- <object many_objects="0" per_vertex="1" scaleX="1" scaleY="1" scaleZ="1"/> -->
-    <light posX="100" posY="100" posZ="100"/>
-    <material_properties diffuse_albedoX="0.5" diffuse_albedoY="0.69999999" diffuse_albedoZ="1" specular_albedo="20" specular_power="200"/>
+    <light posX="20" posY="100" posZ="30"/>
+    <material_properties diffuse_albedoX="1" diffuse_albedoY="0.30000001" diffuse_albedoZ="0.2" specular_albedo="20" specular_power="200"/>
     <objects>
-        <object coordX="0" coordY="0" coordZ="0" model="media/objects/sphere.sbm" texture="" rotX="-0" rotY="0" rotZ="0" scaleX="1" scaleY="1" scaleZ="1" vsPath="media/shaders/default/default.vs.glsl" fsPath="media/shaders/default/default.fs.glsl" gsPath="" tesPath="" tcsPath=""/>
+        <object coordX="0" coordY="0" coordZ="0" model="media/objects/cube.sbm" texture="" rotX="-0" rotY="0" rotZ="0" scaleX="1" scaleY="1" scaleZ="1" vsPath="media/shaders/default/default.vs.glsl" fsPath="media/shaders/default/default.fs.glsl" gsPath="" tesPath="" tcsPath=""/>
         <object coordX="0" coordY="0" coordZ="1" model="media/objects/bunny_1k.sbm" texture="costam" rotX="13.13" rotY="0.2" rotZ="0.30000001" scaleX="1" scaleY="1" scaleZ="1" vsPath="media/shaders/default/default.vs.glsl" fsPath="media/shaders/default/default.fs.glsl" gsPath="" tesPath="" tcsPath=""/>
         <object coordX="0" coordY="0" coordZ="2" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.30000001" scaleX="1" scaleY="1" scaleZ="1" vsPath="media/shaders/default/default.vs.glsl" fsPath="media/shaders/default/default.fs.glsl" gsPath="" tesPath="" tcsPath=""/>
         <object coordX="0" coordY="1" coordZ="0" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.30000001" scaleX="1" scaleY="1" scaleZ="1" vsPath="media/shaders/default/default.vs.glsl" fsPath="media/shaders/default/default.fs.glsl" gsPath="" tesPath="" tcsPath=""/>
-        <object coordX="0" coordY="1" coordZ="1" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.30000001" scaleX="1" scaleY="1" scaleZ="1" vsPath="media/shaders/default/default.vs.glsl" fsPath="media/shaders/default/default.fs.glsl" gsPath="" tesPath="" tcsPath=""/>
+        <object coordX="0" coordY="1" coordZ="1" model="media/objects/cube.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.30000001" scaleX="1" scaleY="1" scaleZ="1" vsPath="media/shaders/default/default.vs.glsl" fsPath="media/shaders/default/default.fs.glsl" gsPath="" tesPath="" tcsPath=""/>
         <object coordX="0" coordY="1" coordZ="2" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.30000001" scaleX="1" scaleY="1" scaleZ="1" vsPath="media/shaders/default/default.vs.glsl" fsPath="media/shaders/default/default.fs.glsl" gsPath="" tesPath="" tcsPath=""/>
         <object coordX="0" coordY="2" coordZ="0" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.30000001" scaleX="1" scaleY="1" scaleZ="1" vsPath="media/shaders/default/default.vs.glsl" fsPath="media/shaders/default/default.fs.glsl" gsPath="" tesPath="" tcsPath=""/>
         <object coordX="0" coordY="2" coordZ="1" model="media/objects/sphere.sbm" texture="costam" rotX="0.1" rotY="0.2" rotZ="0.30000001" scaleX="1" scaleY="1" scaleZ="1" vsPath="media/shaders/default/default.vs.glsl" fsPath="media/shaders/default/default.fs.glsl" gsPath="" tesPath="" tcsPath=""/>

@@ -25,6 +25,9 @@ public:
 	bool showMenuFlag = false;
 	bool showMenuGlobalSettings = false;
 	bool xmlDirChanged = false;
+	bool LoadXMLToDir = false;
+	bool SaveXMLToDir = false;
+
 	SceneObjectParams xmlParams[OBJECT_COUNT_X*OBJECT_COUNT_Y*OBJECT_COUNT_Z];
 
 	int modifiedElementIndex;
