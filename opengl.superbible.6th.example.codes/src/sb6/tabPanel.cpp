@@ -7,6 +7,7 @@ TabPanel::TabPanel()
 
 	modifiedElementIndex = -1;
 
+	buttonMenuXml = new Button();
 	buttonPage1 = new Button();
 	buttonPage2 = new Button();
 	buttonShowMenu = new Button();
@@ -21,6 +22,8 @@ TabPanel::TabPanel()
 	btnMenu1 = new Button();
 	btnMenu2 = new Button();
 
+	dropDownListFragmentShader = new DropDownList();
+	dropDownListVertexShader = new DropDownList();
 	dropDownListTest = new DropDownList();
 	dropDownListModels = new DropDownList();
 	dropDownListSlots = new DropDownList();
@@ -35,6 +38,13 @@ TabPanel::TabPanel()
 	labelGlobalSettingsLightPosition = new Label();
 	labelGlobalSettingsSpecularAlbedo = new Label();
 	labelGlobalSettingsSpecularPower = new Label();
+
+	labelFragmentShader = new Label();
+	labelVertexShader = new Label();
+	labelGeometryShader = new Label();
+	labelTesselationControlShader = new Label();
+	labelTesselationEvaluationShader = new Label();
+	labelComputeShader = new Label();
 
 	label1 = new Label();
 	label2 = new Label();
@@ -69,6 +79,12 @@ TabPanel::TabPanel()
 	textEdit3 = new TextEdit();
 	textEdit4 = new TextEdit();
 
+	textEditComputeShader = new TextEdit();
+	textEditFragmentShader = new TextEdit();
+	textEditGeometryShader = new TextEdit();
+	textEditTesselationControlShader = new TextEdit();
+	textEditTesselationEvaluationShader = new TextEdit();
+	textEditVertexShader = new TextEdit();
 
 	textEditXmlFileDir = new TextEdit();
 }
@@ -76,6 +92,7 @@ TabPanel::TabPanel()
 
 TabPanel::~TabPanel()
 {
+	delete buttonMenuXml;
 	delete buttonPage1;
 	delete buttonPage2;
 	delete panelPage1;
@@ -88,6 +105,8 @@ TabPanel::~TabPanel()
 	delete btnMenu2;
 	delete buttonShowGlobalSettings;
 
+	delete dropDownListFragmentShader;
+	delete dropDownListVertexShader;
 	delete dropDownListTest;
 	delete dropDownListModels;
 	delete buttonShowMenu;
@@ -112,6 +131,13 @@ TabPanel::~TabPanel()
 	delete label7;
 	delete LabelXmlFileDir;
 	
+	delete labelFragmentShader;
+	delete labelVertexShader;
+	delete labelGeometryShader;
+	delete labelTesselationControlShader;
+	delete labelTesselationEvaluationShader;
+	delete labelComputeShader;
+
 	delete label8;
 	delete label9;
 	delete label10;
@@ -133,6 +159,13 @@ TabPanel::~TabPanel()
 	delete textEditScaleY;
 	delete textEditScaleZ;
 
+	delete textEditComputeShader;
+	delete textEditFragmentShader;
+	delete textEditGeometryShader;
+	delete textEditTesselationControlShader;
+	delete textEditTesselationEvaluationShader;
+	delete textEditVertexShader;
+
 	delete textEdit3;
 	delete textEdit4;
 
@@ -149,13 +182,14 @@ void TabPanel::Init(int winWidth, int winHight)
 
 	buttonShowMenu->Init(800, 600, xOffset, 10, 50, (int)xOffset, "../../bitmap/ButtonShowMenu2.bmp");
 	buttonShowGlobalSettings->Init(800, 600, xOffset + 100 + 90, 10, 150, (int)xOffset, "../../bitmap/ButtonShowMenu3.bmp");
+	buttonMenuXml->Init(800, 600, xOffset + 100 + 90 + 160, 10, 50, (int)xOffset, "../../bitmap/ButtonMenuXML.bmp");
 
 	buttonPage1->Init(800, 600, xOffset, yOffset + 10, 50, 20, "../../bitmap/panelPage1.bmp");
 	panelPage1->Init(800, 600, xOffset, yOffset + 30, 500, 400, "../../bitmap/panel2.bmp");
 	buttonPage2->Init(800, 600, xOffset + 50 + 10, yOffset + 10, 50, 20, "../../bitmap/panelPage2.bmp");
 	buttonSave->Init(800, 600, xOffset+5, 415, 100, 30, "../../bitmap/ButtonSave3.bmp");
 
-	buttonSaveGlobal->Init(800, 600, xOffset + 5, 135, 100, 30, "../../bitmap/ButtonSave3.bmp");
+	buttonSaveGlobal->Init(800, 600, xOffset + 5, 415, 100, 30, "../../bitmap/ButtonSave3.bmp");
 
 	buttonLoadXML->Init(800, 600, xOffset + 5, 315, 100, 30, "../../bitmap/ButtonLoadXML.bmp");
 	buttonSaveXML->Init(800, 600, xOffset + 5, 355, 100, 30, "../../bitmap/ButtonSaveXML.bmp");
@@ -171,21 +205,36 @@ void TabPanel::Init(int winWidth, int winHight)
 	slotName->Init(800, 600, xOffset + 20, yOffset + 50, fontsize, "Slot number 0 parameters:");
 	labelGlobalSettings->Init(800, 600, xOffset + 20, yOffset + 50, fontsize, "Global Settings:");
 	labelGlobalSettingsLightPosition->Init(800, 600, xOffset + 30, yOffset + 80, fontsize, "Light Position[x,y,z]");
-	labelGlobalSettingsDiffuseAlbedo->Init(800, 600, xOffset + 30, yOffset + 110 + yOffSetDiffuse, fontsize, "Diffuse Albedo[x,y,z]");
-	labelGlobalSettingsSpecularAlbedo->Init(800, 600, xOffset + 30, yOffset + 140 + yOffSetDiffuse, fontsize, "Specular Albedo:");
-	labelGlobalSettingsSpecularPower->Init(800, 600, xOffset + 30, yOffset + 170 + yOffSetDiffuse, fontsize, "Specular Power:");
+	labelGlobalSettingsDiffuseAlbedo->Init(800, 600, xOffset + 30, yOffset + 110 + yOffSetDiffuse - 30, fontsize, "Diffuse Albedo[x,y,z]");
+	labelGlobalSettingsSpecularAlbedo->Init(800, 600, xOffset + 30, yOffset + 140 + yOffSetDiffuse - 30, fontsize, "Specular Albedo:");
+	labelGlobalSettingsSpecularPower->Init(800, 600, xOffset + 30, yOffset + 170 + yOffSetDiffuse - 30, fontsize, "Specular Power:");
+	labelVertexShader->Init(800, 600, xOffset + 30, yOffset + 140, fontsize, "Vertex Shader:");
+	labelFragmentShader->Init(800, 600, xOffset + 30, yOffset + 140 + 30, fontsize, "Fragment Shader:");
+	labelGeometryShader->Init(800, 600, xOffset + 30, yOffset + 170 + 30, fontsize, "Geometry Shader:");
+	labelTesselationControlShader->Init(800, 600, xOffset + 30, yOffset + 200 + 30, fontsize, "Tes Con Shader:");
+	labelTesselationEvaluationShader->Init(800, 600, xOffset + 30, yOffset + 230 + 30, fontsize, "Tes Eval Shader:");
+	labelComputeShader->Init(800, 600, xOffset + 30, yOffset + 260 + 30, fontsize, "Compute Shader:");
 
 	label1->Init(800, 600, xOffset + 30, yOffset + 80, fontsize, "Model:");
 	label2->Init(800, 600, xOffset + 30, yOffset + 110, fontsize, "Texture:");
-	label3->Init(800, 600, xOffset + 30, yOffset + 140, fontsize, "Rotation [x,y,z]:");
-	label4->Init(800, 600, xOffset + 30, yOffset + 170, fontsize, "Scale    [x,y,z]:");
+	label3->Init(800, 600, xOffset + 30, yOffset + 140 - 30, fontsize, "Rotation [x,y,z]:");
+	label4->Init(800, 600, xOffset + 30, yOffset + 170 - 30, fontsize, "Scale    [x,y,z]:");
 	label5->Init(800, 600, xOffset + 30, yOffset + 200, fontsize, "specular_albedo:");
 	label6->Init(800, 600, xOffset + 30, yOffset + 230, fontsize, "specular_power:");
 	label7->Init(800, 600, xOffset + 30, yOffset + 260, fontsize, "other:");
 
 	//cbOpt1->Init(800, 600, xOffset + controlsOffset, yOffset + 80, fontsize, fontsize, "../../bitmap/CheckBoxUnchecked.bmp");
+	//dropDownListVertexShader->Init(800, 600, xOffset + controlsOffset, yOffset + 140, 200, 20, "../../bitmap/DropDownListShaders.bmp", 32);
+	//dropDownListFragmentShader->Init(800, 600, xOffset + controlsOffset, yOffset + 140 + 30, 200, 20, "../../bitmap/DropDownListShaders.bmp", 32);
+
 	dropDownListModels->Init(800, 600, xOffset + controlsOffset, yOffset + 80, 200, 20, "../../bitmap/DropDownListModel.bmp", 9);
-	dropDownListTextures->Init(800, 600, xOffset + controlsOffset, yOffset + 110, 200, 20, "../../bitmap/panel.bmp", 2);
+	dropDownListTextures->Init(800, 600, xOffset + controlsOffset, yOffset + 110, 200, 20, "../../bitmap/DropDownListTextures.bmp", 17);
+	textEditVertexShader->Init(800, 600, xOffset + controlsOffset, yOffset + 110 + 30, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditFragmentShader->Init(800, 600, xOffset + controlsOffset, yOffset + 140 + 30, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGeometryShader->Init(800, 600, xOffset + controlsOffset, yOffset + 170 + 30, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditTesselationControlShader->Init(800, 600, xOffset + controlsOffset, yOffset + 200 + 30, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditTesselationEvaluationShader->Init(800, 600, xOffset + controlsOffset, yOffset + 230 + 30, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditComputeShader->Init(800, 600, xOffset + controlsOffset, yOffset + 260 + 30, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
 
 	//cbOpt2->Init(800, 600, xOffset + controlsOffset, yOffset + 110, fontsize, fontsize, "../../bitmap/CheckBoxUnchecked.bmp");
 
@@ -200,26 +249,26 @@ void TabPanel::Init(int winWidth, int winHight)
 	textEditGlobalSettingsLightPosX->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
 	textEditGlobalSettingsLightPosY->Init(800, 600, xOffset + controlsOffset + 70, yOffsetForGlobal + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
 	textEditGlobalSettingsLightPosZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffsetForGlobal + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditGlobalSettingsDiffuseAlbedoX->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 170 + yOffSetDiffuse, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditGlobalSettingsDiffuseAlbedoY->Init(800, 600, xOffset + controlsOffset + 70, yOffsetForGlobal + 170 + yOffSetDiffuse, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditGlobalSettingsDiffuseAlbedoZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffsetForGlobal + 170 + yOffSetDiffuse, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditGlobalSettingsSpecularAlbedo->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 200 + yOffSetDiffuse, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditGlobalSettingsSpecularPower->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 230 + yOffSetDiffuse, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGlobalSettingsDiffuseAlbedoX->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 170 + yOffSetDiffuse - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGlobalSettingsDiffuseAlbedoY->Init(800, 600, xOffset + controlsOffset + 70, yOffsetForGlobal + 170 + yOffSetDiffuse - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGlobalSettingsDiffuseAlbedoZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffsetForGlobal + 170 + yOffSetDiffuse - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGlobalSettingsSpecularAlbedo->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 200 + yOffSetDiffuse - 30, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGlobalSettingsSpecularPower->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 230 + yOffSetDiffuse - 30, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
 
-	textEditRotationX->Init(800, 600, xOffset + controlsOffset, yOffset + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditRotationY->Init(800, 600, xOffset + controlsOffset + 70, yOffset + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditRotationZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffset + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditRotationX->Init(800, 600, xOffset + controlsOffset, yOffset + 140 - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditRotationY->Init(800, 600, xOffset + controlsOffset + 70, yOffset + 140 - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditRotationZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffset + 140 - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
 
-	textEditScaleX->Init(800, 600, xOffset + controlsOffset, yOffset + 170, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditScaleY->Init(800, 600, xOffset + controlsOffset + 70, yOffset + 170, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditScaleZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffset + 170, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditScaleX->Init(800, 600, xOffset + controlsOffset, yOffset + 170 - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditScaleY->Init(800, 600, xOffset + controlsOffset + 70, yOffset + 170 - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditScaleZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffset + 170 - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
 
 	textEdit3->Init(800, 600, xOffset + controlsOffset, yOffset + 200, 200, fontsize, "../../bitmap/textEdit1.bmp", "edit3");
 	textEdit4->Init(800, 600, xOffset + controlsOffset, yOffset + 230, 200, fontsize, "../../bitmap/textEdit1.bmp", "edit4");
 
 	string xmlPathDir = "configs/MainApp.xml";
-	LabelXmlFileDir->Init(800, 600, xOffset + 30, yOffset + 260, fontsize, "Xml dir:");
-	textEditXmlFileDir->Init(800, 600, xOffset + 120, yOffset + 260, 320, fontsize, "../../bitmap/textEdit1.bmp", xmlPathDir);
+	LabelXmlFileDir->Init(800, 600, xOffset + 30, yOffset + 60, fontsize, "Xml dir:");
+	textEditXmlFileDir->Init(800, 600, xOffset + 120, yOffset + 60, 320, fontsize, "../../bitmap/textEdit1.bmp", xmlPathDir);
 }
 
 void TabPanel::InitializationOfTabParams()
@@ -240,6 +289,13 @@ SceneObjectParams TabPanel::getXmlParamsStruct(int index)
 
 void TabPanel::CheckKey(int key, int action) 
 {
+	textEditGeometryShader->CheckKey(key, action);
+	textEditComputeShader->CheckKey(key, action);
+	textEditFragmentShader->CheckKey(key, action);
+	textEditTesselationControlShader->CheckKey(key, action);
+	textEditTesselationEvaluationShader->CheckKey(key, action);
+	textEditComputeShader->CheckKey(key, action);
+
 	textEditGlobalSettingsLightPosX->CheckKey(key, action);
 	textEditGlobalSettingsLightPosY->CheckKey(key, action);
 	textEditGlobalSettingsLightPosZ->CheckKey(key, action);
@@ -266,6 +322,17 @@ void TabPanel::Render(double currentTime)
 {
 	buttonShowMenu->Render(currentTime);
 	buttonShowGlobalSettings->Render(currentTime);
+	buttonMenuXml->Render(currentTime);
+
+	if (showMenuXML)
+	{
+		panelPage1->Render(currentTime);
+		buttonLoadXML->Render(currentTime);
+		buttonSaveXML->Render(currentTime);
+		LabelXmlFileDir->Render(currentTime);
+		textEditXmlFileDir->Render(currentTime);
+
+	}
 
 	if (showMenuGlobalSettings)
 	{
@@ -273,15 +340,34 @@ void TabPanel::Render(double currentTime)
 		labelGlobalSettings->Render(currentTime);
 		labelGlobalSettingsLightPosition->Render(currentTime);
 
-		LabelXmlFileDir->Render(currentTime);
-		textEditXmlFileDir->Render(currentTime);
+
 
 		textEditGlobalSettingsLightPosX->Render(currentTime);
 		textEditGlobalSettingsLightPosY->Render(currentTime);
 		textEditGlobalSettingsLightPosZ->Render(currentTime);
 		buttonSaveGlobal->Render(currentTime);
-		buttonLoadXML->Render(currentTime);
-		buttonSaveXML->Render(currentTime);
+
+
+		labelGlobalSettingsDiffuseAlbedo->Render(currentTime);
+		labelGlobalSettingsSpecularAlbedo->Render(currentTime);
+		labelGlobalSettingsSpecularPower->Render(currentTime);
+
+
+		textEditGlobalSettingsDiffuseAlbedoX->Render(currentTime);
+		textEditGlobalSettingsDiffuseAlbedoY->Render(currentTime);
+		textEditGlobalSettingsDiffuseAlbedoZ->Render(currentTime);
+		textEditGlobalSettingsSpecularAlbedo->Render(currentTime);
+		textEditGlobalSettingsSpecularPower->Render(currentTime);
+
+		textEditRotationX->Render(currentTime);
+		textEditRotationY->Render(currentTime);
+		textEditRotationZ->Render(currentTime);
+		textEditScaleX->Render(currentTime);
+		textEditScaleY->Render(currentTime);
+		textEditScaleZ->Render(currentTime);
+
+		label3->Render(currentTime);
+		label4->Render(currentTime);
 	}
 
 
@@ -303,29 +389,30 @@ void TabPanel::Render(double currentTime)
 			slotName->Render(currentTime);
 			label1->Render(currentTime);
 			label2->Render(currentTime);
-			label3->Render(currentTime);
-			label4->Render(currentTime);
 
-			labelGlobalSettingsDiffuseAlbedo->Render(currentTime);
-			labelGlobalSettingsSpecularAlbedo->Render(currentTime);
-			labelGlobalSettingsSpecularPower->Render(currentTime);
 
-			textEditGlobalSettingsDiffuseAlbedoX->Render(currentTime);
-			textEditGlobalSettingsDiffuseAlbedoY->Render(currentTime);
-			textEditGlobalSettingsDiffuseAlbedoZ->Render(currentTime);
-			textEditGlobalSettingsSpecularAlbedo->Render(currentTime);
-			textEditGlobalSettingsSpecularPower->Render(currentTime);
+			labelFragmentShader->Render(currentTime);
+			labelVertexShader->Render(currentTime);
+			labelGeometryShader->Render(currentTime);
+			labelTesselationControlShader->Render(currentTime);
+			labelTesselationEvaluationShader->Render(currentTime);
+			labelComputeShader->Render(currentTime);
 
 			buttonSave->Render(currentTime);
-			textEditRotationX->Render(currentTime);
-			textEditRotationY->Render(currentTime);
-			textEditRotationZ->Render(currentTime);
-			textEditScaleX->Render(currentTime);
-			textEditScaleY->Render(currentTime);
-			textEditScaleZ->Render(currentTime);
+
+			textEditGeometryShader->Render(currentTime);
+			textEditFragmentShader->Render(currentTime);
+			textEditVertexShader->Render(currentTime);
+			textEditTesselationControlShader->Render(currentTime);
+			textEditTesselationEvaluationShader->Render(currentTime);
+			textEditComputeShader->Render(currentTime);
+
 			//textEdit3->Render(currentTime);
 			//textEdit4->Render(currentTime);
 
+			//dropDownListFragmentShader->Render(currentTime);
+			//dropDownListVertexShader->Render(currentTime);
+			
 			dropDownListTextures->Render(currentTime);
 			dropDownListModels->Render(currentTime);
 		}
@@ -349,6 +436,7 @@ bool TabPanel::CheckArea(int x, int y)
 	buttonShowGlobalSettings->CheckArea(x, y);
 	buttonSave->CheckArea(x, y);
 	buttonSaveGlobal->CheckArea(x, y);
+	buttonMenuXml->CheckArea(x, y);
 	buttonLoadXML->CheckArea(x, y);
 	buttonSaveXML->CheckArea(x, y);
 	btnMenu1->CheckArea(x, y);
@@ -356,10 +444,19 @@ bool TabPanel::CheckArea(int x, int y)
 	//cbOpt1->CheckArea(x, y);
 	//cbOpt2->CheckArea(x, y);
 
+	//dropDownListVertexShader->CheckArea(x, y);
+	//dropDownListFragmentShader->CheckArea(x, y);
 	dropDownListTest->CheckArea(x, y);
 	dropDownListModels->CheckArea(x, y);
 	dropDownListSlots->CheckArea(x, y);
 	dropDownListTextures->CheckArea(x, y);
+
+	textEditGeometryShader->CheckArea(x, y);
+	textEditFragmentShader->CheckArea(x, y);
+	textEditVertexShader->CheckArea(x, y);
+	textEditTesselationControlShader->CheckArea(x, y);
+	textEditTesselationEvaluationShader->CheckArea(x, y);
+	textEditComputeShader->CheckArea(x, y);
 
 	textEditGlobalSettingsLightPosX->CheckArea(x, y);
 	textEditGlobalSettingsLightPosY->CheckArea(x, y);
@@ -393,12 +490,15 @@ void TabPanel::onResizeChangeGUI(int w, int h) {
 	buttonSaveGlobal->UpdateSize(w, h);
 	buttonLoadXML->UpdateSize(w, h);
 	buttonSaveXML->UpdateSize(w, h);
+	buttonMenuXml->UpdateSize(w, h);
 
 	panelPage1->UpdateSize(w, h);
 
 	btnMenu1->UpdateSize(w, h);
 	btnMenu2->UpdateSize(w, h);
 
+	//dropDownListFragmentShader->UpdateSize(w, h);
+	//dropDownListVertexShader->UpdateSize(w, h);
 	dropDownListTest->UpdateSize(w, h);
 	dropDownListModels->UpdateSize(w, h);
 	dropDownListSlots->UpdateSize(w, h);
@@ -408,6 +508,8 @@ void TabPanel::onResizeChangeGUI(int w, int h) {
 	cbOpt2->UpdateSize(w, h);
 
 	slotName->UpdateSize(w, h);
+	labelVertexShader->UpdateSize(w, h);
+	labelFragmentShader->UpdateSize(w, h);
 	label1->UpdateSize(w, h);
 	label2->UpdateSize(w, h);
 	label3->UpdateSize(w, h);
@@ -423,6 +525,13 @@ void TabPanel::onResizeChangeGUI(int w, int h) {
 	label12->UpdateSize(w, h);
 
 	LabelXmlFileDir->UpdateSize(w, h);
+
+	textEditGeometryShader->UpdateSize(w, h);
+	textEditFragmentShader->UpdateSize(w, h);
+	textEditVertexShader->UpdateSize(w, h);
+	textEditTesselationControlShader->UpdateSize(w, h);
+	textEditTesselationEvaluationShader->UpdateSize(w, h);
+	textEditComputeShader->UpdateSize(w, h);
 
 	textEditRotationX->UpdateSize(w, h);
 	textEditRotationY->UpdateSize(w, h);
@@ -470,63 +579,37 @@ void TabPanel::ChangeTabParams() {
 	//label10->ChangeText(xmlParams[slotIndex].Coords);
 	//label11->ChangeText(xmlParams[slotIndex].Rotation);
     //label11->ChangeText( xmlParams[slotIndex].Scale );
-	textEditGlobalSettingsDiffuseAlbedoX->setCurrentText((std::to_string(xmlParams[slotIndex].DiffuseAlbedo[0])).substr(0, 5));
-	textEditGlobalSettingsDiffuseAlbedoY->setCurrentText((std::to_string(xmlParams[slotIndex].DiffuseAlbedo[1])).substr(0, 5));
-	textEditGlobalSettingsDiffuseAlbedoZ->setCurrentText((std::to_string(xmlParams[slotIndex].DiffuseAlbedo[2])).substr(0, 5));
-	textEditGlobalSettingsSpecularAlbedo->setCurrentText((std::to_string(xmlParams[slotIndex].SpecularAlbedo)).substr(0, 5));
-	textEditGlobalSettingsSpecularPower->setCurrentText((std::to_string(xmlParams[slotIndex].SpecularPower)).substr(0, 5));
 
-	textEditRotationX->setCurrentText((std::to_string(xmlParams[slotIndex].Rotation[0])).substr(0, 5));
-	textEditRotationY->setCurrentText((std::to_string(xmlParams[slotIndex].Rotation[1])).substr(0, 5));
-	textEditRotationZ->setCurrentText((std::to_string(xmlParams[slotIndex].Rotation[2])).substr(0, 5));
 
-	textEditScaleX->setCurrentText((std::to_string(xmlParams[slotIndex].Scale[0])).substr(0, 5));
-	textEditScaleY->setCurrentText((std::to_string(xmlParams[slotIndex].Scale[1])).substr(0, 5));
-	textEditScaleZ->setCurrentText((std::to_string(xmlParams[slotIndex].Scale[2])).substr(0, 5));
+	//dropDownListShaders()
 
-	if (xmlParams[slotIndex].ModelPath == "media/objects/asteroids.sbm")
-	{
-		dropDownListModels->SetCurrentElement((int)Models::Asteroids);
-	}
-	if (xmlParams[slotIndex].ModelPath == "media/objects/bunny_1k.sbm")
-	{
-		dropDownListModels->SetCurrentElement((int)Models::Bunny_1k);
-	}
-	if (xmlParams[slotIndex].ModelPath == "media/objects/bunny_40k.sbm")
-	{
-		dropDownListModels->SetCurrentElement((int)Models::Bunny_40k);
-	}
-	if (xmlParams[slotIndex].ModelPath == "media/objects/cube.sbm")
-	{
-		dropDownListModels->SetCurrentElement((int)Models::Cube);
-	}
-	if (xmlParams[slotIndex].ModelPath == "media/objects/dragon.sbm")
-	{
-		dropDownListModels->SetCurrentElement((int)Models::Dragon);
-	}
-	if (xmlParams[slotIndex].ModelPath == "media/objects/ladybug.sbm")
-	{
-		dropDownListModels->SetCurrentElement((int)Models::Ladybug);
-	}
-	if (xmlParams[slotIndex].ModelPath == "media/objects/sphere.sbm")
-	{
-		dropDownListModels->SetCurrentElement((int)Models::Sphere);
-	}
-	if (xmlParams[slotIndex].ModelPath == "media/objects/torus.sbm")
-	{
-		dropDownListModels->SetCurrentElement((int)Models::Torus);
-	}
-	if (xmlParams[slotIndex].ModelPath == "media/objects/torus_nrms_tc.sbm")
-	{
-		dropDownListModels->SetCurrentElement((int)Models::Torus_nrms_tc);
-	}
+	ChangeParamsModels(slotIndex);
+	//ChangeParamsTextures(slotIndex);
 }
 
 void TabPanel::ChangeTabGlobalParams() 
 {
+	/*int slotIndex = dropDownListSlots->GetCurrentElement();
+	std::string text = "Slot number " + to_string(slotIndex);
+	slotName->ChangeText(text);*/
+
 	textEditGlobalSettingsLightPosX->setCurrentText((std::to_string(xmlParams[0].LightPosition[0])).substr(0, 5));
 	textEditGlobalSettingsLightPosY->setCurrentText((std::to_string(xmlParams[0].LightPosition[1])).substr(0, 5));
 	textEditGlobalSettingsLightPosZ->setCurrentText((std::to_string(xmlParams[0].LightPosition[2])).substr(0, 5));
+
+	textEditGlobalSettingsDiffuseAlbedoX->setCurrentText((std::to_string(xmlParams[0].DiffuseAlbedo[0])).substr(0, 5));
+	textEditGlobalSettingsDiffuseAlbedoY->setCurrentText((std::to_string(xmlParams[0].DiffuseAlbedo[1])).substr(0, 5));
+	textEditGlobalSettingsDiffuseAlbedoZ->setCurrentText((std::to_string(xmlParams[0].DiffuseAlbedo[2])).substr(0, 5));
+	textEditGlobalSettingsSpecularAlbedo->setCurrentText((std::to_string(xmlParams[0].SpecularAlbedo)).substr(0, 5));
+	textEditGlobalSettingsSpecularPower->setCurrentText((std::to_string(xmlParams[0].SpecularPower)).substr(0, 5));
+
+	textEditRotationX->setCurrentText((std::to_string(xmlParams[0].Rotation[0])).substr(0, 5));
+	textEditRotationY->setCurrentText((std::to_string(xmlParams[0].Rotation[1])).substr(0, 5));
+	textEditRotationZ->setCurrentText((std::to_string(xmlParams[0].Rotation[2])).substr(0, 5));
+
+	textEditScaleX->setCurrentText((std::to_string(xmlParams[0].Scale[0])).substr(0, 5));
+	textEditScaleY->setCurrentText((std::to_string(xmlParams[0].Scale[1])).substr(0, 5));
+	textEditScaleZ->setCurrentText((std::to_string(xmlParams[0].Scale[2])).substr(0, 5));
 }
 
 void TabPanel::SaveChanges()
@@ -597,6 +680,13 @@ void TabPanel::SaveChanges()
 
 void TabPanel::CheckClickedButton(int button, int action)
 {
+	textEditGeometryShader->onMouseButton(button, action);
+	textEditFragmentShader->onMouseButton(button, action);
+	textEditVertexShader->onMouseButton(button, action);
+	textEditTesselationControlShader->onMouseButton(button, action);
+	textEditTesselationEvaluationShader->onMouseButton(button, action);
+	textEditComputeShader->onMouseButton(button, action);
+
 	textEditGlobalSettingsLightPosX->onMouseButton(button, action);
 	textEditGlobalSettingsLightPosY->onMouseButton(button, action);
 	textEditGlobalSettingsLightPosZ->onMouseButton(button, action);
@@ -623,6 +713,8 @@ void TabPanel::CheckClickedButton(int button, int action)
 	//cbOpt1->onMouseButton(button, action);
 	//cbOpt2->onMouseButton(button, action);
 	
+	//dropDownListFragmentShader->onMouseButton(button, action);
+	//dropDownListVertexShader->onMouseButton(button, action);
 	dropDownListTest->onMouseButton(button, action);
 	dropDownListModels->onMouseButton(button, action);
 	dropDownListTextures->onMouseButton(button, action);
@@ -652,6 +744,7 @@ void TabPanel::CheckClickedButton(int button, int action)
 	{
 		showMenuFlag = !showMenuFlag;
 		showMenuGlobalSettings = false;
+		showMenuXML = false;
 		ChangeTabParams();
 	}
 
@@ -659,7 +752,16 @@ void TabPanel::CheckClickedButton(int button, int action)
 	{	
 		showMenuGlobalSettings = !showMenuGlobalSettings;
 		showMenuFlag = false;
+		showMenuXML = false;
 		ChangeTabGlobalParams();
+	}
+
+	if (buttonMenuXml->onMouseButton(button, action))
+	{
+		showMenuXML = !showMenuXML;
+		showMenuGlobalSettings = false;
+		showMenuFlag = false;
+
 	}
 
 	if (buttonPage1->onMouseButton(button, action))
@@ -671,3 +773,44 @@ void TabPanel::CheckClickedButton(int button, int action)
 		currentPage = 2;
 	}
 }
+
+void TabPanel::ChangeParamsModels(int slotIndex)
+{
+	if (xmlParams[slotIndex].ModelPath == "media/objects/asteroids.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Asteroids);
+	}
+	if (xmlParams[slotIndex].ModelPath == "media/objects/bunny_1k.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Bunny_1k);
+	}
+	if (xmlParams[slotIndex].ModelPath == "media/objects/bunny_40k.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Bunny_40k);
+	}
+	if (xmlParams[slotIndex].ModelPath == "media/objects/cube.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Cube);
+	}
+	if (xmlParams[slotIndex].ModelPath == "media/objects/dragon.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Dragon);
+	}
+	if (xmlParams[slotIndex].ModelPath == "media/objects/ladybug.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Ladybug);
+	}
+	if (xmlParams[slotIndex].ModelPath == "media/objects/sphere.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Sphere);
+	}
+	if (xmlParams[slotIndex].ModelPath == "media/objects/torus.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Torus);
+	}
+	if (xmlParams[slotIndex].ModelPath == "media/objects/torus_nrms_tc.sbm")
+	{
+		dropDownListModels->SetCurrentElement((int)Models::Torus_nrms_tc);
+	}
+}
+

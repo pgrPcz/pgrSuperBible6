@@ -20,10 +20,14 @@ private:
 	const static unsigned int OBJECT_COUNT_Y = 3;
 	const static unsigned int OBJECT_COUNT_Z = 3;
 	enum class Models { Asteroids, Bunny_1k, Bunny_40k, Cube, Dragon, Ladybug, Sphere, Torus, Torus_nrms_tc };
-    
+	enum class Textures { Aliens, Brick, Ceiling, Floor, Grass_bend, Grass_color, Grass_length, Grass_orientation, Ladybug_co, Ladybug_nm, Pattern1, Rightarrows, Star, Terragen_color, Terragen1, Tree, Treelights_2k };
+	enum class Shaders { Blinnphong, Bumpmapping, Clipdistance, Cubemapenv, Cubicebezier, Default, DefferedShading, Dispmap, Dof, Envmapsphere, Equirectangular, Flocking, Fragmentlist, Hdrbloom, Hdrtonemap, 
+		Multidrawindirect, Multimaterial, Noise, Perpixelgloss, Phonglighting, Prefixsum, Prefixsum2d, Raytracer, Rimlight, Sb6mrender, Shadowmapping, Simpletexcoords, Springmass, Ssao, Stereo, Subroutines, Toonshading};
+
 public:
 	bool showMenuFlag = false;
 	bool showMenuGlobalSettings = false;
+	bool showMenuXML = false;
 	bool xmlDirChanged = false;
 	bool LoadXMLToDir = false;
 	bool SaveXMLToDir = false;
@@ -33,6 +37,7 @@ public:
 	int modifiedElementIndex;
 	SceneObjectParams TabPanel::getXmlParamsStruct(int index);	
 
+	Button* buttonMenuXml;
 	Button* buttonPage1;
 	Button* buttonPage2;
 	Button* buttonShowMenu;
@@ -48,9 +53,11 @@ public:
 	CheckBox* cbOpt1;
 	CheckBox* cbOpt2;
 
+	DropDownList* dropDownListFragmentShader;
 	DropDownList* dropDownListTest;
 	DropDownList* dropDownListSlots;
 	DropDownList* dropDownListModels;
+	DropDownList* dropDownListVertexShader;
 	DropDownList* dropDownListTextures;
 
 	Label* slotName;
@@ -60,6 +67,12 @@ public:
 	Label* labelGlobalSettingsDiffuseAlbedo;
 	Label* labelGlobalSettingsSpecularAlbedo;
 	Label* labelGlobalSettingsSpecularPower;
+	Label* labelVertexShader;
+	Label* labelFragmentShader;
+	Label* labelGeometryShader;
+	Label* labelTesselationControlShader;
+	Label* labelTesselationEvaluationShader;
+	Label* labelComputeShader;
 
 	Label* label1;
 	Label* label2;
@@ -95,6 +108,13 @@ public:
 	TextEdit* textEdit4;
 	TextEdit* textEditXmlFileDir;
 
+	TextEdit* textEditVertexShader;
+	TextEdit* textEditFragmentShader;
+	TextEdit* textEditGeometryShader;
+	TextEdit* textEditTesselationControlShader;
+	TextEdit* textEditTesselationEvaluationShader;
+	TextEdit* textEditComputeShader;
+
 	TabPanel();
 	~TabPanel();
 	void Init(int w,int h);
@@ -109,6 +129,10 @@ public:
 	void SetGlobalParams(vmath::vec3 _lightPosition, vmath::vec3 _diffuseAlbedo, float _specularAlbedo, float _specularPower);
 	void CheckKey(int key, int action);
 	void ChangeTabParams();
+	void ChangeParamsModels(int slotIndex);
+	void ChangeParamsTextures(int slotIndex);
+	void ChangeParamsVertexShader(int slotIndex);
+	void ChangeParamsFragmentShader(int slotIndex);
 	void ChangeTabGlobalParams();
 	void InitializationOfTabParams();
 };
