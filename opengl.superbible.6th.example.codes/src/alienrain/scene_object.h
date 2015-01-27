@@ -28,6 +28,10 @@ public:
     bool LoadShaders();
     GLuint LoadShaderFromFile( const string path, GLenum shaderType );
 
+	void LoadTexture();
+	void UnloadTexture();
+	GLuint LoadTextureFromFile(const string path);
+
     //void SetVertexShader( const string path );
     //void SetFragmentShader( const string path );
     //void SetGeometryShader( const string path );
@@ -64,6 +68,10 @@ protected:
 
     GLuint          mProgram;
     sb6::object     model;
+
+	GLuint mTexture;
+	GLuint test_tex_object;
+	bool IsTextureLoaded;
 
     struct
     {

@@ -7,6 +7,32 @@
 #include <vector>
 #include "scene_object.h"
 
+// manual texture data (optional)
+#define B 0x00, 0x00, 0x00, 0x00
+#define W 0xFF, 0xFF, 0xFF, 0xFF
+static const GLubyte tex_data[] =
+{
+	B, W, B, W, B, W, B, W, B, W, B, W, B, W, B, W,
+	W, B, W, B, W, B, W, B, W, B, W, B, W, B, W, B,
+	B, W, B, W, B, W, B, W, B, W, B, W, B, W, B, W,
+	W, B, W, B, W, B, W, B, W, B, W, B, W, B, W, B,
+	B, W, B, W, B, W, B, W, B, W, B, W, B, W, B, W,
+	W, B, W, B, W, B, W, B, W, B, W, B, W, B, W, B,
+	B, W, B, W, B, W, B, W, B, W, B, W, B, W, B, W,
+	W, B, W, B, W, B, W, B, W, B, W, B, W, B, W, B,
+	B, W, B, W, B, W, B, W, B, W, B, W, B, W, B, W,
+	W, B, W, B, W, B, W, B, W, B, W, B, W, B, W, B,
+	B, W, B, W, B, W, B, W, B, W, B, W, B, W, B, W,
+	W, B, W, B, W, B, W, B, W, B, W, B, W, B, W, B,
+	B, W, B, W, B, W, B, W, B, W, B, W, B, W, B, W,
+	W, B, W, B, W, B, W, B, W, B, W, B, W, B, W, B,
+	B, W, B, W, B, W, B, W, B, W, B, W, B, W, B, W,
+	W, B, W, B, W, B, W, B, W, B, W, B, W, B, W, B,
+};
+#undef B
+#undef W
+
+
 // mlaboszc
 vmath::vec3 getXmlVecParam( string mParams ) {
     vmath::vec3 vecParams = vmath::vec3( 0.0, 0.0, 0.0 );
@@ -150,6 +176,34 @@ GLuint SceneObject::LoadShaderFromFile( const string path, GLenum shaderType )
     return shaderID;
 }
 
+
+void SceneObject::LoadTexture()
+{
+	if (!mParams.TexturePath.empty())
+		mTexture = LoadTextureFromFile(mParams.TexturePath.c_str());
+	if (mTexture != 0)
+		IsTextureLoaded = GL_TRUE;
+}
+
+void SceneObject::UnloadTexture()
+{
+	glDeleteTextures(1, &mTexture);
+	mTexture = 0;
+	IsTextureLoaded = GL_FALSE;
+}
+
+GLuint SceneObject::LoadTextureFromFile(string path)
+{
+	GLuint textureID = 0;
+
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	textureID = sb6::ktx::file::load(path.c_str());
+
+	return textureID;
+}
+
+
 //************************************
 // Method:    Startup
 // FullName:  SceneObject::startup
@@ -167,6 +221,7 @@ void SceneObject::Startup()
 
     // TODO check error on load shaders and load object
     LoadShaders();
+	LoadTexture();
 
     glGenBuffers(1, &uniforms_buffer);
     glBindBuffer(GL_UNIFORM_BUFFER, uniforms_buffer);
@@ -183,6 +238,7 @@ void SceneObject::Update()
 {
 	// TODO check error on load shaders and load object
 	LoadShaders();
+	LoadTexture();
 
 	glGenBuffers(1, &uniforms_buffer);
 	glBindBuffer(GL_UNIFORM_BUFFER, uniforms_buffer);
@@ -214,6 +270,9 @@ void SceneObject::Render( double currentTime, int w, int h, vmath::vec3 view_pos
     static const GLfloat zeros[] = { 0.0f, 0.0f, 0.0f, 0.0f };
     static const GLfloat gray[] = { 0.1f, 0.1f, 0.1f, 0.0f };
     static const GLfloat ones[] = { 1.0f };
+
+	if (IsTextureLoaded)
+		glBindTexture(GL_TEXTURE_2D, mTexture);
 
      /*
     vmath::mat4 model_matrix = vmath::rotate((float)currentTime * 14.5f, 0.0f, 1.0f, 0.0f) *

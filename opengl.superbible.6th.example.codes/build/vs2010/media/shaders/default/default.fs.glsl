@@ -1,7 +1,15 @@
-#version 410 core
+#version 420 core
+
+//uniform sampler2D s;
+
+layout (binding = 0) uniform sampler2D mTexture;
+
+//uniform sampler2D mTexture;
+out vec4 color;
 
 // Output
-layout (location = 0) out vec4 color;
+//layout (location = 0) out vec4 color;
+
 
 // Input from vertex shader
 in VS_OUT
@@ -9,12 +17,15 @@ in VS_OUT
     vec3 N;
     vec3 L;
     vec3 V;
+    vec2 tc;
 } fs_in;
 
 // Material properties
 uniform vec3 diffuse_albedo;
 uniform vec3 specular_albedo;
 uniform float specular_power;
+
+
 
 void main(void)
 {
@@ -29,5 +40,9 @@ void main(void)
     vec3 specular = pow(max(dot(N, H), 0.0), specular_power) * specular_albedo;
 
     // Write final color to the framebuffer
-    color = vec4(diffuse + specular, 1.0);
+    //color = vec4(diffuse + specular, 1.0);
+    //color = texelFetch(s, ivec2(gl_FragCoord.xy), 0);
+    //color = vec4(diffuse + specular, 1.0);
+    color = texture(mTexture, fs_in.tc * vec2(3.0, 1.0));
+    //color = vec4(diffuse + specular, 1.0);
 }

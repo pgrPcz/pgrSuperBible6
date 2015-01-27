@@ -1,8 +1,9 @@
-#version 410 core
+#version 420 core
 
 // Per-vertex inputs
 layout (location = 0) in vec4 position;
 layout (location = 1) in vec3 normal;
+layout (location = 4) in vec2 tc;
 
 // Matrices we'll need
 layout (std140) uniform constants
@@ -18,6 +19,7 @@ out VS_OUT
     vec3 N;
     vec3 L;
     vec3 V;
+    vec2 tc;
 } vs_out;
 
 // Position of light
@@ -36,6 +38,8 @@ void main(void)
 
     // Calculate view vector
     vs_out.V = -P.xyz;
+    
+    vs_out.tc = tc;
 
     // Calculate the clip-space position of each vertex
     gl_Position = proj_matrix * P;
