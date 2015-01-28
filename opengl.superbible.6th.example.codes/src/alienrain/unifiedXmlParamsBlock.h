@@ -24,6 +24,7 @@ struct SceneObjectParams
     string      GeometryShaderPath;
     string      TessControlShaderPath;
     string      TessEvaluationShaderPath;
+	string		ComputeShaderPath;
 
  //   bool    is_many_objects;
  //   bool    is_per_vertex;

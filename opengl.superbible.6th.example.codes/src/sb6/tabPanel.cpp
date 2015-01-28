@@ -185,7 +185,7 @@ void TabPanel::Init(int winWidth, int winHight)
 	buttonMenuXml->Init(800, 600, xOffset + 100 + 90 + 160, 10, 50, (int)xOffset, "../../bitmap/ButtonMenuXML.bmp");
 
 	buttonPage1->Init(800, 600, xOffset, yOffset + 10, 50, 20, "../../bitmap/panelPage1.bmp");
-	panelPage1->Init(800, 600, xOffset, yOffset + 30, 500, 400, "../../bitmap/panel2.bmp");
+	panelPage1->Init(800, 600, xOffset, yOffset + 30, 700, 400, "../../bitmap/panel2.bmp");
 	buttonPage2->Init(800, 600, xOffset + 50 + 10, yOffset + 10, 50, 20, "../../bitmap/panelPage2.bmp");
 	buttonSave->Init(800, 600, xOffset+5, 415, 100, 30, "../../bitmap/ButtonSave3.bmp");
 
@@ -205,9 +205,9 @@ void TabPanel::Init(int winWidth, int winHight)
 	slotName->Init(800, 600, xOffset + 20, yOffset + 50, fontsize, "Slot number 0 parameters:");
 	labelGlobalSettings->Init(800, 600, xOffset + 20, yOffset + 50, fontsize, "Global Settings:");
 	labelGlobalSettingsLightPosition->Init(800, 600, xOffset + 30, yOffset + 80, fontsize, "Light Position[x,y,z]");
-	labelGlobalSettingsDiffuseAlbedo->Init(800, 600, xOffset + 30, yOffset + 110 + yOffSetDiffuse - 30, fontsize, "Diffuse Albedo[x,y,z]");
-	labelGlobalSettingsSpecularAlbedo->Init(800, 600, xOffset + 30, yOffset + 140 + yOffSetDiffuse - 30, fontsize, "Specular Albedo:");
-	labelGlobalSettingsSpecularPower->Init(800, 600, xOffset + 30, yOffset + 170 + yOffSetDiffuse - 30, fontsize, "Specular Power:");
+	labelGlobalSettingsDiffuseAlbedo->Init(800, 600, xOffset + 30, yOffset + 110 + yOffSetDiffuse - 90, fontsize, "Diffuse Albedo[x,y,z]");
+	labelGlobalSettingsSpecularAlbedo->Init(800, 600, xOffset + 30, yOffset + 140 + yOffSetDiffuse - 90, fontsize, "Specular Albedo:");
+	labelGlobalSettingsSpecularPower->Init(800, 600, xOffset + 30, yOffset + 170 + yOffSetDiffuse - 90, fontsize, "Specular Power:");
 	labelVertexShader->Init(800, 600, xOffset + 30, yOffset + 140, fontsize, "Vertex Shader:");
 	labelFragmentShader->Init(800, 600, xOffset + 30, yOffset + 140 + 30, fontsize, "Fragment Shader:");
 	labelGeometryShader->Init(800, 600, xOffset + 30, yOffset + 170 + 30, fontsize, "Geometry Shader:");
@@ -217,8 +217,8 @@ void TabPanel::Init(int winWidth, int winHight)
 
 	label1->Init(800, 600, xOffset + 30, yOffset + 80, fontsize, "Model:");
 	label2->Init(800, 600, xOffset + 30, yOffset + 110, fontsize, "Texture:");
-	label3->Init(800, 600, xOffset + 30, yOffset + 140 - 30, fontsize, "Rotation [x,y,z]:");
-	label4->Init(800, 600, xOffset + 30, yOffset + 170 - 30, fontsize, "Scale    [x,y,z]:");
+	label3->Init(800, 600, xOffset + 30, yOffset + 140 - 30 + 210, fontsize, "Rotation [x,y,z]:");
+	label4->Init(800, 600, xOffset + 30, yOffset + 170 - 30 + 210, fontsize, "Scale    [x,y,z]:");
 	label5->Init(800, 600, xOffset + 30, yOffset + 200, fontsize, "specular_albedo:");
 	label6->Init(800, 600, xOffset + 30, yOffset + 230, fontsize, "specular_power:");
 	label7->Init(800, 600, xOffset + 30, yOffset + 260, fontsize, "other:");
@@ -229,12 +229,12 @@ void TabPanel::Init(int winWidth, int winHight)
 
 	dropDownListModels->Init(800, 600, xOffset + controlsOffset, yOffset + 80, 200, 20, "../../bitmap/DropDownListModel.bmp", 9);
 	dropDownListTextures->Init(800, 600, xOffset + controlsOffset, yOffset + 110, 200, 20, "../../bitmap/DropDownListTextures.bmp", 17);
-	textEditVertexShader->Init(800, 600, xOffset + controlsOffset, yOffset + 110 + 30, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditFragmentShader->Init(800, 600, xOffset + controlsOffset, yOffset + 140 + 30, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditGeometryShader->Init(800, 600, xOffset + controlsOffset, yOffset + 170 + 30, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditTesselationControlShader->Init(800, 600, xOffset + controlsOffset, yOffset + 200 + 30, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditTesselationEvaluationShader->Init(800, 600, xOffset + controlsOffset, yOffset + 230 + 30, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditComputeShader->Init(800, 600, xOffset + controlsOffset, yOffset + 260 + 30, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditVertexShader->Init(800, 600, xOffset + controlsOffset, yOffset + 110 + 30, 430, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditFragmentShader->Init(800, 600, xOffset + controlsOffset, yOffset + 140 + 30, 430, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGeometryShader->Init(800, 600, xOffset + controlsOffset, yOffset + 170 + 30, 430, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditTesselationControlShader->Init(800, 600, xOffset + controlsOffset, yOffset + 200 + 30, 430, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditTesselationEvaluationShader->Init(800, 600, xOffset + controlsOffset, yOffset + 230 + 30, 430, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditComputeShader->Init(800, 600, xOffset + controlsOffset, yOffset + 260 + 30, 430, fontsize, "../../bitmap/textEdit1.bmp", "");
 
 	//cbOpt2->Init(800, 600, xOffset + controlsOffset, yOffset + 110, fontsize, fontsize, "../../bitmap/CheckBoxUnchecked.bmp");
 
@@ -249,19 +249,19 @@ void TabPanel::Init(int winWidth, int winHight)
 	textEditGlobalSettingsLightPosX->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
 	textEditGlobalSettingsLightPosY->Init(800, 600, xOffset + controlsOffset + 70, yOffsetForGlobal + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
 	textEditGlobalSettingsLightPosZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffsetForGlobal + 140, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditGlobalSettingsDiffuseAlbedoX->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 170 + yOffSetDiffuse - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditGlobalSettingsDiffuseAlbedoY->Init(800, 600, xOffset + controlsOffset + 70, yOffsetForGlobal + 170 + yOffSetDiffuse - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditGlobalSettingsDiffuseAlbedoZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffsetForGlobal + 170 + yOffSetDiffuse - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditGlobalSettingsSpecularAlbedo->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 200 + yOffSetDiffuse - 30, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditGlobalSettingsSpecularPower->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 230 + yOffSetDiffuse - 30, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGlobalSettingsDiffuseAlbedoX->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 170 + yOffSetDiffuse - 90, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGlobalSettingsDiffuseAlbedoY->Init(800, 600, xOffset + controlsOffset + 70, yOffsetForGlobal + 170 + yOffSetDiffuse - 90, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGlobalSettingsDiffuseAlbedoZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffsetForGlobal + 170 + yOffSetDiffuse - 90, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGlobalSettingsSpecularAlbedo->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 200 + yOffSetDiffuse - 90, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditGlobalSettingsSpecularPower->Init(800, 600, xOffset + controlsOffset, yOffsetForGlobal + 230 + yOffSetDiffuse - 90, 200, fontsize, "../../bitmap/textEdit1.bmp", "");
 
-	textEditRotationX->Init(800, 600, xOffset + controlsOffset, yOffset + 140 - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditRotationY->Init(800, 600, xOffset + controlsOffset + 70, yOffset + 140 - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditRotationZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffset + 140 - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditRotationX->Init(800, 600, xOffset + controlsOffset, yOffset + 140 - 30 + 210, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditRotationY->Init(800, 600, xOffset + controlsOffset + 70, yOffset + 140 - 30 + 210, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditRotationZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffset + 140 - 30 + 210, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
 
-	textEditScaleX->Init(800, 600, xOffset + controlsOffset, yOffset + 170 - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditScaleY->Init(800, 600, xOffset + controlsOffset + 70, yOffset + 170 - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
-	textEditScaleZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffset + 170 - 30, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditScaleX->Init(800, 600, xOffset + controlsOffset, yOffset + 170 - 30 + 210, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditScaleY->Init(800, 600, xOffset + controlsOffset + 70, yOffset + 170 - 30 + 210, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
+	textEditScaleZ->Init(800, 600, xOffset + controlsOffset + 70 + 70, yOffset + 170 - 30 + 210, 60, fontsize, "../../bitmap/textEdit1.bmp", "");
 
 	textEdit3->Init(800, 600, xOffset + controlsOffset, yOffset + 200, 200, fontsize, "../../bitmap/textEdit1.bmp", "edit3");
 	textEdit4->Init(800, 600, xOffset + controlsOffset, yOffset + 230, 200, fontsize, "../../bitmap/textEdit1.bmp", "edit4");
@@ -290,7 +290,7 @@ SceneObjectParams TabPanel::getXmlParamsStruct(int index)
 void TabPanel::CheckKey(int key, int action) 
 {
 	textEditGeometryShader->CheckKey(key, action);
-	textEditComputeShader->CheckKey(key, action);
+	textEditVertexShader->CheckKey(key, action);
 	textEditFragmentShader->CheckKey(key, action);
 	textEditTesselationControlShader->CheckKey(key, action);
 	textEditTesselationEvaluationShader->CheckKey(key, action);
@@ -359,15 +359,7 @@ void TabPanel::Render(double currentTime)
 		textEditGlobalSettingsSpecularAlbedo->Render(currentTime);
 		textEditGlobalSettingsSpecularPower->Render(currentTime);
 
-		textEditRotationX->Render(currentTime);
-		textEditRotationY->Render(currentTime);
-		textEditRotationZ->Render(currentTime);
-		textEditScaleX->Render(currentTime);
-		textEditScaleY->Render(currentTime);
-		textEditScaleZ->Render(currentTime);
 
-		label3->Render(currentTime);
-		label4->Render(currentTime);
 	}
 
 
@@ -390,6 +382,15 @@ void TabPanel::Render(double currentTime)
 			label1->Render(currentTime);
 			label2->Render(currentTime);
 
+			textEditRotationX->Render(currentTime);
+			textEditRotationY->Render(currentTime);
+			textEditRotationZ->Render(currentTime);
+			textEditScaleX->Render(currentTime);
+			textEditScaleY->Render(currentTime);
+			textEditScaleZ->Render(currentTime);
+
+			label3->Render(currentTime);
+			label4->Render(currentTime);
 
 			labelFragmentShader->Render(currentTime);
 			labelVertexShader->Render(currentTime);
@@ -451,9 +452,10 @@ bool TabPanel::CheckArea(int x, int y)
 	dropDownListSlots->CheckArea(x, y);
 	dropDownListTextures->CheckArea(x, y);
 
+	textEditVertexShader->CheckArea(x, y);
 	textEditGeometryShader->CheckArea(x, y);
 	textEditFragmentShader->CheckArea(x, y);
-	textEditVertexShader->CheckArea(x, y);
+
 	textEditTesselationControlShader->CheckArea(x, y);
 	textEditTesselationEvaluationShader->CheckArea(x, y);
 	textEditComputeShader->CheckArea(x, y);
@@ -510,6 +512,10 @@ void TabPanel::onResizeChangeGUI(int w, int h) {
 	slotName->UpdateSize(w, h);
 	labelVertexShader->UpdateSize(w, h);
 	labelFragmentShader->UpdateSize(w, h);
+	labelGeometryShader->UpdateSize(w, h);
+	labelTesselationControlShader->UpdateSize(w, h);
+	labelTesselationEvaluationShader->UpdateSize(w, h);
+	labelComputeShader->UpdateSize(w, h);
 	label1->UpdateSize(w, h);
 	label2->UpdateSize(w, h);
 	label3->UpdateSize(w, h);
@@ -580,11 +586,27 @@ void TabPanel::ChangeTabParams() {
 	//label11->ChangeText(xmlParams[slotIndex].Rotation);
     //label11->ChangeText( xmlParams[slotIndex].Scale );
 
+	//textEditGlobalSettingsLightPosX->setCurrentText((std::to_string(xmlParams[0].LightPosition[0])).substr(0, 5));
 
+	textEditFragmentShader->setCurrentText(xmlParams[slotIndex].FragmentShaderPath);
+	textEditGeometryShader->setCurrentText(xmlParams[slotIndex].GeometryShaderPath);
+	textEditVertexShader->setCurrentText(xmlParams[slotIndex].VertexShaderPath);
+	textEditTesselationControlShader->setCurrentText(xmlParams[slotIndex].TessControlShaderPath);
+	textEditTesselationEvaluationShader->setCurrentText(xmlParams[slotIndex].TessEvaluationShaderPath);
+	textEditComputeShader->setCurrentText(xmlParams[slotIndex].ComputeShaderPath);
 	//dropDownListShaders()
 
+
+	textEditRotationX->setCurrentText((std::to_string(xmlParams[0].Rotation[0])).substr(0, 5));
+	textEditRotationY->setCurrentText((std::to_string(xmlParams[0].Rotation[1])).substr(0, 5));
+	textEditRotationZ->setCurrentText((std::to_string(xmlParams[0].Rotation[2])).substr(0, 5));
+
+	textEditScaleX->setCurrentText((std::to_string(xmlParams[0].Scale[0])).substr(0, 5));
+	textEditScaleY->setCurrentText((std::to_string(xmlParams[0].Scale[1])).substr(0, 5));
+	textEditScaleZ->setCurrentText((std::to_string(xmlParams[0].Scale[2])).substr(0, 5));
+
 	ChangeParamsModels(slotIndex);
-	//ChangeParamsTextures(slotIndex);
+	ChangeParamsTextures(slotIndex);
 }
 
 void TabPanel::ChangeTabGlobalParams() 
@@ -603,13 +625,6 @@ void TabPanel::ChangeTabGlobalParams()
 	textEditGlobalSettingsSpecularAlbedo->setCurrentText((std::to_string(xmlParams[0].SpecularAlbedo)).substr(0, 5));
 	textEditGlobalSettingsSpecularPower->setCurrentText((std::to_string(xmlParams[0].SpecularPower)).substr(0, 5));
 
-	textEditRotationX->setCurrentText((std::to_string(xmlParams[0].Rotation[0])).substr(0, 5));
-	textEditRotationY->setCurrentText((std::to_string(xmlParams[0].Rotation[1])).substr(0, 5));
-	textEditRotationZ->setCurrentText((std::to_string(xmlParams[0].Rotation[2])).substr(0, 5));
-
-	textEditScaleX->setCurrentText((std::to_string(xmlParams[0].Scale[0])).substr(0, 5));
-	textEditScaleY->setCurrentText((std::to_string(xmlParams[0].Scale[1])).substr(0, 5));
-	textEditScaleZ->setCurrentText((std::to_string(xmlParams[0].Scale[2])).substr(0, 5));
 }
 
 void TabPanel::SaveChanges()
@@ -617,17 +632,17 @@ void TabPanel::SaveChanges()
 	modifiedElementIndex = dropDownListSlots->GetCurrentElement();
 	std::string::size_type sz;
 
+
+
 	if (showMenuFlag)
 	{
-
-		for (int i = 0; i < 27 ; i++) {
-			xmlParams[i].DiffuseAlbedo[0] = std::stof(textEditGlobalSettingsDiffuseAlbedoX->getCurrentText(), &sz);
-			xmlParams[i].DiffuseAlbedo[1] = std::stof(textEditGlobalSettingsDiffuseAlbedoY->getCurrentText(), &sz);
-			xmlParams[i].DiffuseAlbedo[2] = std::stof(textEditGlobalSettingsDiffuseAlbedoZ->getCurrentText(), &sz);
-			xmlParams[i].SpecularAlbedo = std::stof(textEditGlobalSettingsSpecularAlbedo->getCurrentText(), &sz);
-			xmlParams[i].SpecularPower = std::stof(textEditGlobalSettingsSpecularPower->getCurrentText(), &sz);
-		}
 		
+		xmlParams[modifiedElementIndex].FragmentShaderPath = textEditFragmentShader->getCurrentText();
+		xmlParams[modifiedElementIndex].VertexShaderPath = textEditVertexShader->getCurrentText();
+		xmlParams[modifiedElementIndex].GeometryShaderPath = textEditGeometryShader->getCurrentText();
+		xmlParams[modifiedElementIndex].TessControlShaderPath = textEditTesselationControlShader->getCurrentText();
+		xmlParams[modifiedElementIndex].TessEvaluationShaderPath = textEditTesselationEvaluationShader->getCurrentText();
+		xmlParams[modifiedElementIndex].ComputeShaderPath = textEditComputeShader->getCurrentText();
 
 		xmlParams[modifiedElementIndex].Rotation[0] = std::stof(textEditRotationX->getCurrentText(), &sz);
 		xmlParams[modifiedElementIndex].Rotation[1] = std::stof(textEditRotationY->getCurrentText(), &sz);
@@ -670,11 +685,76 @@ void TabPanel::SaveChanges()
 			break;
 		}
 	}
+
+	switch (dropDownListTextures->GetCurrentElement())
+	{
+		case (int)Textures::Aliens:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/aliens.ktx";
+			break;
+		case (int)Textures::Brick:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/brick.ktx";
+			break;
+		case (int)Textures::Ceiling:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/ceiling.ktx";
+			break;
+		case (int)Textures::Floor:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/floor.ktx";
+			break;
+		case (int)Textures::Grass_bend:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/grass_bend.ktx";
+			break;
+		case (int)Textures::Grass_color:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/grass_color.ktx";
+			break;
+		case (int)Textures::Grass_length:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/grass_length.ktx";
+			break;
+		case (int)Textures::Grass_orientation:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/grass_orientation.ktx";
+			break;
+		case (int)Textures::Ladybug_co:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/ladybug_co.ktx";
+			break;
+		case (int)Textures::Ladybug_nm:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/ladybug_nm.ktx";
+			break;
+		case (int)Textures::Pattern1:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/pattern1.ktx";
+			break;
+		case (int)Textures::Rightarrows:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/rightarrows.ktx";
+			break;
+		case (int)Textures::Star:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/star.ktx";
+			break;
+		case (int)Textures::Terragen1:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/terragen1.ktx";
+			break;
+		case (int)Textures::Terragen_color:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/terragen_color.ktx";
+			break;
+		case (int)Textures::Tree:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/Tree.ktx";
+			break;
+		case (int)Textures::Treelights_2k:
+			xmlParams[modifiedElementIndex].TexturePath = "media/textures/treelights_2k.ktx";
+			break;
+	}
+
 	if (showMenuGlobalSettings)
 	{
+
 		xmlParams[modifiedElementIndex].LightPosition[0] = std::stof(textEditGlobalSettingsLightPosX->getCurrentText(), &sz);
 		xmlParams[modifiedElementIndex].LightPosition[1] = std::stof(textEditGlobalSettingsLightPosY->getCurrentText(), &sz);
 		xmlParams[modifiedElementIndex].LightPosition[2] = std::stof(textEditGlobalSettingsLightPosZ->getCurrentText(), &sz);
+
+		for (int i = 0; i < 27; i++) {
+			xmlParams[i].DiffuseAlbedo[0] = std::stof(textEditGlobalSettingsDiffuseAlbedoX->getCurrentText(), &sz);
+			xmlParams[i].DiffuseAlbedo[1] = std::stof(textEditGlobalSettingsDiffuseAlbedoY->getCurrentText(), &sz);
+			xmlParams[i].DiffuseAlbedo[2] = std::stof(textEditGlobalSettingsDiffuseAlbedoZ->getCurrentText(), &sz);
+			xmlParams[i].SpecularAlbedo = std::stof(textEditGlobalSettingsSpecularAlbedo->getCurrentText(), &sz);
+			xmlParams[i].SpecularPower = std::stof(textEditGlobalSettingsSpecularPower->getCurrentText(), &sz);
+		}
 	}
 }
 
@@ -814,3 +894,74 @@ void TabPanel::ChangeParamsModels(int slotIndex)
 	}
 }
 
+void TabPanel::ChangeParamsTextures(int slotIndex)
+{
+	if (xmlParams[slotIndex].TexturePath == "media/textures/aliens.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Aliens);
+	}
+	if (xmlParams[slotIndex].TexturePath == "media/textures/brick.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Brick);
+	}
+	if (xmlParams[slotIndex].TexturePath == "media/textures/ceiling.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Ceiling);
+	}
+	if (xmlParams[slotIndex].TexturePath == "media/textures/floor.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Floor);
+	}
+	if (xmlParams[slotIndex].TexturePath == "media/textures/grass_bend.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Grass_bend);
+	}
+	if (xmlParams[slotIndex].TexturePath == "media/textures/grass_color.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Grass_color);
+	}
+	if (xmlParams[slotIndex].TexturePath == "media/textures/grass_length.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Grass_length);
+	}
+	if (xmlParams[slotIndex].TexturePath == "media/textures/grass_orientation.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Grass_orientation);
+	}
+	if (xmlParams[slotIndex].TexturePath == "media/textures/ladybug_co.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Ladybug_co);
+	}
+	if (xmlParams[slotIndex].TexturePath == "media/textures/ladybug_nm.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Ladybug_nm);
+	}
+	if (xmlParams[slotIndex].TexturePath == "media/textures/pattern1.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Pattern1);
+	}
+	if (xmlParams[slotIndex].TexturePath == "media/textures/rightarrows.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Rightarrows);
+	}
+	if (xmlParams[slotIndex].TexturePath == "media/textures/star.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Star);
+	}
+	if (xmlParams[slotIndex].TexturePath == "media/textures/terragen_color.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Terragen_color);
+	}
+	if (xmlParams[slotIndex].TexturePath == "media/textures/terragen1.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Terragen1);
+	}
+	if (xmlParams[slotIndex].TexturePath == "media/textures/Tree.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Tree);
+	}
+	if (xmlParams[slotIndex].TexturePath == "media/textures/treelights_2k.ktx")
+	{
+		dropDownListTextures->SetCurrentElement((int)Textures::Treelights_2k);
+	}
+}

@@ -433,6 +433,7 @@ void MainApp::ReadObjectsProperties(XMLElement* root, vmath::vec3 lightPos, vmat
             objectParams.GeometryShaderPath       = element->AttributeText( "gsPath" );
             objectParams.TessEvaluationShaderPath = element->AttributeText( "tesPath" );
             objectParams.TessControlShaderPath    = element->AttributeText( "tcsPath" );
+			objectParams.ComputeShaderPath		  =	element->AttributeText( "csPath" );
 
             SceneObject& object = mSceneObjects[objectParams.Coords[0]]
                                                [objectParams.Coords[1]]
@@ -488,6 +489,7 @@ void MainApp::WriteObjectsProperties( XMLElement* root )
             element->SetAttribute( "gsPath", objectParams.GeometryShaderPath.c_str() );
             element->SetAttribute( "tesPath", objectParams.TessEvaluationShaderPath.c_str() );
             element->SetAttribute( "tcsPath", objectParams.TessControlShaderPath.c_str() );
+			element->SetAttribute( "csPath", objectParams.ComputeShaderPath.c_str());
         }
 
         element = element->NextSiblingElement();
