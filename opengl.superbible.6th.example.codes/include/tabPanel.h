@@ -31,6 +31,7 @@ public:
 	bool xmlDirChanged = false;
 	bool LoadXMLToDir = false;
 	bool SaveXMLToDir = false;
+	string xmlComment;
 
 	SceneObjectParams xmlParams[OBJECT_COUNT_X*OBJECT_COUNT_Y*OBJECT_COUNT_Z];
 
@@ -88,8 +89,9 @@ public:
 	Label* label11;
 	Label* label12;
 	Label* LabelXmlFileDir;
+	Label* labelXmlComment;
 
-
+	TextEdit* textEditXmlComment;
 	TextEdit* textEditGlobalSettingsLightPosX;
 	TextEdit* textEditGlobalSettingsLightPosY;
 	TextEdit* textEditGlobalSettingsLightPosZ;
@@ -123,8 +125,10 @@ public:
 	void CheckClickedButton(int button, int action);
 	void onResizeChangeGUI(int w, int h);
 
+	void setXmlComment(string comment);
 	void setXmlParamsStruct(int index, SceneObjectParams block);
 	void SaveChanges();
+
 
 	void SetGlobalParams(vmath::vec3 _lightPosition, vmath::vec3 _diffuseAlbedo, float _specularAlbedo, float _specularPower);
 	void CheckKey(int key, int action);

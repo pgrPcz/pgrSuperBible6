@@ -60,8 +60,9 @@ TabPanel::TabPanel()
 	label11 = new Label();
 	label12 = new Label();
 	LabelXmlFileDir = new Label();
+	labelXmlComment = new Label();
 
-
+	textEditXmlComment = new TextEdit();
 	textEditGlobalSettingsLightPosX = new TextEdit();
 	textEditGlobalSettingsLightPosY = new TextEdit();
 	textEditGlobalSettingsLightPosZ = new TextEdit();
@@ -130,7 +131,8 @@ TabPanel::~TabPanel()
 	delete label6;
 	delete label7;
 	delete LabelXmlFileDir;
-	
+	delete labelXmlComment;
+
 	delete labelFragmentShader;
 	delete labelVertexShader;
 	delete labelGeometryShader;
@@ -144,6 +146,7 @@ TabPanel::~TabPanel()
 	delete label11;
 	delete label12;
 
+	delete textEditXmlComment;
 	delete textEditGlobalSettingsLightPosX;
 	delete textEditGlobalSettingsLightPosY;
 	delete textEditGlobalSettingsLightPosZ;
@@ -268,7 +271,10 @@ void TabPanel::Init(int winWidth, int winHight)
 
 	string xmlPathDir = "configs/MainApp.xml";
 	LabelXmlFileDir->Init(800, 600, xOffset + 30, yOffset + 60, fontsize, "Xml dir:");
-	textEditXmlFileDir->Init(800, 600, xOffset + 120, yOffset + 60, 320, fontsize, "../../bitmap/textEdit1.bmp", xmlPathDir);
+	textEditXmlFileDir->Init(800, 600, xOffset + 120 + 50, yOffset + 60, 500, fontsize, "../../bitmap/textEdit1.bmp", xmlPathDir);
+
+	labelXmlComment->Init(800, 600, xOffset + 30, yOffset + 60 + 30 + 110, fontsize, "Comment:");
+	textEditXmlComment->Init(800, 600, xOffset + 120 + 50 + 80, yOffset + 60 + 30 + 110, 440, fontsize, "../../bitmap/textEdit1.bmp", "");
 }
 
 void TabPanel::InitializationOfTabParams()
@@ -280,6 +286,11 @@ void TabPanel::InitializationOfTabParams()
 
 void TabPanel::setXmlParamsStruct(int index, SceneObjectParams block) {
 	xmlParams[index] = block;
+}
+
+void TabPanel::setXmlComment(string comment)
+{
+	xmlComment = comment;
 }
 
 SceneObjectParams TabPanel::getXmlParamsStruct(int index)
@@ -315,6 +326,7 @@ void TabPanel::CheckKey(int key, int action)
 	textEdit3->CheckKey(key, action);
 	textEdit4->CheckKey(key, action);
 
+	textEditXmlComment->CheckKey(key, action);
 	textEditXmlFileDir->CheckKey(key, action);
 }
 
@@ -331,7 +343,6 @@ void TabPanel::Render(double currentTime)
 		buttonSaveXML->Render(currentTime);
 		LabelXmlFileDir->Render(currentTime);
 		textEditXmlFileDir->Render(currentTime);
-
 	}
 
 	if (showMenuGlobalSettings)
@@ -339,7 +350,8 @@ void TabPanel::Render(double currentTime)
 		panelPage1->Render(currentTime);
 		labelGlobalSettings->Render(currentTime);
 		labelGlobalSettingsLightPosition->Render(currentTime);
-
+		textEditXmlComment->Render(currentTime);
+		labelXmlComment->Render(currentTime);
 
 
 		textEditGlobalSettingsLightPosX->Render(currentTime);
@@ -478,6 +490,7 @@ bool TabPanel::CheckArea(int x, int y)
 	textEdit3->CheckArea(x, y);
 	textEdit4->CheckArea(x, y);
 	textEditXmlFileDir->CheckArea(x, y);
+	textEditXmlComment->CheckArea(x, y);
 
 	return true;
 }
@@ -531,6 +544,7 @@ void TabPanel::onResizeChangeGUI(int w, int h) {
 	label12->UpdateSize(w, h);
 
 	LabelXmlFileDir->UpdateSize(w, h);
+	labelXmlComment->UpdateSize(w, h);
 
 	textEditGeometryShader->UpdateSize(w, h);
 	textEditFragmentShader->UpdateSize(w, h);
@@ -548,6 +562,7 @@ void TabPanel::onResizeChangeGUI(int w, int h) {
 	textEdit3->UpdateSize(w, h);
 	textEdit4->UpdateSize(w, h);
 	textEditXmlFileDir->UpdateSize(w, h);
+	textEditXmlComment->UpdateSize(w, h);
 
 	//Global Settings panel
 	buttonShowGlobalSettings->UpdateSize(w, h);
@@ -626,6 +641,7 @@ void TabPanel::ChangeTabGlobalParams()
 	textEditGlobalSettingsSpecularAlbedo->setCurrentText((std::to_string(xmlParams[0].SpecularAlbedo)).substr(0, 5));
 	textEditGlobalSettingsSpecularPower->setCurrentText((std::to_string(xmlParams[0].SpecularPower)).substr(0, 5));
 
+	textEditXmlComment->setCurrentText(xmlComment);
 }
 
 void TabPanel::SaveChanges()
@@ -744,7 +760,7 @@ void TabPanel::SaveChanges()
 
 	if (showMenuGlobalSettings)
 	{
-
+		xmlComment = textEditXmlComment->getCurrentText();
 		xmlParams[modifiedElementIndex].LightPosition[0] = std::stof(textEditGlobalSettingsLightPosX->getCurrentText(), &sz);
 		xmlParams[modifiedElementIndex].LightPosition[1] = std::stof(textEditGlobalSettingsLightPosY->getCurrentText(), &sz);
 		xmlParams[modifiedElementIndex].LightPosition[2] = std::stof(textEditGlobalSettingsLightPosZ->getCurrentText(), &sz);
@@ -788,6 +804,7 @@ void TabPanel::CheckClickedButton(int button, int action)
 	textEdit3->onMouseButton(button, action);
 	textEdit4->onMouseButton(button, action);
 	textEditXmlFileDir->onMouseButton(button, action);
+	textEditXmlComment->onMouseButton(button, action);
 
 	btnMenu1->onMouseButton(button, action);
 	btnMenu2->onMouseButton(button, action);

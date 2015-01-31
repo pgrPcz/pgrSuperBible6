@@ -91,6 +91,7 @@ void MainApp::startup()
             for(int k = 0; k < OBJECT_COUNT_Z; k++)
             {
                 myTabPanel->setXmlParamsStruct( i*9 + j*3 + k, mSceneObjects[i][j][k].GetParams() );
+				myTabPanel->setXmlComment(xmlComment);
                 mSceneObjects[i][j][k].Startup();
             }
         }
@@ -162,8 +163,9 @@ void MainApp::render(double currentTime)
 				if (myTabPanel->modifiedElementIndex == (i*9 + j*3 + k))
 				{				
 					mSceneObjects[i][j][k].SetParams(myTabPanel->getXmlParamsStruct((i * 9 + j * 3 + k)));
-
+					
 					mSceneObjects[i][j][k].Update();
+					xmlComment = myTabPanel->xmlComment;
 					myTabPanel->modifiedElementIndex = -1;
 				}
             }
@@ -368,6 +370,8 @@ void MainApp::handleOpenDocument( XMLDocument* doc )
 	m_camera->setPosition(cameraPosition[0], cameraPosition[1], cameraPosition[2]);
 	m_camera->setLookat(cameraEye, cameraCenter, cameraUp);
 
+	ele = root->FirstChildElement("info");
+	xmlComment = ele->AttributeText("comment");
     //diffuse_albedo   = ele->Attribute("diffuse_albedo");
     //specular_albedo  = ele->Attribute("specular_albedo");
     //specular_power   = ele->Attribute("specular_power");
@@ -417,6 +421,10 @@ void MainApp::handleSaveDocument( XMLDocument* doc )
 	ele->SetAttribute("upX", (m_camera->getUp()[0]));
 	ele->SetAttribute("upY", (m_camera->getUp()[1]));
 	ele->SetAttribute("upZ", (m_camera->getUp()[2]));
+
+	ele = root->FirstChildElement("info");
+
+	ele->SetAttribute("commment", xmlComment.c_str());
 
     WriteObjectsProperties( root );
 }

@@ -59,6 +59,7 @@ public:
 protected:
 	bool buttonMouseClicked = false;
     TabPanel* myTabPanel;
+	string xmlComment;
 
     camera* m_camera;
 
