@@ -75,6 +75,26 @@ public:
 		is_shift_preessed = false;
 	}
 
+	void setvAngle(float vAngle)
+	{
+		v_angle = vAngle;
+	}
+
+	float getvAngle()
+	{
+		return v_angle;
+	}
+
+	void sethAngle(float hAngle)
+	{
+		h_angle = hAngle;
+	}
+
+	float gethAngle()
+	{
+		return h_angle;
+	}
+
 	void setPosition(float nx, float ny, float nz)
 	{
 		x = nx;
@@ -117,6 +137,11 @@ public:
 		eye = neye;
 		center = ncenter;
 		up = nup;
+	}
+
+	void setLookat(vmath::vec3 neye)
+	{
+		eye = neye;
 	}
 
 	vmath::mat4 createViewMatrix() {
@@ -221,6 +246,7 @@ public:
 			float tmp_speed = sign > 0 ? mouse_speed : - mouse_speed;
 
 			float tmp = abs(sign) > mouse_speed ? tmp_speed : last_mouse_y - y;
+			v_angle = eye[1];
 			v_angle -= tmp/ (app->info.windowHeight/11);
 
 			v_angle = v_angle > 1 ? 1 : v_angle;

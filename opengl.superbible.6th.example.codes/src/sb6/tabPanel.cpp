@@ -7,6 +7,8 @@ TabPanel::TabPanel()
 
 	modifiedElementIndex = -1;
 
+	buttonDefaultView = new Button();
+	buttonFocusOnSlot = new Button();
 	buttonMenuXml = new Button();
 	buttonPage1 = new Button();
 	buttonPage2 = new Button();
@@ -101,6 +103,8 @@ TabPanel::~TabPanel()
 	delete buttonSaveGlobal;
 	delete buttonLoadXML;
 	delete buttonSaveXML;
+	delete buttonFocusOnSlot;
+	delete buttonDefaultView;
 
 	delete btnMenu1;
 	delete btnMenu2;
@@ -186,6 +190,8 @@ void TabPanel::Init(int winWidth, int winHight)
 	buttonShowMenu->Init(800, 600, xOffset, 10, 50, (int)xOffset, "../../bitmap/ButtonShowMenu2.bmp");
 	buttonShowGlobalSettings->Init(800, 600, xOffset + 100 + 90, 10, 150, (int)xOffset, "../../bitmap/ButtonShowMenu3.bmp");
 	buttonMenuXml->Init(800, 600, xOffset + 100 + 90 + 160, 10, 50, (int)xOffset, "../../bitmap/ButtonMenuXML.bmp");
+	buttonFocusOnSlot->Init(800, 600, xOffset + 100 + 90 + 160 + 60, 10, 100, (int)xOffset, "../../bitmap/ButtonSlotView.bmp");
+	buttonDefaultView->Init(800, 600, xOffset + 100 + 90 + 160 + 100 + 70, 10, 120, (int)xOffset, "../../bitmap/ButtonDefaultView.bmp");
 
 	buttonPage1->Init(800, 600, xOffset, yOffset + 10, 50, 20, "../../bitmap/panelPage1.bmp");
 	panelPage1->Init(800, 600, xOffset, yOffset + 30, 700, 400, "../../bitmap/panel2.bmp");
@@ -335,6 +341,8 @@ void TabPanel::Render(double currentTime)
 	buttonShowMenu->Render(currentTime);
 	buttonShowGlobalSettings->Render(currentTime);
 	buttonMenuXml->Render(currentTime);
+	buttonFocusOnSlot->Render(currentTime);
+	buttonDefaultView->Render(currentTime);
 
 	if (showMenuXML)
 	{
@@ -450,6 +458,8 @@ bool TabPanel::CheckArea(int x, int y)
 	buttonSave->CheckArea(x, y);
 	buttonSaveGlobal->CheckArea(x, y);
 	buttonMenuXml->CheckArea(x, y);
+	buttonFocusOnSlot->CheckArea(x, y);
+	buttonDefaultView->CheckArea(x, y);
 	buttonLoadXML->CheckArea(x, y);
 	buttonSaveXML->CheckArea(x, y);
 	btnMenu1->CheckArea(x, y);
@@ -506,6 +516,8 @@ void TabPanel::onResizeChangeGUI(int w, int h) {
 	buttonLoadXML->UpdateSize(w, h);
 	buttonSaveXML->UpdateSize(w, h);
 	buttonMenuXml->UpdateSize(w, h);
+	buttonFocusOnSlot->UpdateSize(w, h);
+	buttonDefaultView->UpdateSize(w, h);
 
 	panelPage1->UpdateSize(w, h);
 
@@ -860,6 +872,16 @@ void TabPanel::CheckClickedButton(int button, int action)
 		showMenuGlobalSettings = false;
 		showMenuFlag = false;
 
+	}
+
+	if (buttonFocusOnSlot->onMouseButton(button, action))
+	{
+		CameraFocus = true;
+	}
+
+	if (buttonDefaultView->onMouseButton(button, action))
+	{
+		DefaultView = true;
 	}
 
 	if (buttonPage1->onMouseButton(button, action))

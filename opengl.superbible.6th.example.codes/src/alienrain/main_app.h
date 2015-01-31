@@ -46,6 +46,7 @@ protected:
     void    onMouseButton(int button, int action);
 	void	onResizeChangeGUI(int w,int h);
 
+	void	setCameraPositions();
 	void    ReadObjectsProperties(XMLElement* root, vmath::vec3 lightPos, vmath::vec3 diffuseAlbedo, float specularAlbedo, float specularPower);
     void    WriteObjectsProperties( XMLElement* root );
     //void    load_shaders();
@@ -81,6 +82,17 @@ protected:
 	//float specularPower;
 
     GLuint  per_fragment_program; // TODO adatczuk to be removed
+
+	struct cameraPosition
+	{
+		float x;
+		float y;
+		float z;
+		float hAngle;
+		vmath::vec3 eye;
+		vmath::vec3 center;
+		vmath::vec3 up;
+	} cameraPositions[28];
 
     struct
     {

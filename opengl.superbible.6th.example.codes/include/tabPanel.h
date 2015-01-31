@@ -31,6 +31,8 @@ public:
 	bool xmlDirChanged = false;
 	bool LoadXMLToDir = false;
 	bool SaveXMLToDir = false;
+	bool CameraFocus = false;
+	bool DefaultView = false;
 	string xmlComment;
 
 	SceneObjectParams xmlParams[OBJECT_COUNT_X*OBJECT_COUNT_Y*OBJECT_COUNT_Z];
@@ -38,6 +40,8 @@ public:
 	int modifiedElementIndex;
 	SceneObjectParams TabPanel::getXmlParamsStruct(int index);	
 
+	Button* buttonDefaultView;
+	Button* buttonFocusOnSlot;
 	Button* buttonMenuXml;
 	Button* buttonPage1;
 	Button* buttonPage2;

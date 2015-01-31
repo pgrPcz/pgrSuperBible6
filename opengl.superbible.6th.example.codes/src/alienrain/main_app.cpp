@@ -96,6 +96,8 @@ void MainApp::startup()
             }
         }
     }
+
+	setCameraPositions();
 }
 
 //************************************
@@ -139,6 +141,26 @@ void MainApp::render(double currentTime)
 	float distanceFromCamera = 6.25;
 	float yTrans = 2.75;
 	float zTrans = 2.25;
+
+	if (myTabPanel->CameraFocus)
+	{
+		int index = myTabPanel->dropDownListSlots->GetCurrentElement();
+
+		m_camera->setPosition(cameraPositions[index].x, cameraPositions[index].y, cameraPositions[index].z);
+		m_camera->setLookat( cameraPositions[index].eye );
+		m_camera->sethAngle(cameraPositions[index].hAngle);
+
+		myTabPanel->CameraFocus = false;
+	}
+
+	if (myTabPanel->DefaultView)
+	{
+		m_camera->setPosition(cameraPositions[27].x, cameraPositions[27].y, cameraPositions[27].z);
+		m_camera->setLookat(cameraPositions[27].eye);
+		m_camera->sethAngle(cameraPositions[27].hAngle);
+
+		myTabPanel->DefaultView = false;
+	}
 
     for(int i = 0; i < OBJECT_COUNT_X; i++)
     {
@@ -366,9 +388,13 @@ void MainApp::handleOpenDocument( XMLDocument* doc )
 		ele->FloatAttribute("upX"),
 		ele->FloatAttribute("upY"),
 		ele->FloatAttribute("upZ"));
+	float camerahAngle = ele->FloatAttribute("hAngle");
+	//float cameravAngle = ele->FloatAttribute("vAngle");
 
 	m_camera->setPosition(cameraPosition[0], cameraPosition[1], cameraPosition[2]);
 	m_camera->setLookat(cameraEye, cameraCenter, cameraUp);
+	m_camera->sethAngle(camerahAngle);
+	//m_camera->setvAngle(cameravAngle);
 
 	ele = root->FirstChildElement("info");
 	xmlComment = ele->AttributeText("comment");
@@ -421,6 +447,8 @@ void MainApp::handleSaveDocument( XMLDocument* doc )
 	ele->SetAttribute("upX", (m_camera->getUp()[0]));
 	ele->SetAttribute("upY", (m_camera->getUp()[1]));
 	ele->SetAttribute("upZ", (m_camera->getUp()[2]));
+	ele->SetAttribute("hAngle", m_camera->gethAngle());
+	//ele->SetAttribute("vAngle", m_camera->getvAngle());
 
 	ele = root->FirstChildElement("info");
 
@@ -541,4 +569,175 @@ void MainApp::WriteObjectsProperties( XMLElement* root )
 
         element = element->NextSiblingElement();
     }
+}
+
+void MainApp::setCameraPositions()
+{
+	cameraPositions[0].eye = vmath::vec3(1, -0.6, 0);
+	cameraPositions[0].x = -10;
+	cameraPositions[0].y = 0;
+	cameraPositions[0].z = -4;
+	cameraPositions[0].hAngle = 531.76941;
+
+	cameraPositions[1].eye = vmath::vec3(1, -0.56, 0);
+	cameraPositions[1].x = -10;
+	cameraPositions[1].y = 0;
+	cameraPositions[1].z = 0.9;
+	cameraPositions[1].hAngle = 539.26941;
+
+	cameraPositions[2].eye = vmath::vec3(1, -0.6, 0);
+	cameraPositions[2].x = -10;
+	cameraPositions[2].y = 0;
+	cameraPositions[2].z = 4;
+	cameraPositions[2].hAngle = 531.76941;
+
+	cameraPositions[3].eye = vmath::vec3(1, 0, 0);
+	cameraPositions[3].x = -10;
+	cameraPositions[3].y = 0;
+	cameraPositions[3].z = -4;
+	cameraPositions[3].hAngle = 531.76941;
+
+	cameraPositions[4].eye = vmath::vec3(1, 0, 0);
+	cameraPositions[4].x = -10;
+	cameraPositions[4].y = 0;
+	cameraPositions[4].z = 1.3;
+	cameraPositions[4].hAngle = 541.76941;
+
+	cameraPositions[5].eye = vmath::vec3(1, 0, 0);
+	cameraPositions[5].x = -10;
+	cameraPositions[5].y = 0;
+	cameraPositions[5].z = 4.3;
+	cameraPositions[5].hAngle = 541.76941;
+
+	cameraPositions[6].eye = vmath::vec3(1, 0.8, 0);
+	cameraPositions[6].x = -10;
+	cameraPositions[6].y = 0;
+	cameraPositions[6].z = -4;
+	cameraPositions[6].hAngle = 531.76941;
+
+	cameraPositions[7].eye = vmath::vec3(1, 0.8, 0);
+	cameraPositions[7].x = -10;
+	cameraPositions[7].y = 0;
+	cameraPositions[7].z = 1.3;
+	cameraPositions[7].hAngle = 541.76941;
+
+	cameraPositions[8].eye = vmath::vec3(1, 0.8, 0);
+	cameraPositions[8].x = -10;
+	cameraPositions[8].y = 0;
+	cameraPositions[8].z = 4.3;
+	cameraPositions[8].hAngle = 541.76941;
+
+	cameraPositions[9].eye = vmath::vec3(1, -0.5, 0);
+	cameraPositions[9].x = -10;
+	cameraPositions[9].y = 0;
+	cameraPositions[9].z = 2.3;
+	cameraPositions[9].hAngle = 625.5;
+
+	cameraPositions[10].eye = vmath::vec3(1, -1, 0);
+	cameraPositions[10].x = 0.3;
+	cameraPositions[10].y = 0;
+	cameraPositions[10].z = 1.7;
+	cameraPositions[10].hAngle = 672;
+
+	cameraPositions[11].eye = vmath::vec3(1, -1, 0);
+	cameraPositions[11].x = -8.9;
+	cameraPositions[11].y = 0;
+	cameraPositions[11].z = -2.6;
+	cameraPositions[11].hAngle = 450.52;
+
+	cameraPositions[12].eye = vmath::vec3(1, 0, 0);
+	cameraPositions[12].x = -10;
+	cameraPositions[12].y = 0;
+	cameraPositions[12].z = 2.3;
+	cameraPositions[12].hAngle = 625.5;
+
+	cameraPositions[13].eye = vmath::vec3(1, 0, 0);
+	cameraPositions[13].x = 0.3;
+	cameraPositions[13].y = 0;
+	cameraPositions[13].z = 1.7;
+	cameraPositions[13].hAngle = 672;
+
+	cameraPositions[14].eye = vmath::vec3(1, 0, 0);
+	cameraPositions[14].x = -8.9;
+	cameraPositions[14].y = 0;
+	cameraPositions[14].z = -2.6;
+	cameraPositions[14].hAngle = 450.52;
+
+	cameraPositions[15].eye = vmath::vec3(1, +0.5, 0);
+	cameraPositions[15].x = -10;
+	cameraPositions[15].y = 0;
+	cameraPositions[15].z = 2.3;
+	cameraPositions[15].hAngle = 625.5;
+
+	cameraPositions[16].eye = vmath::vec3(1, 1, 0);
+	cameraPositions[16].x = 0.3;
+	cameraPositions[16].y = 0;
+	cameraPositions[16].z = 1.7;
+	cameraPositions[16].hAngle = 672;
+
+	cameraPositions[17].eye = vmath::vec3(1, 1, 0);
+	cameraPositions[17].x = -8.9;
+	cameraPositions[17].y = 0;
+	cameraPositions[17].z = -2.6;
+	cameraPositions[17].hAngle = 450.52;
+
+	cameraPositions[18].eye = vmath::vec3(1, -1, 0);
+	cameraPositions[18].x = -3.39;
+	cameraPositions[18].y = 0;
+	cameraPositions[18].z = 2.5;
+	cameraPositions[18].hAngle = 732.81;
+
+	cameraPositions[19].eye = vmath::vec3(1, -1, 0);
+	cameraPositions[19].x = -3.39;
+	cameraPositions[19].y = 0;
+	cameraPositions[19].z = 0;
+	cameraPositions[19].hAngle = 732.81;
+
+	cameraPositions[20].eye = vmath::vec3(1, -1, 0);
+	cameraPositions[20].x = -3.39;
+	cameraPositions[20].y = 0;
+	cameraPositions[20].z = -4;
+	cameraPositions[20].hAngle = 732.81;
+
+	cameraPositions[21].eye = vmath::vec3(1, 0, 0);
+	cameraPositions[21].x = -3.39;
+	cameraPositions[21].y = 0;
+	cameraPositions[21].z = 2.5;
+	cameraPositions[21].hAngle = 732.81;
+
+	cameraPositions[22].eye = vmath::vec3(1, 0, 0);
+	cameraPositions[22].x = -3.39;
+	cameraPositions[22].y = 0;
+	cameraPositions[22].z = 0;
+	cameraPositions[22].hAngle = 732.81;
+
+	cameraPositions[23].eye = vmath::vec3(1, 0, 0);
+	cameraPositions[23].x = -3.39;
+	cameraPositions[23].y = 0;
+	cameraPositions[23].z = -4;
+	cameraPositions[23].hAngle = 722;
+
+	cameraPositions[24].eye = vmath::vec3(1, 1, 0);
+	cameraPositions[24].x = -3.39;
+	cameraPositions[24].y = 0;
+	cameraPositions[24].z = 2.5;
+	cameraPositions[24].hAngle = 732.81;
+
+	cameraPositions[25].eye = vmath::vec3(1, 1, 0);
+	cameraPositions[25].x = -3.39;
+	cameraPositions[25].y = 0;
+	cameraPositions[25].z = 0;
+	cameraPositions[25].hAngle = 732.81;
+
+	cameraPositions[26].eye = vmath::vec3(1, 1, 0);
+	cameraPositions[26].x = -3.39;
+	cameraPositions[26].y = 0;
+	cameraPositions[26].z = -4;
+	cameraPositions[26].hAngle = 732.81;
+
+	cameraPositions[27].eye = vmath::vec3(1, 0, 0);
+	cameraPositions[27].x = -32;
+	cameraPositions[27].y = 0;
+	cameraPositions[27].z = 2.5;
+	cameraPositions[27].hAngle = 902.18;
 }
