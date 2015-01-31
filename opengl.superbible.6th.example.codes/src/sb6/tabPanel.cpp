@@ -568,7 +568,8 @@ void TabPanel::onResizeChangeGUI(int w, int h) {
 	labelGlobalSettingsSpecularPower->UpdateSize(w, h);
 }
 
-void TabPanel::ChangeTabParams() {
+void TabPanel::ChangeTabParams() 
+{
 
 	int slotIndex = dropDownListSlots->GetCurrentElement();
 	std::string text = "Slot number " + to_string(slotIndex);
@@ -597,13 +598,13 @@ void TabPanel::ChangeTabParams() {
 	//dropDownListShaders()
 
 
-	textEditRotationX->setCurrentText((std::to_string(xmlParams[0].Rotation[0])).substr(0, 5));
-	textEditRotationY->setCurrentText((std::to_string(xmlParams[0].Rotation[1])).substr(0, 5));
-	textEditRotationZ->setCurrentText((std::to_string(xmlParams[0].Rotation[2])).substr(0, 5));
+	textEditRotationX->setCurrentText((std::to_string(xmlParams[slotIndex].Rotation[0])).substr(0, 5));
+	textEditRotationY->setCurrentText((std::to_string(xmlParams[slotIndex].Rotation[1])).substr(0, 5));
+	textEditRotationZ->setCurrentText((std::to_string(xmlParams[slotIndex].Rotation[2])).substr(0, 5));
 
-	textEditScaleX->setCurrentText((std::to_string(xmlParams[0].Scale[0])).substr(0, 5));
-	textEditScaleY->setCurrentText((std::to_string(xmlParams[0].Scale[1])).substr(0, 5));
-	textEditScaleZ->setCurrentText((std::to_string(xmlParams[0].Scale[2])).substr(0, 5));
+	textEditScaleX->setCurrentText((std::to_string(xmlParams[slotIndex].Scale[0])).substr(0, 5));
+	textEditScaleY->setCurrentText((std::to_string(xmlParams[slotIndex].Scale[1])).substr(0, 5));
+	textEditScaleZ->setCurrentText((std::to_string(xmlParams[slotIndex].Scale[2])).substr(0, 5));
 
 	ChangeParamsModels(slotIndex);
 	ChangeParamsTextures(slotIndex);
