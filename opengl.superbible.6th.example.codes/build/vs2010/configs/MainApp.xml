@@ -2,6 +2,8 @@
     <!-- <object many_objects="0" per_vertex="1" scaleX="1" scaleY="1" scaleZ="1"/> -->
     <light posX="98" posY="100" posZ="100"/>
     <material_properties diffuse_albedoX="0.1" diffuse_albedoY="1" diffuse_albedoZ="0.1" specular_albedo="10" specular_power="2"/>
+    <camera posX="-27.100065" posY="0" posZ="-0.90000051" eyeX="1" eyeY="-0.018518534" eyeZ="0" centerX="0" centerY="0" centerZ="0" upX="0" upY="1" upZ="0"/>
+    <info comment="empty comment"/>
     <objects>
         <object coordX="0" coordY="0" coordZ="0" model="media/objects/bunny_1k.sbm" texture="media/textures/pattern1.ktx" rotX="-0" rotY="0" rotZ="0" scaleX="1" scaleY="1" scaleZ="1" vsPath="media/shaders/default/default.vs.glsl" fsPath="media/shaders/DOF/RENDER.FS.GLSL" gsPath="" tesPath="" tcsPath="" csPath=""/>
         <object coordX="0" coordY="0" coordZ="1" model="media/objects/torus_nrms_tc.sbm" texture="media/textures/aliens.ktx" rotX="13.13" rotY="0.2" rotZ="0.30000001" scaleX="1" scaleY="1" scaleZ="1" vsPath="media/shaders/default/default.vs.glsl" fsPath="media/shaders/default/default.fs.glsl" gsPath="" tesPath="" tcsPath="" csPath=""/>

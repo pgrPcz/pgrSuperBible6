@@ -51,7 +51,7 @@ public:
 		center =  vmath::vec3(0.0f, 0.0f, 0.0f);
 		up = vmath::vec3(0.0, 1.0, 0.0);
 		speed = 0.1f;
-		mouse_speed = 1.0f;
+		mouse_speed = 2.0f;
 
 		x = 0;
 		y = 0;
@@ -80,6 +80,36 @@ public:
 		x = nx;
 		y = ny;
 		z = nz;
+	}
+
+	float getPositionX()
+	{
+		return x;
+	}
+
+	float getPositionY()
+	{
+		return y;
+	}
+
+	float getPositionZ()
+	{
+		return z;
+	}
+
+	vmath::vec3 getEye()
+	{
+		return eye;
+	}
+
+	vmath::vec3 getCenter()
+	{
+		return center;
+	}
+
+	vmath::vec3 getUp()
+	{
+		return up;
 	}
 
 	void setLookat(vmath::vec3 neye, vmath::vec3 ncenter, vmath::vec3 nup)

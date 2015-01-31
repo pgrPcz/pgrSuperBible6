@@ -157,10 +157,12 @@ void MainApp::render(double currentTime)
                     model_matrix);
 
 
-					mSceneObjects[i][j][k].SetParams(myTabPanel->getXmlParamsStruct((i * 9 + j * 3 + k)));
+					
 
 				if (myTabPanel->modifiedElementIndex == (i*9 + j*3 + k))
 				{				
+					mSceneObjects[i][j][k].SetParams(myTabPanel->getXmlParamsStruct((i * 9 + j * 3 + k)));
+
 					mSceneObjects[i][j][k].Update();
 					myTabPanel->modifiedElementIndex = -1;
 				}
@@ -344,6 +346,28 @@ void MainApp::handleOpenDocument( XMLDocument* doc )
         ele->FloatAttribute("diffuse_albedoZ"));
 	float specularAlbedo      = ele->FloatAttribute("specular_albedo");
 	float specularPower       = ele->FloatAttribute("specular_power");
+
+	ele = root->FirstChildElement("camera");
+	vmath::vec3 cameraPosition = vmath::vec3(
+		ele->FloatAttribute("posX"),
+		ele->FloatAttribute("posY"),
+		ele->FloatAttribute("posZ"));
+	vmath::vec3 cameraEye = vmath::vec3(
+		ele->FloatAttribute("eyeX"),
+		ele->FloatAttribute("eyeY"),
+		ele->FloatAttribute("eyeZ"));
+	vmath::vec3 cameraCenter = vmath::vec3(
+		ele->FloatAttribute("centerX"),
+		ele->FloatAttribute("centerY"),
+		ele->FloatAttribute("centerZ"));
+	vmath::vec3 cameraUp = vmath::vec3(
+		ele->FloatAttribute("upX"),
+		ele->FloatAttribute("upY"),
+		ele->FloatAttribute("upZ"));
+
+	m_camera->setPosition(cameraPosition[0], cameraPosition[1], cameraPosition[2]);
+	m_camera->setLookat(cameraEye, cameraCenter, cameraUp);
+
     //diffuse_albedo   = ele->Attribute("diffuse_albedo");
     //specular_albedo  = ele->Attribute("specular_albedo");
     //specular_power   = ele->Attribute("specular_power");
@@ -378,6 +402,21 @@ void MainApp::handleSaveDocument( XMLDocument* doc )
 	ele->SetAttribute("diffuse_albedoZ", (mSceneObjects[0][0][0].GetParams()).DiffuseAlbedo[2]);
 	ele->SetAttribute("specular_albedo", (mSceneObjects[0][0][0].GetParams()).SpecularAlbedo);
 	ele->SetAttribute("specular_power", (mSceneObjects[0][0][0].GetParams()).SpecularPower);
+
+	ele = root->FirstChildElement("camera");
+
+	ele->SetAttribute("posX", (m_camera->getPositionX()));
+	ele->SetAttribute("posY", (m_camera->getPositionY()));
+	ele->SetAttribute("posZ", (m_camera->getPositionZ()));
+	ele->SetAttribute("eyeX", (m_camera->getEye()[0]));
+	ele->SetAttribute("eyeY", (m_camera->getEye()[1]));
+	ele->SetAttribute("eyeZ", (m_camera->getEye()[2]));
+	ele->SetAttribute("centerX", (m_camera->getCenter()[0]));
+	ele->SetAttribute("centerY", (m_camera->getCenter()[1]));
+	ele->SetAttribute("centerZ", (m_camera->getCenter()[2]));
+	ele->SetAttribute("upX", (m_camera->getUp()[0]));
+	ele->SetAttribute("upY", (m_camera->getUp()[1]));
+	ele->SetAttribute("upZ", (m_camera->getUp()[2]));
 
     WriteObjectsProperties( root );
 }
