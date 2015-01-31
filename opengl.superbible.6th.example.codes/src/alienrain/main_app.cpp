@@ -452,7 +452,7 @@ void MainApp::handleSaveDocument( XMLDocument* doc )
 
 	ele = root->FirstChildElement("info");
 
-	ele->SetAttribute("commment", xmlComment.c_str());
+	ele->SetAttribute("comment", xmlComment.c_str());
 
     WriteObjectsProperties( root );
 }
