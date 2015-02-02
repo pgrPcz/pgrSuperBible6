@@ -14,10 +14,8 @@ public:
     static const int SHADER_PARAMS_NUM = 10;
 
     SceneObject();
-
-    void Startup();
-
-    void Render(
+    void   Startup();
+    void   Render(
         double      currentTime, 
         int         w, 
         int         h, 
@@ -25,45 +23,35 @@ public:
         vmath::mat4 view_matrix, 
         vmath::mat4 model_matrix );
 
-    bool LoadShaders();
+    bool   LoadShaders();
     GLuint LoadShaderFromFile( const string path, GLenum shaderType );
 
-	void LoadTexture();
-	void UnloadTexture();
+	void   LoadTexture();
+	void   UnloadTexture();
 	GLuint LoadTextureFromFile(const string path);
 
-    //void SetVertexShader( const string path );
-    //void SetFragmentShader( const string path );
-    //void SetGeometryShader( const string path );
-    //void SetTessEvaluationShader( const string path );
-    //void SetTessControlShader( const string path );
+	void   Update();
+    void   SetParams( SceneObjectParams paramsToSet );
 
-	void Update();
-    void SetParams( SceneObjectParams paramsToSet );
-
-	void SetLightPosition(string lightPosition);
-	void SetLightPosition(vmath::vec3 lightPosition);
-	void SetDiffuseAlbedo(vmath::vec3 diffuseAlbedo);
-	void SetSpecularAlbedo(float specularAlbedo);
-	void SetSpecularPower(float specularPower);
-    void SetModel( std::string path );
-    void SetTexture( std::string path );
-    void SetRotation( vmath::vec3 rotation );
-    void SetRotation( float x, float y, float z );
-    void SetCoords( vmath::uvec3 coords );
-    void SetScale( vmath::vec3 scale );
+	void   SetLightPosition(string lightPosition);
+	void   SetLightPosition(vmath::vec3 lightPosition);
+	void   SetDiffuseAlbedo(vmath::vec3 diffuseAlbedo);
+	void   SetSpecularAlbedo(float specularAlbedo);
+	void   SetSpecularPower(float specularPower);
+    void   SetModel( std::string path );
+    void   SetTexture( std::string path );
+    void   SetRotation( vmath::vec3 rotation );
+    void   SetRotation( float x, float y, float z );
+    void   SetCoords( vmath::uvec3 coords );
+    void   SetScale( vmath::vec3 scale );
 
     const SceneObjectParams& GetParams();
 
-    //mlaboszc
-    //string getAppName();
-    //void handleDocument(XMLDocument* doc);
-
 protected:
-    // Note mlaboszc: struct should be unified and contain the same (all) relevant params
-    //                  across all objects/slots (not used params equal NULL)
-    //                  below params are only examples and are copied from main_app class
-    // Config from XML - main param struct for passing into GUI 
+    // Note: struct should be unified and contain the same (all) relevant params
+    //       across all objects/slots (not used params equal NULL)
+
+    // Config from XML - main param struct for passing into GUI     
     SceneObjectParams mParams;
 
     GLuint          mProgram;
@@ -96,7 +84,6 @@ protected:
 
 
     // Constants
-    // Note adatczuk: these below doesn't have to be static, it's only for now
     static const float     perspective_fovy;
     static const float     perspective_f;
     static const float     perspective_n;

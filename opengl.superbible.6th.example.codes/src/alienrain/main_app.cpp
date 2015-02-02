@@ -2,36 +2,20 @@
 
 #include <sb6.h>
 #include <vmath.h>
-
 #include <object.h>
 #include <sb6ktx.h>
 #include <shader.h>
-
 #include <sb6ktx.h>
 
-
-
 #include "main_app.h"
-
-// TODO here adatczuk
-// + Cube of objects
-// + Setting shaders
-// + Rendering each object
-// + Rendering GUI
-// + Saving XML
-// + Reading XML
-// - Shader parameters (uniforms)
-// - Input handling (update)
-
 
 //************************************
 // Method:    MainApp
 // FullName:  MainApp::MainApp
 // Access:    public 
 // Returns:   
-// Qualifier: : per_fragment_program(0)
 //************************************
-MainApp::MainApp() : per_fragment_program(0)
+MainApp::MainApp()
 {
 	xmlPathDir = "configs/MainApp.xml";
 }
@@ -45,7 +29,6 @@ MainApp::MainApp() : per_fragment_program(0)
 //************************************
 MainApp::~MainApp()
 {
-
 }
 
 //************************************
@@ -61,7 +44,6 @@ void MainApp::init()
 
     sb6::application::init();
 
-    //mlaboszc
     myTabPanel = new TabPanel();
     mXmlHelper = new xml_helper();
 
@@ -119,24 +101,9 @@ void MainApp::render(double currentTime)
     glClearBufferfv(GL_COLOR, 0, gray);
     glClearBufferfv(GL_DEPTH, 0, ones);
 
-    /*
-    vmath::mat4 model_matrix = vmath::rotate((float)currentTime * 14.5f, 0.0f, 1.0f, 0.0f) *
-                               vmath::rotate(180.0f, 0.0f, 0.0f, 1.0f) *
-                               vmath::rotate(20.0f, 1.0f, 0.0f, 0.0f);
-                               */
-
     vmath::vec3 view_position = vmath::vec3(0.0f, 0.0f, 50.0f);
     vmath::mat4 view_matrix = m_camera->createViewMatrix();
-        /*vmath::lookat(view_position,
-                                            vmath::vec3(0.0f, 0.0f, 0.0f),
-                                            vmath::vec3(0.0f, 1.0f, 0.0f));
-                                            */
 
-    /*vmath::vec3 light_position    = vmath::vec3(-20.0f, -20.0f, 0.0f);
-    vmath::mat4 light_proj_matrix = vmath::frustum(-1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 200.0f);
-    vmath::mat4 light_view_matrix = vmath::lookat(light_position, vmath::vec3(0.0f), vmath::vec3(0.0f, 1.0f, 0.0f));*/
-
-    // For every object
 	float spacing = 3.25;
 	float distanceFromCamera = 6.25;
 	float yTrans = 2.75;
@@ -162,6 +129,7 @@ void MainApp::render(double currentTime)
 		myTabPanel->DefaultView = false;
 	}
 
+    // For every object
     for(int i = 0; i < OBJECT_COUNT_X; i++)
     {
         for(int j = 0; j < OBJECT_COUNT_Y; j++)
@@ -179,9 +147,6 @@ void MainApp::render(double currentTime)
                     view_matrix,
                     model_matrix);
 
-
-					
-
 				if (myTabPanel->modifiedElementIndex == (i*9 + j*3 + k))
 				{				
 					mSceneObjects[i][j][k].SetParams(myTabPanel->getXmlParamsStruct((i * 9 + j * 3 + k)));
@@ -194,8 +159,8 @@ void MainApp::render(double currentTime)
         }
     }
     myTabPanel->Render(currentTime);
-
 }
+
 //************************************
 // Method:    onKey
 // FullName:  MainApp::onKey
@@ -213,12 +178,7 @@ void MainApp::onKey(int key, int action)
     {
         switch (key)
         {
-            case 'R': 
-                //load_shaders();
-                /*for(int i = 0; i < OBJECT_COUNT_X; i++)
-                    for(int j = 0; j < OBJECT_COUNT_Y; j++)
-                        for(int k = 0; k < OBJECT_COUNT_Z; k++)
-                            mSceneObjects[i][j][k].load_shaders(...);*/
+            case 'R':
                 break;
         }
         // Not needed anymore - one scene
@@ -368,8 +328,8 @@ void MainApp::handleOpenDocument( XMLDocument* doc )
         ele->FloatAttribute("diffuse_albedoX"), 
         ele->FloatAttribute("diffuse_albedoY"), 
         ele->FloatAttribute("diffuse_albedoZ"));
-	float specularAlbedo      = ele->FloatAttribute("specular_albedo");
-	float specularPower       = ele->FloatAttribute("specular_power");
+	float specularAlbedo = ele->FloatAttribute("specular_albedo");
+	float specularPower  = ele->FloatAttribute("specular_power");
 
 	ele = root->FirstChildElement("camera");
 	vmath::vec3 cameraPosition = vmath::vec3(

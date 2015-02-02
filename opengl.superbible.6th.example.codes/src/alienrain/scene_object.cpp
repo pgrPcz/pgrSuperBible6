@@ -5,6 +5,7 @@
 #include <sb6ktx.h>
 #include <shader.h>
 #include <vector>
+
 #include "scene_object.h"
 
 // manual texture data (optional)
@@ -33,7 +34,6 @@ static const GLubyte tex_data[] =
 #undef W
 
 
-// mlaboszc
 vmath::vec3 getXmlVecParam( string mParams ) {
     vmath::vec3 vecParams = vmath::vec3( 0.0, 0.0, 0.0 );
 
@@ -52,7 +52,6 @@ vmath::vec3 getXmlVecParam( string mParams ) {
 const float SceneObject::perspective_fovy = 50.0f;
 const float SceneObject::perspective_f    = 0.1f;
 const float SceneObject::perspective_n    = 1000.0f;
-//int SceneObject::instanceCounter = 0;
 
 //************************************
 // Method:    SceneObject
@@ -61,8 +60,7 @@ const float SceneObject::perspective_n    = 1000.0f;
 // Returns:   
 // Qualifier: : per_fragment_program(0), per_vertex_program(0), is_per_vertex(false)
 //************************************
-SceneObject::SceneObject() :
-	mProgram(0)
+SceneObject::SceneObject() : mProgram(0)
 {
 }
 
@@ -88,9 +86,6 @@ bool SceneObject::LoadShaders()
         tcs = LoadShaderFromFile( mParams.TessControlShaderPath, GL_TESS_CONTROL_SHADER );
     if( !mParams.TessEvaluationShaderPath.empty() )
         tes = LoadShaderFromFile( mParams.TessEvaluationShaderPath, GL_TESS_EVALUATION_SHADER );
-
-    //vs = sb6::shader::load("media/shaders/blinnphong/blinnphong.vs.glsl", GL_VERTEX_SHADER);
-    //fs = sb6::shader::load("media/shaders/blinnphong/blinnphong.fs.glsl", GL_FRAGMENT_SHADER);
 
     if (mProgram)
         glDeleteProgram(mProgram);
@@ -203,7 +198,6 @@ GLuint SceneObject::LoadTextureFromFile(string path)
 	return textureID;
 }
 
-
 //************************************
 // Method:    Startup
 // FullName:  SceneObject::startup
@@ -219,7 +213,6 @@ void SceneObject::Startup()
         mParams.ModelPath = "media/objects/sphere.sbm";
     }
 
-    // TODO check error on load shaders and load object
     LoadShaders();
 	LoadTexture();
 
@@ -234,9 +227,15 @@ void SceneObject::Startup()
     glDepthFunc(GL_LEQUAL);
 }
 
+//************************************
+// Method:    Update
+// FullName:  SceneObject::Update
+// Access:    public 
+// Returns:   void
+// Qualifier:
+//************************************
 void SceneObject::Update()
 {
-	// TODO check error on load shaders and load object
 	LoadShaders();
 	LoadTexture();
 
@@ -274,33 +273,10 @@ void SceneObject::Render( double currentTime, int w, int h, vmath::vec3 view_pos
 	if (IsTextureLoaded)
 		glBindTexture(GL_TEXTURE_2D, mTexture);
 
-     /*
-    vmath::mat4 model_matrix = vmath::rotate((float)currentTime * 14.5f, 0.0f, 1.0f, 0.0f) *
-    vmath::rotate(180.0f, 0.0f, 0.0f, 1.0f) *
-    vmath::rotate(20.0f, 1.0f, 0.0f, 0.0f);
-    */
-
-    /* MUST BE PASSED TO A FUNCTION NOW
-
-    vmath::vec3 view_position = vmath::vec3(0.0f, 0.0f, 50.0f);
-    vmath::mat4 view_matrix = vmath::lookat(view_position,
-    vmath::vec3(0.0f, 0.0f, 0.0f),
-    vmath::vec3(0.0f, 1.0f, 0.0f));
-
-    vmath::vec3 light_position = vmath::vec3(20.0f, 20.0f, 0.0f);
-
-    vmath::mat4 light_proj_matrix = vmath::frustum(-1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 200.0f);
-    vmath::mat4 light_view_matrix = vmath::lookat(light_position,
-    vmath::vec3(0.0f), vmath::vec3(0.0f, 1.0f, 0.0f));
-    */
-
 	model_matrix *= vmath::rotate(mParams.Rotation[0], mParams.Rotation[1], mParams.Rotation[2]);
 	model_matrix *= vmath::scale(mParams.Scale[0], mParams.Scale[1], mParams.Scale[2]);
-	//model_matrix *= vmath::translate((float)mParams.Coords[0], (float)mParams.Coords[0], (float)mParams.Coords[0]);
-	//model_matrix *= vmath::translate(0.0f, - 4.0f, 0.0f);
 
-
-    glUseProgram(/*is_per_vertex ? per_vertex_program : */mProgram);
+    glUseProgram(mProgram);
     glViewport(0, 0, w, h);
 
     glBindBufferBase(GL_UNIFORM_BUFFER, 0, uniforms_buffer);
@@ -312,10 +288,6 @@ void SceneObject::Render( double currentTime, int w, int h, vmath::vec3 view_pos
     block->proj_matrix = vmath::perspective(perspective_fovy, (float)w / (float)h, perspective_f, perspective_n);
 
     glUnmapBuffer(GL_UNIFORM_BUFFER);
-	
-	//mlaboszc
-	//glUniform1f(uniforms[is_per_vertex ? 1 : 0].specular_power, mParams.SpecularPower);
-	//glUniform3fv(uniforms[is_per_vertex ? 1 : 0].specular_albedo, 1, vmath::vec3(0.1f));
 
 	glUniform1f(uniforms[0].specular_power, mParams.SpecularPower);
 	glUniform3fv(uniforms[0].specular_albedo, 1, vmath::vec3(mParams.SpecularAlbedo));
@@ -325,87 +297,78 @@ void SceneObject::Render( double currentTime, int w, int h, vmath::vec3 view_pos
 }
 
 //************************************
-// Method:    LoadShaders
-// FullName:  SceneObject::load_shaders
+// Method:    SetParams
+// FullName:  SceneObject::SetParams
 // Access:    public 
 // Returns:   void
 // Qualifier:
-// Parameter: const char * per_fragment_vs_path
-// Parameter: const char * per_fragment_fs_path
-// Parameter: const char * per_vertex_vs_path
-// Parameter: const char * per_vertex_fs_path
+// Parameter: SceneObjectParams paramsToSet
 //************************************
-//void SceneObject::LoadShaders( const char* per_fragment_vs_path, const char* per_fragment_fs_path, const char* per_vertex_vs_path, const char* per_vertex_fs_path )
-//{
-//    GLuint vs;
-//    GLuint fs;
-//
-//    /* MUST BE PASSED TO A FUNCTION NOW
-//    vs = sb6::shader::load("media/shaders/phonglighting/per-fragment-phong.vs.glsl", GL_VERTEX_SHADER);
-//    fs = sb6::shader::load("media/shaders/phonglighting/per-fragment-phong.fs.glsl", GL_FRAGMENT_SHADER);
-//    */
-//
-//    vs = sb6::shader::load(per_fragment_vs_path);
-//    fs = sb6::shader::load(per_fragment_fs_path);
-//
-//    if (per_fragment_program)
-//        glDeleteProgram(per_fragment_program);
-//
-//    per_fragment_program = glCreateProgram();
-//    glAttachShader(per_fragment_program, vs);
-//    glAttachShader(per_fragment_program, fs);
-//    glLinkProgram(per_fragment_program);
-//
-//    uniforms[0].diffuse_albedo = glGetUniformLocation(per_fragment_program, "diffuse_albedo");
-//    uniforms[0].specular_albedo = glGetUniformLocation(per_fragment_program, "specular_albedo");
-//    uniforms[0].specular_power = glGetUniformLocation(per_fragment_program, "specular_power");
-//
-//    /* MUST BE PASSED TO A FUNCTION NOW
-//    vs = sb6::shader::load("media/shaders/phonglighting/per-vertex-phong.vs.glsl", GL_VERTEX_SHADER);
-//    fs = sb6::shader::load("media/shaders/phonglighting/per-vertex-phong.fs.glsl", GL_FRAGMENT_SHADER);
-//    */
-//
-//    vs = sb6::shader::load(per_vertex_vs_path);
-//    fs = sb6::shader::load(per_vertex_fs_path);
-//
-//    if (per_vertex_program)
-//        glDeleteProgram(per_vertex_program);
-//
-//    per_vertex_program = glCreateProgram();
-//    glAttachShader(per_vertex_program, vs);
-//    glAttachShader(per_vertex_program, fs);
-//    glLinkProgram(per_vertex_program);
-//
-//    uniforms[1].diffuse_albedo = glGetUniformLocation(per_vertex_program, "diffuse_albedo");
-//    uniforms[1].specular_albedo = glGetUniformLocation(per_vertex_program, "specular_albedo");
-//    uniforms[1].specular_power = glGetUniformLocation(per_vertex_program, "specular_power");
-//}
-
 void SceneObject::SetParams(SceneObjectParams paramsToSet)
 {
     mParams = paramsToSet;
 }
 
+//************************************
+// Method:    SetLightPosition
+// FullName:  SceneObject::SetLightPosition
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: string lightPosition
+//************************************
 void SceneObject::SetLightPosition(string lightPosition)
 {
 	mParams.LightPosition = getXmlVecParam( lightPosition );
 }
 
+//************************************
+// Method:    SetLightPosition
+// FullName:  SceneObject::SetLightPosition
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: vmath::vec3 lightPosition
+//************************************
 void SceneObject::SetLightPosition(vmath::vec3 lightPosition)
 {
 	mParams.LightPosition = lightPosition;
 }
 
+//************************************
+// Method:    SetDiffuseAlbedo
+// FullName:  SceneObject::SetDiffuseAlbedo
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: vmath::vec3 diffuseAlbedo
+//************************************
 void SceneObject::SetDiffuseAlbedo(vmath::vec3 diffuseAlbedo)
 {
 	mParams.DiffuseAlbedo = diffuseAlbedo;
 }
 
+//************************************
+// Method:    SetSpecularAlbedo
+// FullName:  SceneObject::SetSpecularAlbedo
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: float specularAlbedo
+//************************************
 void SceneObject::SetSpecularAlbedo(float specularAlbedo)
 {
 	mParams.SpecularAlbedo = specularAlbedo;
 }
 
+//************************************
+// Method:    SetSpecularPower
+// FullName:  SceneObject::SetSpecularPower
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: float specularPower
+//************************************
 void SceneObject::SetSpecularPower(float specularPower)
 {
 	mParams.SpecularPower = specularPower;

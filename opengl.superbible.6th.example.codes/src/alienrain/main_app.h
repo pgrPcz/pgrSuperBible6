@@ -9,17 +9,6 @@
 
 #include "../../include/tabPanel.h"
 
-// TODO here adatczuk
-// +  Cube of objects
-// +  Rendering each object
-// -  Translate / rotate each object
-// -  Setting shaders for each object
-// -  Shader parameters (10)
-// -  Rendering GUI
-// +  Saving XML
-// +  Reading XML
-// +- Input handling (update)
-
 class MainApp : public sb6::application, public xml_helper_listener
 {
 /* Methods */
@@ -49,7 +38,6 @@ protected:
 	void	setCameraPositions();
 	void    ReadObjectsProperties(XMLElement* root, vmath::vec3 lightPos, vmath::vec3 diffuseAlbedo, float specularAlbedo, float specularPower);
     void    WriteObjectsProperties( XMLElement* root );
-    //void    load_shaders();
 
 /* Variables */
 public:
@@ -58,30 +46,10 @@ public:
     const static unsigned int OBJECT_COUNT_Z = 3;
 
 protected:
-	bool buttonMouseClicked = false;
-    TabPanel* myTabPanel;
-	string xmlComment;
-
-    camera* m_camera;
-
-    // Object
-    bool    is_many_objects; // TODO adatczuk to be removed
-    bool    is_per_vertex;
-
-    // Light
-    //string  light_pos;    
-
-    // Material properties    
-    //string  diffuse_albedo;
-    //string  specular_albedo;
-    //string  specular_power;
-
-	//vmath::vec3 lightPosition;
-	//vmath::vec3 diffuseAlbedo;
-	//float specularAlbedo;
-	//float specularPower;
-
-    GLuint  per_fragment_program; // TODO adatczuk to be removed
+	bool        buttonMouseClicked = false;
+    TabPanel*   myTabPanel;
+	string      xmlComment;
+    camera*     m_camera;
 
 	struct cameraPosition
 	{

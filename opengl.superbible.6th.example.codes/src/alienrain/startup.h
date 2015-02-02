@@ -24,31 +24,8 @@
 	#include <sys/stat.h>	// mkdir
 #endif
 
-//using namespace tinyxml2;
 using namespace std;
 
 #include <string>
 
-//#include "xml_helper.h"
 #include "camera.h"
-
-/*
-#include "alienrain_app.h"
-#include "grass.h"
-#include "basicfbo_app.h"
-#include "blendmatrix_app.h"
-*/
-//#include "blinnphong_app.h"
-//#include "bumpmapping.h"
-//#include "clipdistance_app.h"
-//#include "tessellatedtri.h"
-//#include "tunnel.h"
-
-
-
-
-
-
-
-
-
