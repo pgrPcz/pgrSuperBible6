@@ -1,5 +1,0 @@
-<app>
-	<textures color="ladybug_co.ktx"  normals="ladybug_nm.ktx"/>
-	<object model="ladybug.sbm"/>
-	<light pos_x_sin ="40.0" pos_y_cos ="30.0" pos_z="40.0" light_speed="5.0"/>
-</app>

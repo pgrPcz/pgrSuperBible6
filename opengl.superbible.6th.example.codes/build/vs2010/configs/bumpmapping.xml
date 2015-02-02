@@ -1,4 +1,0 @@
-<app>
-	<textures color="ladybug_co.ktx"  normals="ladybug_nm.ktx"/>
-	<object file="ladybug.sbm"/>
-</app>

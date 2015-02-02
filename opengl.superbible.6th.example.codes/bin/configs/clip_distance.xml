@@ -1,6 +1,0 @@
-<app>
-    <sphere sin_speed_a="3.0" sin_speed_b="3.0" cos_speed_a="3.0" min_radius="2.5"/>
-    <plane a_angle_speed="60.0" a_x="1.0" a_y="0.0" a_z="0.0" b_angle_speed="70.3" b_x="0.0" b_y="1.0" b_z="0.0"/>
-    <light pos="100.0, 100.0, 100.0"/>
-    <material_properties diffuse_albedo="0.1, 0.1, 0.9" specular_albedo="0.7" specular_power="128" rim_color="0.9, 0.1, 0.1" rim_power="55"/>
-</app>

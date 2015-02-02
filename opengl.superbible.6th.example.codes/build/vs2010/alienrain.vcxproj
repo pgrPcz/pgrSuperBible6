@@ -11,16 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\alienrain\blinnphong_app.h" />
-    <ClInclude Include="..\..\src\alienrain\bumpmapping.h" />
     <ClInclude Include="..\..\src\alienrain\camera.h" />
-    <ClInclude Include="..\..\src\alienrain\clipdistance_app.h" />
     <ClInclude Include="..\..\src\alienrain\main_app.h" />
     <ClInclude Include="..\..\src\alienrain\scene_object.h" />
     <ClInclude Include="..\..\src\alienrain\startup.h" />
-    <ClInclude Include="..\..\src\alienrain\tessellatedtri.h" />
     <ClInclude Include="..\..\src\alienrain\tinyxml2.h" />
-    <ClInclude Include="..\..\src\alienrain\tunnel.h" />
     <ClInclude Include="..\..\src\alienrain\unifiedXmlParamsBlock.h" />
     <ClInclude Include="..\..\src\alienrain\xml_helper.h" />
   </ItemGroup>
