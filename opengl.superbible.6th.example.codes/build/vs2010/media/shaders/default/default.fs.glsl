@@ -26,7 +26,6 @@ uniform vec3 specular_albedo;
 uniform float specular_power;
 
 
-
 void main(void)
 {
     // Normalize the incoming N, L and V vectors
@@ -40,9 +39,7 @@ void main(void)
     vec3 specular = pow(max(dot(N, H), 0.0), specular_power) * specular_albedo;
 
     // Write final color to the framebuffer
-    //color = vec4(diffuse + specular, 1.0);
+    color = vec4(diffuse + specular, 1.0);
     //color = texelFetch(s, ivec2(gl_FragCoord.xy), 0);
-    //color = vec4(diffuse + specular, 1.0);
-    color = texture(mTexture, fs_in.tc * vec2(3.0, 1.0));
-    //color = vec4(diffuse + specular, 1.0);
+    color += texture(mTexture, fs_in.tc * vec2(3.0, 1.0));
 }
